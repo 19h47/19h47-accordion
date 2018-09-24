@@ -1,0 +1,180 @@
+import EventEmitter from 'tom32i-event-emitter.js';
+
+
+/**
+ * Accordion
+ *
+ * @author	Jérémy Levron <jeremylevron@19h47.fr>
+ */
+export default class AccordionStyle extends EventEmitter {
+	/**
+	 * Constructor
+	 *
+	 * @param	obj		DOM element
+	 * @return
+	 */
+	constructor(element) {
+		super();
+
+		// eslint-disable-next-line
+		this.accordion = element;
+		this.panels = null;
+	}
+
+
+	/**
+	 * init
+	 */
+	init() {
+		// No need to go further if no element have been given
+		if (this.accordion === null || this.accordion === undefined) return false;
+
+		this.panels = this.accordion.querySelectorAll('.js-accordion-panel');
+
+		for (let i = 0; i < this.panels.length; i += 1) {
+			this.initPanel(this.panels[i]);
+		}
+
+		return true;
+	}
+
+
+	on(eventName, callback, context) {
+		this.emitter.on(`accordion.${eventName}`, callback, context);
+	}
+
+
+	/**
+	 * init panel
+	 *
+	 * @param	obj		DOM
+	 */
+	initPanel(element) {
+		const $button = element.querySelector('.js-accordion-header');
+		const $body = element.querySelector('.js-accordion-body');
+		const $inner = $body.querySelector('.js-accordion-inner');
+
+		const panel = {
+			body: $body,
+			height: $inner.offsetHeight,
+			element,
+			inner: $body.querySelector('.js-accordion-inner'),
+			open: element.getAttribute('data-accordion-open'),
+		};
+
+		if (panel.open === 'true') {
+			this.open(panel);
+		}
+
+		$button.addEventListener('click', () => this.toggle(element, panel));
+	}
+
+
+	/**
+	 * toggle
+	 *
+	 * @param	obj		panel
+	 */
+	toggle(element, panel) {
+		// Update panel.open
+		// eslint-disable-next-line
+		panel.open = element.getAttribute('data-accordion-open');
+
+		// First we close all panels
+		this.closeAll();
+
+		// If panel is already open
+		if (panel.open === 'true') {
+			// eslint-disable-next-line
+			panel.open = 'false';
+			return true;
+		}
+
+		// Else open it
+		return this.open(panel);
+	}
+
+
+	/**
+	 * open
+	 *
+	 * @param	obj		panel
+	 */
+	open(panel) {
+		panel.element.setAttribute('data-accordion-open', 'true');
+
+		// eslint-disable-next-line
+		panel.open = 'true';
+
+		// eslint-disable-next-line
+		panel.body.style.maxHeight = `${panel.height}px`;
+
+		AccordionStyle.setActive(panel.element);
+		AccordionStyle.setActive(this.accordion);
+
+		this.emit('open');
+
+		return true;
+	}
+
+
+	/**
+	 * close
+	 *
+	 * @param	obj		panel
+	 */
+	close(panel) {
+		panel.element.setAttribute('data-accordion-open', 'false');
+
+		// eslint-disable-next-line
+		panel.open = 'false';
+
+		// eslint-disable-next-line
+		panel.body.style.maxHeight = 0;
+
+		AccordionStyle.setInactive(this.accordion);
+		AccordionStyle.setInactive(panel.element);
+
+		this.emit('close');
+
+		return true;
+	}
+
+
+	/**
+	 * close all
+	 */
+	closeAll() {
+		[...this.panels].forEach((panel) => {
+			const $body = panel.querySelector('.js-accordion-body');
+
+			panel.setAttribute('data-accordion-open', false);
+			$body.style.maxHeight = 0;
+			AccordionStyle.setInactive(panel);
+		});
+	}
+
+
+	/**
+	 * Inactive element
+	 *
+	 * @param	obj		element		DOM element
+	 * @access	static
+	 * @return
+	 */
+	static setInactive(element) {
+		return element.classList.remove('is-active');
+	}
+
+
+	/**
+	 * Active element
+	 *
+	 * @param	obj		element		DOM element
+	 * @access	static
+	 * @return
+	 */
+	static setActive(element) {
+		return element.classList.add('is-active');
+	}
+}
