@@ -56,6 +56,7 @@ export default class AccordionStyle extends EventEmitter {
 
 		const panel = {
 			body: $body,
+			$button,
 			height: $inner.offsetHeight,
 			element,
 			inner: $body.querySelector('.js-accordion-inner'),
@@ -102,6 +103,8 @@ export default class AccordionStyle extends EventEmitter {
 	 */
 	open(panel) {
 		panel.element.setAttribute('data-accordion-open', 'true');
+		panel.$button.setAttribute('aria-expanded', 'true');
+		console.log(panel);
 
 		// eslint-disable-next-line
 		panel.open = 'true';
@@ -123,35 +126,40 @@ export default class AccordionStyle extends EventEmitter {
 	 *
 	 * @param	obj		panel
 	 */
-	close(panel) {
-		panel.element.setAttribute('data-accordion-open', 'false');
-
-		// eslint-disable-next-line
-		panel.open = 'false';
-
-		// eslint-disable-next-line
-		panel.body.style.maxHeight = 0;
-
-		AccordionStyle.setInactive(this.accordion);
-		AccordionStyle.setInactive(panel.element);
-
-		this.emit('close');
-
-		return true;
-	}
+	// close(panel) {
+	// 	panel.element.setAttribute('data-accordion-open', 'false');
+	// 	panel.$button.setAttribute('aria-expanded', false);
+	//
+	// 	// eslint-disable-next-line
+	// 	panel.open = 'false';
+	//
+	// 	// eslint-disable-next-line
+	// 	panel.body.style.maxHeight = 0;
+	//
+	// 	AccordionStyle.setInactive(this.accordion);
+	// 	AccordionStyle.setInactive(panel.element);
+	//
+	// 	this.emit('close');
+	//
+	// 	return true;
+	// }
 
 
 	/**
 	 * close all
 	 */
 	closeAll() {
-		[...this.panels].forEach((panel) => {
-			const $body = panel.querySelector('.js-accordion-body');
+		for (let i = 0; i < this.panels.length; i += 1) {
+			const $body = this.panels[i].querySelector('.js-accordion-body');
+			const $button = this.panels[i].querySelector('.js-accordion-header');
 
-			panel.setAttribute('data-accordion-open', false);
+			this.panels[i].removeAttribute('data-accordion-open');
+
+			$button.setAttribute('aria-expanded', false);
 			$body.style.maxHeight = 0;
-			AccordionStyle.setInactive(panel);
-		});
+
+			AccordionStyle.setInactive(this.panels[i]);
+		}
 	}
 
 
