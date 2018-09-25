@@ -3,83 +3,101 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Accordion style</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-
-	<div class="js-accordion">
-
-		<!-- Panel -->
-		<div
-			class="js-accordion-panel"
-			data-accordion-open="true"
-		>
-			<button
-				class="js-accordion-header"
-				type="button"
-				aria-expanded="true"
-				aria-controls="lorem"
-			>
-			 	Lorem ipsum dolor
-			</button>
-
-			<div
-				id="lorem"
-				class="js-accordion-body"
-				style="overflow: hidden; max-height: 0;"
-			>
-				<div class="js-accordion-inner">
-					Sit amet, consectetur adipisicing elit. Omnis ex inventore tempore. Quam voluptas quibusdam excepturi accusantium voluptatum facere. Nemo vero iste recusandae, at magnam tenetur maxime ad optio veniam!<br>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque, molestias excepturi molestiae nesciunt alias. Nobis aut praesentium, commodi minus laborum ullam at quod soluta qui tempore sit eveniet dicta esse.
-				</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<h1 class="m-5">Accordion</h1>
 			</div>
-		</div>
+			<div class="col-12">
+				<div class="js-accordion">
 
-		<!-- Panel -->
-		<div
-			class="js-accordion-panel"
-			data-accordion-open="false"
-		>
-			<button
-				class="js-accordion-header has-decor"
-				type="button"
-				aria-expanded="false"
-				aria-controls="consectetur"
-			>
-				Consectetur adipisicing elit
-			</button>
+					<!-- Panel -->
+					<div
+						class="card m-5 js-accordion-panel"
+						data-accordion-open="true"
+						data-accordion-deselect="true"
+					>
+						<div class="card-header">
+							<button
+								class="btn btn-primary js-accordion-header"
+								type="button"
+								aria-expanded="true"
+								aria-controls="lorem"
+								>
+								Toggle
+							</button>
+						</div>
 
-			<div
-				id="consectetur"
-				class="js-accordion-body"
-				style="overflow: hidden; max-height: 0;"
-			>
-				<div class="js-accordion-inner">
-					Itaque dolore ipsa harum nobis distinctio aperiam quis omnis error incidunt iusto dolorem inventore laboriosam quaerat numquam tenetur dicta quibusdam quisquam, debitis!
-				</div>
-			</div>
-		</div>
+						<div
+							id="lorem"
+							class="js-accordion-body"
+							style="overflow: hidden; max-height: 0;"
+						>
+							<div class="card-body js-accordion-inner">
+								Sit amet, consectetur adipisicing elit. Omnis ex inventore tempore. Quam voluptas quibusdam excepturi accusantium voluptatum facere. Nemo vero iste recusandae, at magnam tenetur maxime ad optio veniam!<br>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque, molestias excepturi molestiae nesciunt alias. Nobis aut praesentium, commodi minus laborum ullam at quod soluta qui tempore sit eveniet dicta esse.
+							</div>
+						</div>
+					</div>
 
-		<!-- Panel -->
-		<div
-			class="js-accordion-panel"
-			data-accordion-open="false"
-		>
-			<button
-				class="js-accordion-header has-decor"
-				type="button"
-				aria-expanded="false"
-				aria-controls="nihil"
-			>
-				Nihil laboriosam fuga cum illum.
-			</button>
+					<!-- Panel -->
+					<div
+						class="card m-5 js-accordion-panel"
+						data-accordion-open="false"
+						data-accordion-deselect="false"
+					>
+						<div class="card-header">
+							<button
+								class="btn btn-primary js-accordion-header"
+								type="button"
+								aria-expanded="false"
+								aria-controls="consectetur"
+							>
+								Toggle
+							</button>
+						</div>
 
-			<div
-				id="nihil"
-				class="js-accordion-body"
-				style="overflow: hidden; max-height: 0;"
-			>
-				<div class="js-accordion-inner">
-					Nemo nobis doloribus praesentium eum animi qui eos. Sit accusantium rem consequatur quisquam ullam veritatis tenetur architecto.
+						<div
+							id="consectetur"
+							class="js-accordion-body"
+							style="overflow: hidden; max-height: 0;"
+						>
+							<div class="card-body js-accordion-inner">
+								Itaque dolore ipsa harum nobis distinctio aperiam quis omnis error incidunt iusto dolorem inventore laboriosam quaerat numquam tenetur dicta quibusdam quisquam, debitis!
+							</div>
+						</div>
+					</div>
+
+					<!-- Panel -->
+					<div
+						class="card m-5 js-accordion-panel"
+						data-accordion-open="false"
+						data-accordion-deselect="false"
+					>
+						<div class="card-header">
+							<button
+								class="btn btn-primary js-accordion-header has-decor"
+								type="button"
+								aria-expanded="false"
+								aria-controls="nihil"
+							>
+								Toggle
+							</button>
+						</div>
+
+						<div
+							id="nihil"
+							class="js-accordion-body"
+							style="overflow: hidden; max-height: 0;"
+						>
+							<div class="card-body js-accordion-inner">
+								Nemo nobis doloribus praesentium eum animi qui eos. Sit accusantium rem consequatur quisquam ullam veritatis tenetur architecto.
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
