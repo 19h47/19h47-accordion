@@ -11,7 +11,7 @@ export default class AccordionStyle extends EventEmitter {
 	 * Constructor
 	 *
 	 * @param	obj		DOM element
-	 * @return
+	 * @return 	void
 	 */
 	constructor(element) {
 		super();
@@ -24,6 +24,8 @@ export default class AccordionStyle extends EventEmitter {
 
 	/**
 	 * init
+	 *
+	 * @return 	bool
 	 */
 	init() {
 		// No need to go further if no element have been given
@@ -47,52 +49,59 @@ export default class AccordionStyle extends EventEmitter {
 	/**
 	 * init panel
 	 *
-	 * @param	obj		DOM
+	 * @param	obj		DOM element
+	 * @return	void
 	 */
-	initPanel(element) {
-		const $button = element.querySelector('.js-accordion-header');
-		const $body = element.querySelector('.js-accordion-body');
+	initPanel($element) {
+		const $button = $element.querySelector('.js-accordion-header');
+		const $body = $element.querySelector('.js-accordion-body');
 		const $inner = $body.querySelector('.js-accordion-inner');
+		const open = $element.getAttribute('data-accordion-open');
 
 		const panel = {
-			body: $body,
+			$body,
 			$button,
+			$element,
+			$inner,
+			deselect: $element.getAttribute('data-accordion-deselect'),
 			height: $inner.offsetHeight,
-			element,
-			inner: $body.querySelector('.js-accordion-inner'),
-			open: element.getAttribute('data-accordion-open'),
 		};
 
-		if (panel.open === 'true') {
+		if (open === 'true') {
 			this.open(panel);
 		}
 
-		$button.addEventListener('click', () => this.toggle(element, panel));
+		$button.addEventListener('click', () => this.toggle($element, panel));
 	}
 
 
 	/**
 	 * toggle
 	 *
-	 * @param	obj		panel
+	 * @param 	$element 	DOM element
+	 * @param	obj			panel
+	 * @return	void
 	 */
-	toggle(element, panel) {
-		// Update panel.open
-		// eslint-disable-next-line
-		panel.open = element.getAttribute('data-accordion-open');
+	toggle($element, panel) {
+		const current = panel;
+		const open = current.$element.getAttribute('data-accordion-open');
 
-		// First we close all panels
-		this.closeAll();
+		// First of all, we check attribute deselect
+		// If data attribute deselect is set to true and panel is open
+		if (current.deselect === 'true' && open === 'true') {
+			return false;
+		}
+
+		// Next, we close all panels
+		AccordionStyle.closeAll(this.panels);
 
 		// If panel is already open
-		if (panel.open === 'true') {
-			// eslint-disable-next-line
-			panel.open = 'false';
+		if (open === 'true') {
 			return true;
 		}
 
 		// Else open it
-		return this.open(panel);
+		return this.open(current);
 	}
 
 
@@ -100,19 +109,17 @@ export default class AccordionStyle extends EventEmitter {
 	 * open
 	 *
 	 * @param	obj		panel
+	 * @return	bool
 	 */
 	open(panel) {
-		panel.element.setAttribute('data-accordion-open', 'true');
-		panel.$button.setAttribute('aria-expanded', 'true');
-		console.log(panel);
+		const current = panel;
 
-		// eslint-disable-next-line
-		panel.open = 'true';
+		current.$element.setAttribute('data-accordion-open', 'true');
+		current.$button.setAttribute('aria-expanded', 'true');
 
-		// eslint-disable-next-line
-		panel.body.style.maxHeight = `${panel.height}px`;
+		current.$body.style.maxHeight = `${panel.height}px`;
 
-		AccordionStyle.setActive(panel.element);
+		AccordionStyle.setActive(panel.$element);
 		AccordionStyle.setActive(this.accordion);
 
 		this.emit('open');
@@ -125,40 +132,31 @@ export default class AccordionStyle extends EventEmitter {
 	 * close
 	 *
 	 * @param	obj		panel
+	 * @access 	static
+	 * @return	void
 	 */
-	// close(panel) {
-	// 	panel.element.setAttribute('data-accordion-open', 'false');
-	// 	panel.$button.setAttribute('aria-expanded', false);
-	//
-	// 	// eslint-disable-next-line
-	// 	panel.open = 'false';
-	//
-	// 	// eslint-disable-next-line
-	// 	panel.body.style.maxHeight = 0;
-	//
-	// 	AccordionStyle.setInactive(this.accordion);
-	// 	AccordionStyle.setInactive(panel.element);
-	//
-	// 	this.emit('close');
-	//
-	// 	return true;
-	// }
+	static close(panel) {
+		const $body = panel.querySelector('.js-accordion-body');
+		const $button = panel.querySelector('.js-accordion-header');
+
+		panel.setAttribute('data-accordion-open', 'false');
+
+		$button.setAttribute('aria-expanded', false);
+		$body.style.maxHeight = 0;
+
+		AccordionStyle.setInactive(panel);
+	}
 
 
 	/**
-	 * close all
+	 * Close all
+	 *
+	 * @param 	obj 	elements
+	 * @return	void
 	 */
-	closeAll() {
-		for (let i = 0; i < this.panels.length; i += 1) {
-			const $body = this.panels[i].querySelector('.js-accordion-body');
-			const $button = this.panels[i].querySelector('.js-accordion-header');
-
-			this.panels[i].removeAttribute('data-accordion-open');
-
-			$button.setAttribute('aria-expanded', false);
-			$body.style.maxHeight = 0;
-
-			AccordionStyle.setInactive(this.panels[i]);
+	static closeAll(elements) {
+		for (let i = 0; i < elements.length; i += 1) {
+			AccordionStyle.close(elements[i]);
 		}
 	}
 
@@ -168,7 +166,7 @@ export default class AccordionStyle extends EventEmitter {
 	 *
 	 * @param	obj		element		DOM element
 	 * @access	static
-	 * @return
+	 * @return	void
 	 */
 	static setInactive(element) {
 		return element.classList.remove('is-active');
@@ -180,7 +178,7 @@ export default class AccordionStyle extends EventEmitter {
 	 *
 	 * @param	obj		element		DOM element
 	 * @access	static
-	 * @return
+	 * @return 	void
 	 */
 	static setActive(element) {
 		return element.classList.add('is-active');
