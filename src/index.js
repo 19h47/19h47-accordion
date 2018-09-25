@@ -88,7 +88,7 @@ export default class AccordionStyle extends EventEmitter {
 
 		// First of all, we check attribute deselect
 		// If data attribute deselect is set to true and panel is open
-		if (current.deselect === 'true' && open === 'true') {
+		if (current.deselect === 'false' && open === 'true') {
 			return false;
 		}
 
