@@ -16,7 +16,6 @@ export default class AccordionStyle extends EventEmitter {
 	constructor(element) {
 		super();
 
-		// eslint-disable-next-line
 		this.accordion = element;
 		this.panels = null;
 	}
