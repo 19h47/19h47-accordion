@@ -1,4 +1,4 @@
-# Select and reset
+# Accordion style
 
 > Sur un petit air d'accordéon
 
