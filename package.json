@@ -1,6 +1,6 @@
 {
 	"name": "accordion-style",
-	"version": "1.0.1",
+	"version": "1.0.3",
 	"description": "Accordion style",
 	"main": "dist/main.js",
 	"scripts": {

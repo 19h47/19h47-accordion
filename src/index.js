@@ -1,12 +1,9 @@
-import EventEmitter from 'tom32i-event-emitter.js';
-
-
 /**
  * Accordion
  *
  * @author	Jérémy Levron <jeremylevron@19h47.fr>
  */
-export default class AccordionStyle extends EventEmitter {
+export default class AccordionStyle {
 	/**
 	 * Constructor
 	 *
@@ -14,8 +11,6 @@ export default class AccordionStyle extends EventEmitter {
 	 * @return 	void
 	 */
 	constructor(element) {
-		super();
-
 		this.accordion = element;
 		this.panels = null;
 	}
@@ -37,11 +32,6 @@ export default class AccordionStyle extends EventEmitter {
 		}
 
 		return true;
-	}
-
-
-	on(eventName, callback, context) {
-		this.emitter.on(`accordion.${eventName}`, callback, context);
 	}
 
 
