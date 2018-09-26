@@ -111,8 +111,6 @@ export default class AccordionStyle {
 		AccordionStyle.setActive(panel.$element);
 		AccordionStyle.setActive(this.accordion);
 
-		this.emit('open');
-
 		return true;
 	}
 
