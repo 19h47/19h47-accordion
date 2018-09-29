@@ -1,5 +1,5 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackNotifier = require('webpack-notifier');
 
 const production = process.env.NODE_ENV === 'production';
@@ -7,15 +7,24 @@ const path = require('path');
 
 module.exports = {
 	watch: production ? false : true,
-	entry: path.resolve(__dirname, 'src/index.js'),
+	entry: {
+		dist: path.resolve(__dirname, 'src/index.js'),
+		example: path.resolve(__dirname, 'src/index.js')
+	},
 	output: {
-		filename: '[name].js',
 		library: 'AccordionStyle',
 		libraryTarget: 'umd',
+		path: path.resolve(__dirname),
+		filename: '[name]/main.js'
+	},
+	devServer: {
+    	contentBase: path.resolve(__dirname, 'dist'),
+    	compress: true,
+    	port: 9000,
+		inline: true,
 	},
 	resolve: {
 		alias: {
-			src: path.resolve(__dirname, 'src/'),
 			Utils: path.resolve(__dirname, 'src/utils'),
 		}
 	},
@@ -31,39 +40,21 @@ module.exports = {
 			test: /\.js$/,
 			exclude: /(node_modules)/,
 			loader: 'babel-loader'
-		},
-		{
-			test: /\.scss$/,
-			exclude: /node_modules/,
-			use: [
-				MiniCssExtractPlugin.loader,
-				{
-					loader: 'css-loader',
-					options: {
-						sourceMap: production ? false : true
-					}
-				},
-				{
-					loader: 'postcss-loader',
-					options: {
-						sourceMap: production ? false : true
-					}
-				},
-				{
-					loader: 'sass-loader',
-					options: {
-						sourceMap: production ? false : true
-					}
-				}
-			]
 		}]
 	},
 	plugins: [
-		new CleanWebpackPlugin(['dist']),
-		new MiniCssExtractPlugin({
-			filename: 'main.css'
-		}),
+		new CleanWebpackPlugin(
+			['dist', 'example'],
+			{
+				exclude: ['.git']
+			}
+		),
 		new WebpackNotifier(),
+		new HtmlWebpackPlugin({
+      		filename: path.resolve(__dirname, 'example/index.html' ),
+      		template: path.resolve(__dirname, 'index.html' ),
+			inject: false,
+    	})
 	],
 	devtool: production ? false : 'source-map',
 };

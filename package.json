@@ -1,12 +1,13 @@
 {
 	"name": "accordion-style",
-	"version": "1.0.4",
+	"version": "1.0.6",
 	"description": "Accordion style",
 	"main": "dist/main.js",
 	"scripts": {
 		"prod": "./bin/production",
 		"dev": "./bin/development",
-		"deploy": "./bin/deploy"
+		"deploy": "./bin/deploy",
+		"server": "./bin/server"
 	},
 	"repository": {
 		"type": "git",
@@ -39,14 +40,13 @@
 		"eslint-plugin-node": "^7.0.1",
 		"eslint-plugin-promise": "^4.0.1",
 		"eslint-plugin-standard": "^4.0.0",
+		"html-webpack-plugin": "^3.2.0",
 		"mini-css-extract-plugin": "^0.4.3",
 		"postcss-loader": "^3.0.0",
 		"sass-loader": "^7.1.0",
 		"webpack": "^4.19.1",
 		"webpack-cli": "^3.1.0",
+		"webpack-dev-server": "^3.1.9",
 		"webpack-notifier": "^1.6.0"
-	},
-	"dependencies": {
-		"tom32i-event-emitter.js": "^2.0.1"
 	}
 }

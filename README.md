@@ -82,4 +82,4 @@ Can the panel be deselected or not.
 
 ## Example
 
-An example is located right [here](example/index.html), see sources.
+An example is located right [here](https://19h47.github.io/accordion-style/), see [sources](/example/index.html).
