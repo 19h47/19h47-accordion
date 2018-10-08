@@ -1,6 +1,6 @@
 # Accordion style
 
-> Sur un petit air d'accordéon
+> Sur un petit air d'accordéon Léon
 
 ![Accordion style](accordion-style.png)
 
