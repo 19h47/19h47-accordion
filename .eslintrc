@@ -5,9 +5,6 @@
 		"allowImportExportEverywhere": true,
 		"codeFrame": false
 	},
-	"settings": {
-		"import/resolver": webpack,
-	},
 	"extends": ["standard", "airbnb-base"],
 	"rules":{
 		"no-console": 0,
