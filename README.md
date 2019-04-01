@@ -1,4 +1,4 @@
-# Accordion style
+# @19h47/accordion
 
 > Sur un petit air d'accordéon Léon
 

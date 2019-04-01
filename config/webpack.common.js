@@ -22,7 +22,7 @@ module.exports = {
 		example: resolve('src/index.js')
 	},
 	output: {
-		library: 'AccordionStyle',
+		library: 'Accordion',
 		libraryTarget: 'umd',
 		filename: '../[name]/main.js'
 	},

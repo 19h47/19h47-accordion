@@ -1,9 +1,9 @@
 /**
  * Accordion
  *
- * @author	Jérémy Levron <jeremylevron@19h47.fr>
+ * @author	Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
  */
-export default class AccordionStyle {
+export default class Accordion {
 	/**
 	 * Constructor
 	 *
@@ -82,7 +82,7 @@ export default class AccordionStyle {
 		}
 
 		// Next, we close all panels
-		AccordionStyle.closeAll(this.panels);
+		Accordion.closeAll(this.panels);
 
 		// If panel is already open
 		if (open === 'true') {
@@ -108,8 +108,8 @@ export default class AccordionStyle {
 
 		current.$body.style.maxHeight = `${panel.height}px`;
 
-		AccordionStyle.setActive(panel.$element);
-		AccordionStyle.setActive(this.accordion);
+		Accordion.setActive(panel.$element);
+		Accordion.setActive(this.accordion);
 
 		return true;
 	}
@@ -131,7 +131,7 @@ export default class AccordionStyle {
 		$button.setAttribute('aria-expanded', false);
 		$body.style.maxHeight = 0;
 
-		AccordionStyle.setInactive(panel);
+		Accordion.setInactive(panel);
 	}
 
 
@@ -143,7 +143,7 @@ export default class AccordionStyle {
 	 */
 	static closeAll(elements) {
 		for (let i = 0; i < elements.length; i += 1) {
-			AccordionStyle.close(elements[i]);
+			Accordion.close(elements[i]);
 		}
 	}
 
