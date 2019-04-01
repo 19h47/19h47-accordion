@@ -7,17 +7,17 @@
 ## Installation
 
 ```
-npm install accordion-style
+npm install @19h47/accordion
 ```
 
 ## Usage
 
 ```javascript
 
-import AccordionStyle from 'accordion-style';
+import Accordion from '@19h47/accordion';
 
 const element = document.querySelector('.js-accordion');
-const accordion = new AccordionStyle(element);
+const accordion = new Accordion(element);
 accordion.init();
 
 ```
@@ -82,4 +82,4 @@ Can the panel be deselected or not.
 
 ## Example
 
-An example is located right [here](https://19h47.github.io/accordion-style/), see [sources](/example/index.html).
+An example is located right [here](https://19h47.github.io/19h47-accordion/), see [sources](/example/index.html).
