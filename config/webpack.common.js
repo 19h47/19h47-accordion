@@ -19,7 +19,7 @@ function resolve (dir) {
 module.exports = {
 	entry: {
 		dist: resolve('src/index.js'),
-		example: resolve('src/index.js')
+		docs: resolve('src/index.js')
 	},
 	output: {
 		library: 'Accordion',
@@ -47,12 +47,12 @@ module.exports = {
 		}],
 	},
 	plugins: [
-		new CleanWebpackPlugin(['dist', 'example'], {
+		new CleanWebpackPlugin(['dist', 'docs'], {
 			root: resolve(''),
 			exclude: ['.git']
 		}),
 		new HtmlWebpackPlugin({
-			filename: resolve('example/index.html' ),
+			filename: resolve('docs/index.html' ),
 			template: resolve('index.html' ),
 			inject: false,
 		}),

@@ -7,7 +7,7 @@
 		"prod": "./bin/production",
 		"dev": "./bin/development",
 		"deploy": "./bin/deploy",
-		"start": "./bin/start"
+		"start": "npm run prod && npm publish"
 	},
 	"repository": {
 		"type": "git",
@@ -23,34 +23,35 @@
 	},
 	"homepage": "https://github.com/19h47/accordion-style#readme",
 	"devDependencies": {
-		"@babel/core": "^7.3.4",
-		"@babel/plugin-transform-runtime": "^7.3.4",
-		"@babel/preset-env": "^7.3.4",
-		"autoprefixer": "^9.5.0",
-		"babel-eslint": "^10.0.1",
-		"babel-loader": "^8.0.5",
+		"@babel/core": "^7.5.4",
+		"@babel/plugin-transform-runtime": "^7.5.0",
+		"@babel/preset-env": "^7.5.4",
+		"autoprefixer": "^9.6.1",
+		"babel-eslint": "^10.0.2",
+		"babel-loader": "^8.0.6",
 		"clean-webpack-plugin": "^1.0.1",
 		"css-loader": "^2.1.1",
 		"cssnano": "^4.1.10",
-		"eslint": "^5.15.2",
-		"eslint-config-airbnb-base": "^13.1.0",
+		"eslint": "^5.16.0",
+		"eslint-config-airbnb-base": "^13.2.0",
 		"eslint-config-standard": "^12.0.0",
-		"eslint-loader": "^2.1.2",
-		"eslint-plugin-import": "^2.16.0",
+		"eslint-loader": "^2.2.1",
+		"eslint-plugin-import": "^2.18.0",
 		"eslint-plugin-node": "^8.0.1",
-		"eslint-plugin-promise": "^4.0.1",
+		"eslint-plugin-promise": "^4.2.1",
 		"eslint-plugin-standard": "^4.0.0",
 		"html-webpack-plugin": "^3.2.0",
 		"mini-css-extract-plugin": "^0.5.0",
 		"postcss-loader": "^3.0.0",
 		"sass-loader": "^7.1.0",
-		"webpack": "^4.29.6",
-		"webpack-cli": "^3.3.0",
-		"webpack-dev-server": "^3.2.1",
+		"webpack": "^4.35.3",
+		"webpack-cli": "^3.3.5",
+		"webpack-dev-server": "^3.7.2",
 		"webpack-merge": "^4.2.1",
-		"webpack-notifier": "^1.7.0"
+		"webpack-notifier": "^1.8.0"
 	},
 	"dependencies": {
-		"@babel/runtime": "^7.3.4"
+		"@19h47/keycode": "^1.0.3",
+		"@babel/runtime": "^7.5.4"
 	}
 }

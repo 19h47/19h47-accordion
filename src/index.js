@@ -1,3 +1,8 @@
+import { DOWN, UP } from '@19h47/keycode';
+
+const EXPANDED = 'aria-expanded';
+// const MULTISELECTABLE = 'aria-multiselectable';
+
 /**
  * Accordion
  *
@@ -23,7 +28,9 @@ export default class Accordion {
 	 */
 	init() {
 		// No need to go further if no element have been given
-		if (this.accordion === null || this.accordion === undefined) return false;
+		if (null === this.accordion || undefined === this.accordion) {
+			return false;
+		}
 
 		this.panels = this.accordion.querySelectorAll('.js-accordion-panel');
 
@@ -32,6 +39,27 @@ export default class Accordion {
 		}
 
 		return true;
+	}
+
+
+	/**
+	 * Handle keyDown
+	 *
+	 *
+	 */
+	static handleKeyDown(event) {
+		switch (event.keyCode) {
+			case UP:
+
+				break;
+
+			case DOWN:
+
+				break;
+
+			default:
+				break;
+		}
 	}
 
 
@@ -56,7 +84,7 @@ export default class Accordion {
 			height: $inner.offsetHeight,
 		};
 
-		if (open === 'true') {
+		if ('true' === open) {
 			this.open(panel);
 		}
 
@@ -77,7 +105,7 @@ export default class Accordion {
 
 		// First of all, we check attribute deselect
 		// If data attribute deselect is set to true and panel is open
-		if (current.deselect === 'false' && open === 'true') {
+		if ('false' === current.deselect && 'true' === open) {
 			return false;
 		}
 
@@ -85,7 +113,7 @@ export default class Accordion {
 		Accordion.closeAll(this.panels);
 
 		// If panel is already open
-		if (open === 'true') {
+		if ('true' === open) {
 			return true;
 		}
 
@@ -104,7 +132,7 @@ export default class Accordion {
 		const current = panel;
 
 		current.$element.setAttribute('data-accordion-open', 'true');
-		current.$button.setAttribute('aria-expanded', 'true');
+		current.$button.setAttribute(EXPANDED, 'true');
 
 		current.$body.style.maxHeight = `${panel.height}px`;
 
@@ -128,7 +156,7 @@ export default class Accordion {
 
 		panel.setAttribute('data-accordion-open', 'false');
 
-		$button.setAttribute('aria-expanded', false);
+		$button.setAttribute(EXPANDED, false);
 		$body.style.maxHeight = 0;
 
 		Accordion.setInactive(panel);
