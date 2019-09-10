@@ -8,7 +8,7 @@
 const path = require('path');
 
 // Plugins
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 
@@ -29,7 +29,7 @@ module.exports = {
 	devServer: {
 		contentBase: resolve('/'),
 		compress: true,
-		port: 9000,
+		port: 3000,
 		inline: true,
 		disableHostCheck: true
 	},
@@ -47,9 +47,8 @@ module.exports = {
 		}],
 	},
 	plugins: [
-		new CleanWebpackPlugin(['dist', 'docs'], {
-			root: resolve(''),
-			exclude: ['.git']
+		new CleanWebpackPlugin({
+			cleanOnceBeforeBuildPatterns: ['dist', 'docs'],
 		}),
 		new HtmlWebpackPlugin({
 			filename: resolve('docs/index.html' ),

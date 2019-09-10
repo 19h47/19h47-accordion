@@ -1,5 +1,3 @@
-import { DOWN, UP } from '@19h47/keycode';
-
 const EXPANDED = 'aria-expanded';
 // const MULTISELECTABLE = 'aria-multiselectable';
 
@@ -32,34 +30,11 @@ export default class Accordion {
 			return false;
 		}
 
-		this.panels = this.accordion.querySelectorAll('.js-accordion-panel');
+		this.panels = [...this.accordion.querySelectorAll('.js-accordion-panel')];
 
-		for (let i = 0; i < this.panels.length; i += 1) {
-			this.initPanel(this.panels[i]);
-		}
+		this.panels.map(panel => this.initPanel(panel));
 
 		return true;
-	}
-
-
-	/**
-	 * Handle keyDown
-	 *
-	 *
-	 */
-	static handleKeyDown(event) {
-		switch (event.keyCode) {
-			case UP:
-
-				break;
-
-			case DOWN:
-
-				break;
-
-			default:
-				break;
-		}
 	}
 
 
@@ -166,13 +141,11 @@ export default class Accordion {
 	/**
 	 * Close all
 	 *
-	 * @param 	obj 	elements
+	 * @param 	arr 	elements
 	 * @return	void
 	 */
 	static closeAll(elements) {
-		for (let i = 0; i < elements.length; i += 1) {
-			Accordion.close(elements[i]);
-		}
+		return elements.map(element => Accordion.close(element));
 	}
 
 
