@@ -32,7 +32,7 @@ export default class Accordion {
 
 		this.panels = [...this.accordion.querySelectorAll('.js-accordion-panel')];
 
-		this.panels.map(panel => this.initPanel(panel));
+		this.panels.map((panel) => this.initPanel(panel));
 
 		return true;
 	}
@@ -145,7 +145,7 @@ export default class Accordion {
 	 * @return	void
 	 */
 	static closeAll(elements) {
-		return elements.map(element => Accordion.close(element));
+		return elements.map((element) => Accordion.close(element));
 	}
 
 
