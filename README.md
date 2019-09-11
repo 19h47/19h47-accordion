@@ -2,8 +2,6 @@
 
 > Sur un petit air d'accordéon Léon
 
-![Accordion style](accordion-style.png)
-
 ## Installation
 
 ```
