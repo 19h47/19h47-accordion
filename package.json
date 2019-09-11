@@ -4,11 +4,11 @@
 	"description": "Accordion",
 	"main": "dist/main.js",
 	"scripts": {
-		"prod": "./bin/production",
-		"dev": "./bin/development",
-		"deploy": "./bin/deploy",
-		"start": "./bin/start"
-	},
+        "prod": "./bin/production",
+        "dev": "./bin/development",
+        "deploy": "./bin/deploy",
+        "start": "./bin/start"
+    },
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com/19h47"
 	},
@@ -17,7 +17,7 @@
 		"url": "git://github.com/19h47/19h47-accordion.git"
 	},
 	"keywords": [
-		"Vanilla JS"
+		"ES6"
 	],
 	"author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
 	"license": "ISC",
