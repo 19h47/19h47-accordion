@@ -48,18 +48,18 @@ export default class Accordion {
 		const $button = $element.querySelector('.js-accordion-header');
 		const $body = $element.querySelector('.js-accordion-body');
 		const $inner = $body.querySelector('.js-accordion-inner');
-		const open = $element.getAttribute('data-accordion-open');
+		const open = JSON.parse($element.getAttribute('data-accordion-open'));
 
 		const panel = {
 			$body,
 			$button,
 			$element,
 			$inner,
-			deselect: $element.getAttribute('data-accordion-deselect'),
+			deselect: JSON.parse($element.getAttribute('data-accordion-deselect')),
 			height: $inner.offsetHeight,
 		};
 
-		if ('true' === open) {
+		if (true === open) {
 			this.open(panel);
 		}
 
@@ -76,19 +76,29 @@ export default class Accordion {
 	 */
 	toggle($element, panel) {
 		const current = panel;
-		const open = current.$element.getAttribute('data-accordion-open');
+		const open = JSON.parse(current.$element.getAttribute('data-accordion-open'));
+		const closeEvent = new CustomEvent('Accordion.close', {
+			detail: {
+				current,
+			},
+		});
 
 		// First of all, we check attribute deselect
 		// If data attribute deselect is set to true and panel is open
-		if ('false' === current.deselect && 'true' === open) {
+		if (false === current.deselect && true === open) {
 			return false;
+		}
+
+		// dispatchEvent close event on current panel
+		if (open) {
+			this.accordion.dispatchEvent(closeEvent);
 		}
 
 		// Next, we close all panels
 		Accordion.closeAll(this.panels);
 
 		// If panel is already open
-		if ('true' === open) {
+		if (true === open) {
 			return true;
 		}
 
@@ -105,14 +115,21 @@ export default class Accordion {
 	 */
 	open(panel) {
 		const current = panel;
+		const openEvent = new CustomEvent('Accordion.open', {
+			detail: {
+				current,
+			},
+		});
 
-		current.$element.setAttribute('data-accordion-open', 'true');
-		current.$button.setAttribute(EXPANDED, 'true');
+		current.$element.setAttribute('data-accordion-open', true);
+		current.$button.setAttribute(EXPANDED, true);
 
 		current.$body.style.maxHeight = `${panel.height}px`;
 
 		Accordion.setActive(panel.$element);
 		Accordion.setActive(this.accordion);
+
+		this.accordion.dispatchEvent(openEvent);
 
 		return true;
 	}
@@ -129,7 +146,7 @@ export default class Accordion {
 		const $body = panel.querySelector('.js-accordion-body');
 		const $button = panel.querySelector('.js-accordion-header');
 
-		panel.setAttribute('data-accordion-open', 'false');
+		panel.setAttribute('data-accordion-open', false);
 
 		$button.setAttribute(EXPANDED, false);
 		$body.style.maxHeight = 0;
