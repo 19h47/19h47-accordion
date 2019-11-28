@@ -89,16 +89,13 @@ export default class Accordion {
 			return false;
 		}
 
-		// dispatchEvent close event on current panel
-		if (open) {
-			this.accordion.dispatchEvent(closeEvent);
-		}
-
 		// Next, we close all panels
 		Accordion.closeAll(this.panels);
 
 		// If panel is already open
 		if (true === open) {
+			// dispatchEvent close event on current panel
+			this.accordion.dispatchEvent(closeEvent);
 			return true;
 		}
 
