@@ -1,6 +1,26 @@
 const EXPANDED = 'aria-expanded';
 // const MULTISELECTABLE = 'aria-multiselectable';
 
+
+/**
+ * Inactive element
+ *
+ * @param	obj		element		DOM element
+ * @access	static
+ * @return	void
+ */
+const setInactive = (element) => element.classList.remove('is-active');
+
+
+/**
+ * Active element
+ *
+ * @param	obj		element		DOM element
+ * @access	static
+ * @return 	void
+ */
+const setActive = (element) => element.classList.add('is-active');
+
 /**
  * Accordion
  *
@@ -32,7 +52,7 @@ export default class Accordion {
 
 		this.panels = [...this.accordion.querySelectorAll('.js-accordion-panel')];
 
-		this.panels.map((panel) => this.initPanel(panel));
+		this.panels.map((panel) => this.layout(panel));
 
 		return true;
 	}
@@ -44,7 +64,7 @@ export default class Accordion {
 	 * @param	obj		DOM element
 	 * @return	void
 	 */
-	initPanel($element) {
+	layout($element) {
 		const $button = $element.querySelector('.js-accordion-header');
 		const $body = $element.querySelector('.js-accordion-body');
 		const $inner = $body.querySelector('.js-accordion-inner');
@@ -90,7 +110,7 @@ export default class Accordion {
 		}
 
 		// Next, we close all panels
-		Accordion.closeAll(this.panels);
+		this.closeAll(this.panels);
 
 		// If panel is already open
 		if (true === open) {
@@ -123,8 +143,8 @@ export default class Accordion {
 
 		current.$body.style.maxHeight = `${panel.height}px`;
 
-		Accordion.setActive(panel.$element);
-		Accordion.setActive(this.accordion);
+		setActive(panel.$element);
+		setActive(this.accordion);
 
 		this.accordion.dispatchEvent(openEvent);
 
@@ -139,7 +159,7 @@ export default class Accordion {
 	 * @access 	static
 	 * @return	void
 	 */
-	static close(panel) {
+	close(panel) {
 		const $body = panel.querySelector('.js-accordion-body');
 		const $button = panel.querySelector('.js-accordion-header');
 
@@ -148,7 +168,8 @@ export default class Accordion {
 		$button.setAttribute(EXPANDED, false);
 		$body.style.maxHeight = 0;
 
-		Accordion.setInactive(panel);
+		setInactive(panel);
+		setInactive(this.accordion);
 	}
 
 
@@ -158,31 +179,7 @@ export default class Accordion {
 	 * @param 	arr 	elements
 	 * @return	void
 	 */
-	static closeAll(elements) {
-		return elements.map((element) => Accordion.close(element));
-	}
-
-
-	/**
-	 * Inactive element
-	 *
-	 * @param	obj		element		DOM element
-	 * @access	static
-	 * @return	void
-	 */
-	static setInactive(element) {
-		return element.classList.remove('is-active');
-	}
-
-
-	/**
-	 * Active element
-	 *
-	 * @param	obj		element		DOM element
-	 * @access	static
-	 * @return 	void
-	 */
-	static setActive(element) {
-		return element.classList.add('is-active');
+	closeAll(elements) {
+		return elements.map((element) => this.close(element));
 	}
 }
