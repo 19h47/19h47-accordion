@@ -54,8 +54,6 @@ export default class Accordion {
 
 		this.panels.map((panel) => this.layout(panel));
 
-		window.addEventListener('resize', () => this.closeAll(this.panels));
-
 		return true;
 	}
 
