@@ -18,8 +18,8 @@ function resolve (dir) {
 
 module.exports = {
 	entry: {
-		dist: resolve('src/index.js'),
-		docs: resolve('src/index.js')
+		dist: resolve('src/Accordion.js'),
+		docs: resolve('src/Accordion.js')
 	},
 	output: {
 		library: 'Accordion',
@@ -32,6 +32,12 @@ module.exports = {
 		port: 3000,
 		inline: true,
 		disableHostCheck: true
+	},
+	resolve: {
+		alias: {
+			'@': resolve('src'),
+			Utils: resolve('src/utils')
+		}
 	},
 	module: {
 		rules: [{

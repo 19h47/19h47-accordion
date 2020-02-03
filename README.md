@@ -35,7 +35,7 @@ accordion.init();
     		type="button"
     		aria-expanded="true"
     		aria-controls="lorem"
-    		>
+    	>
     		Toggle
     	</button>
 
@@ -43,7 +43,6 @@ accordion.init();
     	<div
     		id="lorem"
     		class="js-accordion-body"
-    		style="overflow: hidden; max-height: 0;"
     	>
     		<div class="js-accordion-inner">
     			Sit amet, consectetur adipisicing elit. Omnis ex inventore tempore. Quam voluptas quibusdam excepturi accusantium voluptatum facere. Nemo vero iste recusandae, at magnam tenetur maxime ad optio veniam!<br>
