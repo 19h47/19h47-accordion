@@ -15,7 +15,7 @@ export default class Accordion {
 	 */
 	constructor(element) {
 		this.accordion = element;
-		this.accordions = [...this.accordion.querySelectorAll('.js-accordion-panel')];
+		this.accordions = [];
 		this.panels = [];
 	}
 
@@ -30,6 +30,8 @@ export default class Accordion {
 		if (null === this.accordion || undefined === this.accordion) {
 			return false;
 		}
+
+		this.accordions = [...this.accordion.querySelectorAll('.js-accordion-panel')];
 
 		this.accordions.map(element => {
 			const panel = new Panel(element);

@@ -1,4 +1,22 @@
-import { setActive, setInactive } from '@/utils';
+
+/**
+ * Inactive element
+ *
+ * @param	obj		element		DOM element
+ * @access	static
+ * @return	void
+ */
+export const setInactive = element => element.classList.remove('is-active');
+
+
+/**
+ * Active element
+ *
+ * @param	obj		element		DOM element
+ * @access	static
+ * @return 	void
+ */
+export const setActive = element => element.classList.add('is-active');
 
 
 const EXPANDED = 'aria-expanded';
@@ -16,7 +34,7 @@ export default class Panel {
 		this.$inner = this.rootElement.querySelector('.js-accordion-inner');
 
 		this.isDeselect = JSON.parse(this.rootElement.getAttribute('data-accordion-deselect'));
-		this.isOpen = JSON.parse(this.rootElement.getAttribute('data-accordion-open'));
+		this.isOpen = JSON.parse(this.rootElement.getAttribute('data-accordion-open')) || false;
 
 		// Bind
 		this.onResize = this.onResize.bind(this);
@@ -73,7 +91,7 @@ export default class Panel {
 	}
 
 	close() {
-		// console.info('Panel.close');
+		// console.info('Panel.close', this.isOpen);
 
 		this.rootElement.setAttribute('data-accordion-open', false);
 		this.$button.setAttribute(EXPANDED, false);
