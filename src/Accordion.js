@@ -1,6 +1,11 @@
 import Panel from '@/Panel';
 
 
+const optionsDefault = {
+	hash: false,
+};
+
+
 /**
  * Accordion
  *
@@ -13,10 +18,12 @@ export default class Accordion {
 	 * @param	obj		DOM element
 	 * @return 	void
 	 */
-	constructor(element) {
+	constructor(element, options = {}) {
 		this.accordion = element;
 		this.accordions = [];
 		this.panels = [];
+
+		this.options = { ...optionsDefault, ...options };
 	}
 
 
@@ -34,7 +41,7 @@ export default class Accordion {
 		this.accordions = [...this.accordion.querySelectorAll('.js-accordion-panel')];
 
 		this.accordions.map(element => {
-			const panel = new Panel(element);
+			const panel = new Panel(element, { hash: this.options.hash });
 
 			panel.init();
 			this.panels.push(panel);

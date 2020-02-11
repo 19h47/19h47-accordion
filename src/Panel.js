@@ -6,8 +6,9 @@ const EXPANDED = 'aria-expanded';
 
 
 export default class Panel {
-	constructor(element) {
+	constructor(element, options) {
 		this.rootElement = element;
+		this.options = options;
 	}
 
 	init() {
@@ -82,6 +83,10 @@ export default class Panel {
 
 		setInactive(this.rootElement);
 
+		if (this.options.hash) {
+			window.history.pushState('', document.title, window.location.href.split('#')[0]);
+		}
+
 		this.isOpen = false;
 	}
 
@@ -94,6 +99,10 @@ export default class Panel {
 		this.$body.style.setProperty('max-height', `${this.height}px`);
 
 		setActive(this.rootElement);
+
+		if (this.options.hash) {
+			window.location.hash = `#${this.rootElement.id}`;
+		}
 
 		this.isOpen = true;
 	}
