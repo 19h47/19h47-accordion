@@ -84,7 +84,7 @@ export default class Panel {
 		setInactive(this.rootElement);
 
 		if (this.options.hash) {
-			window.history.pushState('', document.title, window.location.href.split('#')[0]);
+			window.history.replaceState('', document.title, window.location.href.split('#')[0]);
 		}
 
 		this.isOpen = false;

@@ -1,6 +1,6 @@
 {
 	"name": "@19h47/accordion",
-	"version": "4.1.3",
+	"version": "4.1.4",
 	"description": "Accordion",
 	"main": "dist/main.js",
 	"scripts": {
@@ -8,9 +8,6 @@
 		"dev": "./bin/development",
 		"deploy": "./bin/deploy",
 		"start": "./bin/start"
-	},
-	"publishConfig": {
-		"registry": "https://npm.pkg.github.com/19h47"
 	},
 	"repository": {
 		"type": "git",
