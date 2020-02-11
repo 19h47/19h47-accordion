@@ -79,4 +79,4 @@ Can the panel be deselected or not.
 
 ## Example
 
-An example is located right [here](https://19h47.github.io/19h47-accordion/), see [sources](/example/index.html).
+An example is located right [here](https://19h47.github.io/19h47-accordion/), see [sources](/docs/index.html).
