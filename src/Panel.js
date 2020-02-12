@@ -5,6 +5,21 @@ const EXPANDED = 'aria-expanded';
 // const MULTISELECTABLE = 'aria-multiselectable';
 
 
+const dispatchEvent = (target, details, name) => {
+	// console.info(`Panel.${name}`);
+
+	// Create a new event.
+	const event = new CustomEvent(`Panel.${name}`, {
+		bubbles: true,
+		cancelable: true,
+		detail: details,
+	});
+
+	// Dispatch the event on target.
+	target.dispatchEvent(event);
+};
+
+
 export default class Panel {
 	constructor(element, options) {
 		this.rootElement = element;
@@ -47,28 +62,17 @@ export default class Panel {
 			return false;
 		}
 
-		// If panel is already open
 		if (true === this.isOpen) {
-			// dispatchEvent close event on panel
-			this.rootElement.dispatchEvent(new CustomEvent('Panel.close', {
-				detail: {
-					current: this.rootElement,
-				},
-			}));
+			dispatchEvent(this.rootElement, { current: this.rootElement }, 'close');
 
 			return this.close();
 		}
 
 		if (false === this.isOpen) {
-			this.rootElement.dispatchEvent(new CustomEvent('Panel.open', {
-				detail: {
-					current: this.rootElement,
-				},
-			}));
+			dispatchEvent(this.rootElement, { current: this.rootElement }, 'open');
 
 			return this.open();
 		}
-
 
 		return true;
 	}
@@ -83,10 +87,6 @@ export default class Panel {
 
 		setInactive(this.rootElement);
 
-		if (this.options.hash) {
-			window.history.replaceState('', document.title, window.location.href.split('#')[0]);
-		}
-
 		this.isOpen = false;
 	}
 
@@ -99,10 +99,6 @@ export default class Panel {
 		this.$body.style.setProperty('max-height', `${this.height}px`);
 
 		setActive(this.rootElement);
-
-		if (this.options.hash) {
-			window.location.hash = `#${this.rootElement.id}`;
-		}
 
 		this.isOpen = true;
 	}

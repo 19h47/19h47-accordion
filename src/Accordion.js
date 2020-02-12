@@ -1,9 +1,7 @@
 import Panel from '@/Panel';
 
 
-const optionsDefault = {
-	hash: false,
-};
+const optionsDefault = {};
 
 
 /**
@@ -24,6 +22,9 @@ export default class Accordion {
 		this.panels = [];
 
 		this.options = { ...optionsDefault, ...options };
+
+		// Bind.
+		this.loadFromUrl = this.loadFromUrl.bind(this);
 	}
 
 
@@ -50,14 +51,38 @@ export default class Accordion {
 				this.closeAll();
 			});
 
-			element.addEventListener('Panel.close', () => {
-
-			});
+			// element.addEventListener('Panel.close', () => {});
 
 			return true;
 		});
 
+		this.initEvents();
+		this.loadFromUrl();
+
 		return true;
+	}
+
+
+	initEvents() {
+		window.addEventListener('hashchange', this.loadFromUrl, false);
+	}
+
+
+	loadFromUrl() {
+		const { location: { hash } } = window;
+
+		if (1 > window.location.hash.length) {
+			return;
+		}
+
+		this.panels.map(panel => {
+			if (panel.$body.id === hash.substring(1)) {
+				this.closeAll();
+				return panel.open();
+			}
+
+			return true;
+		});
 	}
 
 
@@ -69,6 +94,7 @@ export default class Accordion {
 	closeAll() {
 		return this.panels.map(panel => panel.close());
 	}
+
 
 	destroyAll() {
 		this.panels.map(panel => panel.destroy());

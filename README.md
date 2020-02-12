@@ -5,7 +5,7 @@
 ## Installation
 
 ```
-npm install @19h47/accordion
+yarn add @19h47/accordion
 ```
 
 ## Usage
@@ -80,3 +80,7 @@ Can the panel be deselected or not.
 ## Example
 
 An example is located right [here](https://19h47.github.io/19h47-accordion/), see [sources](/docs/index.html).
+
+## Acknowledgments
+
+- [Accessible toggle tabs and accordion](https://gomakethings.com/accessible-toggle-tabs-and-accordions/)

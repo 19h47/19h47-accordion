@@ -200,14 +200,14 @@
 				<h2 class="my-3">Hash</h2>
 			</div>
 			<div class="col-12 col-lg-10 offset-lg-1">
-				<div class="js-accordion" data-accordion-hash="true">
+				<div class="js-accordion">
 
 					<!-- Panel -->
-					<div id="behir" class="card js-accordion-panel" data-accordion-open="true" data-accordion-deselect="true">
+					<div id="behir" class="card js-accordion-panel" data-accordion-open="false" data-accordion-deselect="true">
 						<div class="card-header">
-							<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true" aria-controls="behir-body">
+							<a href="#behir-body" class="btn btn-primary js-accordion-header" type="button" aria-expanded="false" aria-controls="behir-body">
 								Behir
-							</button>
+							</a>
 						</div>
 
 						<div id="behir-body" class="js-accordion-body">
@@ -226,10 +226,9 @@
 					<!-- Panel -->
 					<div id="stirge" class="card js-accordion-panel" data-accordion-open="false" data-accordion-deselect="true">
 						<div class="card-header">
-							<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
-								aria-controls="stirge-body">
+							<a href="#stirge-body" class="btn btn-primary js-accordion-header" aria-expanded="true" aria-controls="stirge-body">
 								Stirge
-							</button>
+							</a>
 						</div>
 
 						<div id="stirge-body" class="js-accordion-body">
@@ -245,10 +244,9 @@
 					<!-- Panel -->
 					<div id="androsphinx" class="card js-accordion-panel" data-accordion-open="false" data-accordion-deselect="true">
 						<div class="card-header">
-							<button class="btn btn-primary js-accordion-header has-decor" type="button" aria-expanded="false"
-								aria-controls="androsphinx-body">
+							<a href="#androsphinx-body" class="btn btn-primary js-accordion-header has-decor" aria-expanded="false" aria-controls="androsphinx-body">
 								Androsphinx
-							</button>
+							</a>
 						</div>
 
 						<div id="androsphinx-body" class="js-accordion-body">
@@ -268,21 +266,20 @@
 		const elements = document.querySelectorAll('.js-accordion');
 
 		for (var i = 0; i < elements.length; i += 1) {
-			const hash = JSON.parse(elements[i].getAttribute('data-accordion-hash')) || false;
-			const accordion = new Accordion.default(elements[i], { hash });
+			const accordion = new Accordion.default(elements[i], {});
 			const $destroy = elements[i].querySelector('.js-accordion-destroy') || false;
 			const $create = elements[i].querySelector('.js-accordion-create') || false;
 
 			accordion.init();
 
 			accordion.panels.map(panel => {
-				panel.rootElement.addEventListener('Close.close', (event) => {
+				panel.rootElement.addEventListener('Panel.close', (event) => {
 					console.log({ type: event.type, detail: event.detail });
 				});
 			});
 
 			accordion.panels.map(panel => {
-				panel.rootElement.addEventListener('Close.open', (event) => {
+				panel.rootElement.addEventListener('Panel.open', (event) => {
 					console.log({ type: event.type, detail: event.detail });
 				});
 			});
