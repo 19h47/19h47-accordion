@@ -14,8 +14,8 @@ yarn add @19h47/accordion
 
 import Accordion from '@19h47/accordion';
 
-const element = document.querySelector('.js-accordion');
-const accordion = new Accordion(element);
+const $element = document.querySelector('.js-accordion');
+const accordion = new Accordion($element);
 accordion.init();
 
 ```
@@ -43,6 +43,7 @@ accordion.init();
     	<div
     		id="lorem"
     		class="js-accordion-body"
+			role="region"
     	>
     		<div class="js-accordion-inner">
     			Sit amet, consectetur adipisicing elit. Omnis ex inventore tempore. Quam voluptas quibusdam excepturi accusantium voluptatum facere. Nemo vero iste recusandae, at magnam tenetur maxime ad optio veniam!<br>
@@ -84,3 +85,4 @@ An example is located right [here](https://19h47.github.io/19h47-accordion/), se
 ## Acknowledgments
 
 - [Accessible toggle tabs and accordion](https://gomakethings.com/accessible-toggle-tabs-and-accordions/)
+- [Accordion](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html)
