@@ -7,6 +7,7 @@ module.exports = {
 	extends: [
 		'standard',
 		'airbnb-base',
+		'prettier'
 	],
 	rules: {
 		'arrow-parens': ['error', 'as-needed'],

@@ -1,8 +1,6 @@
 import Panel from '@/Panel';
 
-
 const optionsDefault = {};
-
 
 /**
  * Accordion
@@ -26,7 +24,6 @@ export default class Accordion {
 		// Bind.
 		this.loadFromUrl = this.loadFromUrl.bind(this);
 	}
-
 
 	/**
 	 * init
@@ -62,14 +59,14 @@ export default class Accordion {
 		return true;
 	}
 
-
 	initEvents() {
 		window.addEventListener('hashchange', this.loadFromUrl, false);
 	}
 
-
 	loadFromUrl() {
-		const { location: { hash } } = window;
+		const {
+			location: { hash },
+		} = window;
 
 		if (1 > window.location.hash.length) {
 			return;
@@ -85,7 +82,6 @@ export default class Accordion {
 		});
 	}
 
-
 	/**
 	 * Close all
 	 *
@@ -94,7 +90,6 @@ export default class Accordion {
 	closeAll() {
 		return this.panels.map(panel => panel.close());
 	}
-
 
 	destroyAll() {
 		this.panels.map(panel => panel.destroy());

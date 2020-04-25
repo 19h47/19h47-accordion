@@ -1,9 +1,7 @@
 import { setInactive, setActive } from '@/utils';
 
-
 const EXPANDED = 'aria-expanded';
 // const MULTISELECTABLE = 'aria-multiselectable';
-
 
 const dispatchEvent = (target, details, name) => {
 	// console.info(`Panel.${name}`);
@@ -18,7 +16,6 @@ const dispatchEvent = (target, details, name) => {
 	// Dispatch the event on target.
 	target.dispatchEvent(event);
 };
-
 
 export default class Panel {
 	constructor(element, options) {
@@ -48,7 +45,6 @@ export default class Panel {
 			this.open();
 		}
 	}
-
 
 	initEvents() {
 		window.addEventListener('resize', this.onResize);
