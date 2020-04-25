@@ -1,6 +1,6 @@
 {
 	"name": "@19h47/accordion",
-	"version": "4.2.6",
+	"version": "4.2.7",
 	"description": "Accordion",
 	"main": "dist/main.js",
 	"scripts": {
@@ -23,6 +23,7 @@
 	},
 	"homepage": "https://github.com/19h47/19h47-accordion#readme",
 	"devDependencies": {
+		"@19h47/prettier-config": "19h47/prettier-config",
 		"@babel/core": "^7.9.0",
 		"@babel/plugin-transform-runtime": "^7.9.0",
 		"@babel/preset-env": "^7.9.5",
@@ -33,6 +34,7 @@
 		"eslint": "^6.8.0",
 		"eslint-config-airbnb-base": "^14.0.0",
 		"eslint-config-standard": "^14.1.1",
+		"eslint-config-prettier": "^6.11.0",
 		"eslint-import-resolver-webpack": "^0.12.1",
 		"eslint-loader": "^4.0.2",
 		"eslint-plugin-import": "^2.20.2",
@@ -47,8 +49,6 @@
 		"webpack-notifier": "^1.8.0"
 	},
 	"dependencies": {
-		"@19h47/prettier-config": "19h47/prettier-config",
-		"core-js": "^3.6.5",
-		"eslint-config-prettier": "^6.11.0"
+		"core-js": "^3.6.5"
 	}
 }
