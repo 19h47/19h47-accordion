@@ -116,6 +116,9 @@ export default class Accordion {
 		this.panels.map(panel => panel.destroy());
 		this.panels = [];
 
+		window.removeEventListener('hashchange', this.loadFromUrl, false);
+		this.rootElement.removeEventListener('keydown', this.onKeydown);
+
 		return true;
 	}
 
