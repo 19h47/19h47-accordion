@@ -90,8 +90,9 @@ export default class Accordion {
 			return;
 		}
 
-		this.panels.map(panel => {
+		this.panels.map((panel, index) => {
 			if (panel.$body.id === hash.substring(1)) {
+				this.current = index;
 				this.closeAll();
 				return panel.open();
 			}
