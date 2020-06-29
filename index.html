@@ -25,10 +25,14 @@
 						<h2 class="mb-3">Deselectable</h2>
 
 						<div class="js-accordion">
-							<button class="btn btn-primary js-accordion-destroy mb-4">
-								Destroy
-							</button>
-							<button class="btn btn-primary js-accordion-create mb-4">Create</button>
+							<div class="border p-3 my-3">
+								<button class="btn btn-primary js-destroy" type="button">
+									Destroy
+								</button>
+								<button class="btn btn-primary js-create" type="button">
+									Create
+								</button>
+							</div>
 
 							<!-- Panel -->
 							<div
@@ -122,10 +126,14 @@
 						<h2 class="mb-3">Undeselectable</h2>
 
 						<div class="js-accordion">
-							<button class="btn btn-primary js-accordion-destroy mb-4">
-								Destroy
-							</button>
-							<button class="btn btn-primary js-accordion-create mb-4">Create</button>
+							<div class="border p-3 my-3">
+								<button class="btn btn-primary js-destroy" type="button">
+									Destroy
+								</button>
+								<button class="btn btn-primary js-create" type="button">
+									Create
+								</button>
+							</div>
 
 							<!-- Panel -->
 							<div
@@ -448,8 +456,8 @@
 				const multiselectable =
 					JSON.parse(elements[i].getAttribute('data-accordion-multiselectable')) || false;
 				const accordion = new Accordion.default(elements[i], { multiselectable });
-				const $destroy = elements[i].querySelector('.js-accordion-destroy') || false;
-				const $create = elements[i].querySelector('.js-accordion-create') || false;
+				const $destroy = elements[i].querySelector('.js-destroy') || false;
+				const $create = elements[i].querySelector('.js-create') || false;
 
 				accordion.init();
 
