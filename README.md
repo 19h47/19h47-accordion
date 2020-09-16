@@ -46,15 +46,21 @@ accordion.init();
 
 ## Keyboard Support
 
-| Key            | Function                                                                                                                                                                                     |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Space or Enter | When focus is on the accordion header of a collapsed section, expands the section.                                                                                                           |
-| Tab            | <ul><li>Moves focus to the next focusable element.</li><li>All focusable elements in the accordion are included in the page Tab sequence.</li></ul>                                          |
-| Shift + Tab    | <ul><li>Moves focus to the previous focusable element.</li><li>All focusable elements in the accordion are included in the page Tab sequence.</li></ul>                                      |
-| Down Arrow     | <ul><li>When focus is on an accordion header, moves focus to the next accordion header.</li><li>When focus is on last accordion header, moves focus to first accordion header.</li></ul>     |
-| Up Arrow       | <ul><li>When focus is on an accordion header, moves focus to the previous accordion header.</li><li>When focus is on first accordion header, moves focus to last accordion header.</li></ul> |
-| Home           | When focus is on an accordion header, moves focus to the first accordion header.                                                                                                             |
-| End            | When focus is on an accordion header, moves focus to the last accordion header.                                                                                                              |
+| Key                | Function                                                                                                                                                                                     |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| _Space_ or _Enter_ | When focus is on the accordion header of a collapsed section, expands the section.                                                                                                           |
+| _Tab_              | <ul><li>Moves focus to the next focusable element.</li><li>All focusable elements in the accordion are included in the page `Tab` sequence.</li></ul>                                        |
+| _Shift + Tab_      | <ul><li>Moves focus to the previous focusable element.</li><li>All focusable elements in the accordion are included in the page `Tab` sequence.</li></ul>                                    |
+| _Down Arrow_       | <ul><li>When focus is on an accordion header, moves focus to the next accordion header.</li><li>When focus is on last accordion header, moves focus to first accordion header.</li></ul>     |
+| _Up Arrow_         | <ul><li>When focus is on an accordion header, moves focus to the previous accordion header.</li><li>When focus is on first accordion header, moves focus to last accordion header.</li></ul> |
+| _Home_             | When focus is on an accordion header, moves focus to the first accordion header.                                                                                                             |
+| _End_              | When focus is on an accordion header, moves focus to the last accordion header.                                                                                                              |
+
+## Role, Property, State, and Tabindex Attributes
+
+| Role   | Attribute | Element | Usage                                                                           |
+| ------ | --------- | ------- | ------------------------------------------------------------------------------- |
+| region |           | div     | Creates a landmark region that contains the currently expanded accordion panel. |
 
 ## Option
 
