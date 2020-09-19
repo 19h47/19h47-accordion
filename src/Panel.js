@@ -17,7 +17,16 @@ const dispatchEvent = (target, details, name) => {
 	target.dispatchEvent(event);
 };
 
+/**
+ * Panel
+ */
 export default class Panel {
+	/**
+	 * Constructor
+	 *
+	 * @param {*} element
+	 * @param {*} options
+	 */
 	constructor(element, options) {
 		this.rootElement = element;
 		this.options = options;

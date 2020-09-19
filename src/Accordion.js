@@ -16,14 +16,14 @@ const optionsDefault = {
 /**
  * Accordion
  *
- * @author	Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
+ * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
  */
 export default class Accordion {
 	/**
 	 * Constructor
 	 *
-	 * @param	obj		DOM element
-	 * @return 	void
+	 * @param {object} element
+	 * @param {object} options
 	 */
 	constructor(element, options = {}) {
 		this.rootElement = element;
@@ -34,14 +34,12 @@ export default class Accordion {
 		this.options = { ...optionsDefault, ...options };
 
 		// Bind.
-		this.loadFromUrl = this.loadFromUrl.bind(this);
+		this.loadFromURL = this.loadFromURL.bind(this);
 		this.onKeydown = this.onKeydown.bind(this);
 	}
 
 	/**
-	 * init
-	 *
-	 * @return 	bool
+	 * Init
 	 */
 	init() {
 		// No need to go further if no element have been given
@@ -71,17 +69,23 @@ export default class Accordion {
 		});
 
 		this.initEvents();
-		this.loadFromUrl();
+		this.loadFromURL();
 
 		return true;
 	}
 
+	/**
+	 * InitEvents
+	 */
 	initEvents() {
-		window.addEventListener('hashchange', this.loadFromUrl, false);
+		window.addEventListener('hashchange', this.loadFromURL, false);
 		this.rootElement.addEventListener('keydown', this.onKeydown);
 	}
 
-	loadFromUrl() {
+	/**
+	 * loadFromURL
+	 */
+	loadFromURL() {
 		const {
 			location: { hash },
 		} = window;
@@ -102,9 +106,7 @@ export default class Accordion {
 	}
 
 	/**
-	 * Close all
-	 *
-	 * @return	void
+	 * closeAll
 	 */
 	closeAll() {
 		// console.info('Accordion.closeAll');
@@ -112,19 +114,23 @@ export default class Accordion {
 		return this.panels.map(panel => panel.close());
 	}
 
+	/**
+	 * destroyAll
+	 */
 	destroyAll() {
 		this.panels.map(panel => panel.destroy());
 		this.panels = [];
 
-		window.removeEventListener('hashchange', this.loadFromUrl, false);
+		window.removeEventListener('hashchange', this.loadFromURL, false);
 		this.rootElement.removeEventListener('keydown', this.onKeydown);
 
 		return true;
 	}
 
 	/**
-	 * Keydown event listener
+	 * Event
 	 *
+	 * @param {*} event
 	 */
 	onKeydown(event) {
 		const key = event.keyCode || event.which;
