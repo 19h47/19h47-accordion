@@ -1,13 +1,13 @@
 {
 	"name": "@19h47/accordion",
-	"version": "4.3.10",
+	"version": "4.3.11",
 	"description": "Accordion",
 	"main": "dist/main.js",
 	"scripts": {
-		"prod": "./bin/production",
-		"dev": "./bin/development",
-		"deploy": "./bin/deploy",
-		"start": "./bin/start"
+		"prod": "webpack --mode=production --config webpack/webpack.config.js",
+		"dev": "webpack --mode=development --config webpack/webpack.config.js",
+		"deploy": "npm run prod && npm publish",
+		"start": "webpack-dev-server --mode=development --hot --config webpack/webpack.config.js"
 	},
 	"repository": {
 		"type": "git",
@@ -24,33 +24,33 @@
 	"homepage": "https://github.com/19h47/19h47-accordion#readme",
 	"devDependencies": {
 		"@19h47/prettier-config": "^1.0.0",
-		"@babel/core": "^7.11.6",
-		"@babel/plugin-transform-runtime": "^7.11.5",
-		"@babel/preset-env": "^7.11.5",
-		"@babel/runtime": "^7.11.2",
+		"@babel/core": "^7.12.0",
+		"@babel/plugin-transform-runtime": "^7.12.0",
+		"@babel/preset-env": "^7.12.0",
+		"@babel/runtime": "^7.12.0",
 		"babel-eslint": "^10.0.3",
 		"babel-loader": "^8.1.0",
 		"clean-webpack-plugin": "^3.0.0",
 		"core-js": "^3.6.5",
-		"eslint": "^7.10.0",
+		"eslint": "^7.11.0",
 		"eslint-config-airbnb-base": "^14.2.0",
 		"eslint-config-prettier": "^6.12.0",
 		"eslint-config-standard": "^14.1.1",
 		"eslint-import-resolver-webpack": "^0.13.0",
-		"eslint-loader": "^4.0.2",
 		"eslint-plugin-import": "^2.22.1",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^4.2.1",
 		"eslint-plugin-standard": "^4.0.1",
 		"html-webpack-plugin": "^4.5.0",
 		"prettier": "^2.1.2",
-		"webpack": "^4.44.2",
-		"webpack-cli": "^3.3.12",
-		"webpack-dev-server": "^3.11.0",
-		"webpack-merge": "^5.1.4",
+		"webpack": "4.41.3",
+		"webpack-cli": "3.3.10",
+		"webpack-dev-server": "3.9.0",
+		"webpack-merge": "^5.2.0",
 		"webpack-notifier": "^1.8.0"
 	},
 	"dependencies": {
-		"@19h47/keycode": "^3.0.3"
+		"@19h47/keycode": "^3.0.3",
+		"eslint-loader": "^4.0.2"
 	}
 }

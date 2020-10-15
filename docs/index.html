@@ -9,13 +9,13 @@
 
 				accordion.init();
 
-				accordion.panels.map(panel => {
+				accordion.panels.forEach(panel => {
 					panel.rootElement.addEventListener('Panel.close', event => {
 						console.log({ type: event.type, detail: event.detail });
 					});
 				});
 
-				accordion.panels.map(panel => {
+				accordion.panels.forEach(panel => {
 					panel.rootElement.addEventListener('Panel.open', event => {
 						console.log({ type: event.type, detail: event.detail });
 					});
