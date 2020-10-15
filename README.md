@@ -82,6 +82,21 @@ Can the panel be deselected or not.
 <button data-accordion-deselect="true">Button</button>
 ```
 
+## Build Setup
+
+```bash
+
+# install dependencies
+$ yarn install
+
+# serve with hot reload at localhost:3000
+$ yarn start
+
+# build for production
+$ yarn prod
+
+```
+
 ## Example
 
 An example is located right [here](https://19h47.github.io/19h47-accordion/), see [sources](/docs/index.html).

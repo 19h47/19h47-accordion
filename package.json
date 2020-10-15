@@ -1,12 +1,12 @@
 {
 	"name": "@19h47/accordion",
-	"version": "4.3.11",
+	"version": "4.3.12",
 	"description": "Accordion",
 	"main": "dist/main.js",
 	"scripts": {
 		"prod": "webpack --mode=production --config webpack/webpack.config.js",
 		"dev": "webpack --mode=development --config webpack/webpack.config.js",
-		"deploy": "npm run prod && npm publish",
+		"deploy": "npm login && npm run prod && npm publish",
 		"start": "webpack-dev-server --mode=development --hot --config webpack/webpack.config.js"
 	},
 	"repository": {
