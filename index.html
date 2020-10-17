@@ -9,8 +9,18 @@
 			integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 			crossorigin="anonymous"
 		/>
+		<style>
+			.Alert {
+				margin: 1em;
+				position: fixed;
+				top: 0;
+				right: 0;
+				z-index: 10;
+			}
+		</style>
 	</head>
 	<body>
+		<div class="Alert js-alert"></div>
 		<div class="container-fluid">
 			<div class="row my-5">
 				<div class="col-12 col-lg-10 offset-lg-1">
@@ -451,6 +461,20 @@
 		<script src="main.js"></script>
 		<script>
 			const elements = document.querySelectorAll('.js-accordion');
+			const alert = content => {
+				const div = document.createElement('div');
+
+				div.className = 'toast fade show';
+				div.style = 'toast fade show';
+				div.innerHTML = `<div class="toast-body"><strong>${content}</strong></div>`;
+
+				div.setAttribute('role', 'alert');
+				div.setAttribute('aria-live', 'assertive');
+				div.setAttribute('aria-atomic', 'true');
+
+				return div;
+			};
+			const $alert = document.querySelector('.js-alert');
 
 			for (var i = 0; i < elements.length; i += 1) {
 				const multiselectable =
@@ -462,14 +486,26 @@
 				accordion.init();
 
 				accordion.panels.forEach(panel => {
-					panel.rootElement.addEventListener('Panel.close', event => {
-						console.log({ type: event.type, detail: event.detail });
+					panel.rootElement.addEventListener('Panel.close', ({ type, detail }) => {
+						console.log({ type, detail });
+
+						const $el = alert(type);
+
+						$alert.appendChild($el);
+
+						setTimeout(() => $el.parentNode.removeChild($el), 2000);
 					});
 				});
 
 				accordion.panels.forEach(panel => {
-					panel.rootElement.addEventListener('Panel.open', event => {
-						console.log({ type: event.type, detail: event.detail });
+					panel.rootElement.addEventListener('Panel.open', ({ type, detail }) => {
+						console.log({ type, detail });
+
+						const $el = alert(type);
+
+						$alert.appendChild($el);
+
+						setTimeout(() => $el.parentNode.removeChild($el), 2000);
 					});
 				});
 

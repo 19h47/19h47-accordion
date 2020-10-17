@@ -82,6 +82,42 @@ Can the panel be deselected or not.
 <button data-accordion-deselect="true">Button</button>
 ```
 
+## Event
+
+### Open
+
+```javascript
+import Accordion from '@19h47/accordion';
+
+const $element = document.querySelector('.js-accordion');
+const accordion = new Accordion($element);
+
+accordion.init();
+
+accordion.panels.forEach(panel => {
+	panel.rootElement.addEventListener('Panel.open', ({ type, detail }) => {
+		console.log({ type, detail });
+	});
+});
+```
+
+### Close
+
+```javascript
+import Accordion from '@19h47/accordion';
+
+const $element = document.querySelector('.js-accordion');
+const accordion = new Accordion($element);
+
+accordion.init();
+
+accordion.panels.forEach(panel => {
+	panel.rootElement.addEventListener('Panel.close', ({ type, detail }) => {
+		console.log({ type, detail });
+	});
+});
+```
+
 ## Build Setup
 
 ```bash
