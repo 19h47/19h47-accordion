@@ -10,7 +10,7 @@
 
 				div.className = 'toast fade show';
 				div.style = 'toast fade show';
-				div.innerHTML = `<div class="toast-body"><strong>${content}</strong></div>`;
+				div.innerHTML = `<div class="toast-body">${content}</div>`;
 
 				div.setAttribute('role', 'alert');
 				div.setAttribute('aria-live', 'assertive');
@@ -19,6 +19,20 @@
 				return div;
 			};
 			const $alert = document.querySelector('.js-alert');
+
+			const onChange = content => {
+				const $el = alert(content);
+
+				$alert.appendChild($el);
+
+				$el.addEventListener(
+					'click',
+					() => $el.style.setProperty('display', 'none'),
+					false,
+				);
+
+				setTimeout(() => $el.parentNode.removeChild($el), 2000);
+			};
 
 			for (var i = 0; i < elements.length; i += 1) {
 				const multiselectable =
@@ -33,11 +47,10 @@
 					panel.rootElement.addEventListener('Panel.close', ({ type, detail }) => {
 						console.log({ type, detail });
 
-						const $el = alert(type);
+						const $button = detail.current.querySelector('button,a');
+						const controls = $button.getAttribute('aria-controls');
 
-						$alert.appendChild($el);
-
-						setTimeout(() => $el.parentNode.removeChild($el), 2000);
+						onChange(`<strong>${type}</strong> ${controls}`);
 					});
 				});
 
@@ -45,11 +58,10 @@
 					panel.rootElement.addEventListener('Panel.open', ({ type, detail }) => {
 						console.log({ type, detail });
 
-						const $el = alert(type);
+						const $button = detail.current.querySelector('button,a');
+						const controls = $button.getAttribute('aria-controls');
 
-						$alert.appendChild($el);
-
-						setTimeout(() => $el.parentNode.removeChild($el), 2000);
+						onChange(`<strong>${type}</strong> ${controls}`);
 					});
 				});
 
