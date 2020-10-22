@@ -1,31 +1,19 @@
-import { setInactive, setActive } from '@/utils';
+import { setInactive, setActive, dispatchEvent } from '@/utils';
 
 const EXPANDED = 'aria-expanded';
 // const MULTISELECTABLE = 'aria-multiselectable';
 
-const dispatchEvent = (target, details, name) => {
-	// console.info(`Panel.${name}`);
-
-	// Create a new event.
-	const event = new CustomEvent(`Panel.${name}`, {
-		bubbles: true,
-		cancelable: true,
-		detail: details,
-	});
-
-	// Dispatch the event on target.
-	target.dispatchEvent(event);
-};
-
 /**
  * Panel
+ *
+ * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
  */
 export default class Panel {
 	/**
 	 * Constructor
 	 *
-	 * @param {*} element
-	 * @param {*} options
+	 * @param {object} element
+	 * @param {object} options
 	 */
 	constructor(element, options) {
 		this.rootElement = element;
@@ -41,13 +29,13 @@ export default class Panel {
 		this.isOpen = JSON.parse(this.rootElement.getAttribute('data-accordion-open')) || false;
 
 		// Bind
-		this.onResize = this.onResize.bind(this);
-		this.toggle = this.toggle.bind(this);
+		this.handleResize = this.handleResize.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 
 		this.$body.style.setProperty('max-height', 0);
 		this.$body.style.setProperty('overflow', 'hidden');
 
-		this.onResize();
+		this.handleResize();
 		this.initEvents();
 
 		if (true === this.isOpen) {
@@ -56,12 +44,12 @@ export default class Panel {
 	}
 
 	initEvents() {
-		window.addEventListener('resize', this.onResize);
-		this.$button.addEventListener('click', this.toggle);
+		this.$button.addEventListener('click', this.handleClick);
+		window.addEventListener('resize', this.handleResize);
 	}
 
-	toggle() {
-		// console.info('Panel.toggle', this.isOpen);
+	handleClick() {
+		// console.info('Panel.handleClick', this.isOpen);
 
 		if (false === this.isDeselect && true === this.isOpen) {
 			return false;
@@ -80,6 +68,16 @@ export default class Panel {
 		}
 
 		return true;
+	}
+
+	handleResize() {
+		// console.info('Panel.handleResize');
+
+		this.height = this.$inner.offsetHeight;
+
+		if (this.isOpen) {
+			this.$body.style.setProperty('max-height', `${this.height}px`);
+		}
 	}
 
 	close() {
@@ -111,21 +109,11 @@ export default class Panel {
 	destroy() {
 		// console.info('Panel.destroy');
 
-		this.$button.removeEventListener('click', this.toggle);
-		window.removeEventListener('resize', this.onResize);
+		this.$button.removeEventListener('click', this.handleClick);
+		window.removeEventListener('resize', this.handleResize);
 		this.$body.style.removeProperty('max-height');
 		this.$body.style.removeProperty('overflow');
 
 		setInactive(this.rootElement);
-	}
-
-	onResize() {
-		// console.info('Panel.onResize');
-
-		this.height = this.$inner.offsetHeight;
-
-		if (this.isOpen) {
-			this.$body.style.setProperty('max-height', `${this.height}px`);
-		}
 	}
 }

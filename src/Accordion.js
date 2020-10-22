@@ -1,13 +1,5 @@
 import Panel from '@/Panel';
-import {
-	ARROW_UP,
-	ARROW_RIGHT,
-	ARROW_DOWN,
-	ARROW_LEFT,
-	// SPACE,
-	HOME,
-	END,
-} from '@19h47/keycode';
+import { ARROW_UP, ARROW_RIGHT, ARROW_DOWN, ARROW_LEFT, HOME, END } from '@19h47/keycode';
 
 const optionsDefault = {
 	multiselectable: false,
@@ -34,8 +26,8 @@ export default class Accordion {
 		this.options = { ...optionsDefault, ...options };
 
 		// Bind.
-		this.loadFromURL = this.loadFromURL.bind(this);
-		this.onKeydown = this.onKeydown.bind(this);
+		this.handleHashchange = this.handleHashchange.bind(this);
+		this.handleKeydown = this.handleKeydown.bind(this);
 	}
 
 	/**
@@ -49,7 +41,7 @@ export default class Accordion {
 
 		this.accordions = [...this.rootElement.querySelectorAll('.js-accordion-panel')];
 
-		this.accordions.map((element, index) => {
+		this.accordions.forEach((element, index) => {
 			const panel = new Panel(element, { hash: this.options.hash });
 
 			panel.init();
@@ -69,7 +61,7 @@ export default class Accordion {
 		});
 
 		this.initEvents();
-		this.loadFromURL();
+		this.handleHashchange();
 
 		return true;
 	}
@@ -78,14 +70,14 @@ export default class Accordion {
 	 * InitEvents
 	 */
 	initEvents() {
-		window.addEventListener('hashchange', this.loadFromURL, false);
-		this.rootElement.addEventListener('keydown', this.onKeydown);
+		window.addEventListener('hashchange', this.handleHashchange, false);
+		this.rootElement.addEventListener('keydown', this.handleKeydown);
 	}
 
 	/**
-	 * loadFromURL
+	 * handleHashchange
 	 */
-	loadFromURL() {
+	handleHashchange() {
 		const {
 			location: { hash },
 		} = window;
@@ -94,7 +86,7 @@ export default class Accordion {
 			return;
 		}
 
-		this.panels.map((panel, index) => {
+		this.panels.forEach((panel, index) => {
 			if (panel.$body.id === hash.substring(1)) {
 				this.current = index;
 				this.closeAll();
@@ -106,33 +98,11 @@ export default class Accordion {
 	}
 
 	/**
-	 * closeAll
-	 */
-	closeAll() {
-		// console.info('Accordion.closeAll');
-
-		return this.panels.map(panel => panel.close());
-	}
-
-	/**
-	 * destroyAll
-	 */
-	destroyAll() {
-		this.panels.map(panel => panel.destroy());
-		this.panels = [];
-
-		window.removeEventListener('hashchange', this.loadFromURL, false);
-		this.rootElement.removeEventListener('keydown', this.onKeydown);
-
-		return true;
-	}
-
-	/**
-	 * Event
+	 * Handle keydown
 	 *
-	 * @param {*} event
+	 * @param {object} event
 	 */
-	onKeydown(event) {
+	handleKeydown(event) {
 		const key = event.keyCode || event.which;
 
 		const next = () => {
@@ -174,5 +144,23 @@ export default class Accordion {
 		};
 
 		return (codes[key] || codes.default)();
+	}
+
+	/**
+	 * closeAll
+	 */
+	closeAll = () => this.panels.forEach(panel => panel.close());
+
+	/**
+	 * destroyAll
+	 */
+	destroyAll() {
+		this.panels.forEach(panel => panel.destroy());
+		this.panels = [];
+
+		window.removeEventListener('hashchange', this.handleHashchange, false);
+		this.rootElement.removeEventListener('keydown', this.handleKeydown);
+
+		return true;
 	}
 }

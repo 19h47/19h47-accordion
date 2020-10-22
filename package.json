@@ -51,6 +51,8 @@
 	},
 	"dependencies": {
 		"@19h47/keycode": "^3.0.3",
+		"@babel/eslint-plugin": "^7.12.1",
+		"@babel/plugin-proposal-class-properties": "^7.12.1",
 		"eslint-loader": "^4.0.2"
 	}
 }
