@@ -9,6 +9,12 @@
 			integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 			crossorigin="anonymous"
 		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css"
+			integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ=="
+			crossorigin="anonymous"
+		/>
 		<style>
 			.Alert {
 				margin: 1em;
@@ -21,16 +27,28 @@
 	</head>
 	<body>
 		<div class="Alert js-alert"></div>
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row my-5">
-				<div class="col-12 col-lg-10 offset-lg-1">
+				<div class="col-12">
 					<h1 class="m-0">
 						<a href="https://github.com/19h47/19h47-accordion">Accordion</a>
 					</h1>
 				</div>
 			</div>
 			<div class="row my-5">
-				<div class="col-12 col-lg-10 offset-lg-1">
+				<div class="col-12">
+					<pre
+						class="p-3 language-javascript"
+					><code>import Accordion from '@19h47/accordion';
+
+const $element = document.querySelector('.js-accordion');
+const accordion = new Accordion($element);
+
+accordion.init();</code></pre>
+				</div>
+			</div>
+			<div class="row my-5">
+				<div class="col-12">
 					<div class="border p-3">
 						<h2 class="mb-3">Deselectable</h2>
 
@@ -128,7 +146,7 @@
 				</div>
 			</div>
 			<div class="row my-5">
-				<div class="col-12 col-lg-10 offset-lg-1">
+				<div class="col-12">
 					<div class="border p-3">
 						<h2 class="mb-3">Undeselectable</h2>
 
@@ -226,7 +244,7 @@
 				</div>
 			</div>
 			<div class="row my-5">
-				<div class="col-12 col-lg-10 offset-lg-1">
+				<div class="col-12">
 					<div class="border p-3">
 						<h2 class="mb-3">Hash</h2>
 
@@ -326,7 +344,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-12 col-lg-10 offset-lg-1 my-5">
+				<div class="col-12 my-5">
 					<div class="border p-3">
 						<h2 class="mb-3">Multiselectable</h2>
 
@@ -446,7 +464,8 @@
 				</div>
 			</div>
 		</div>
-
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
 		<script src="main.js"></script>
 		<script>
 			const elements = document.querySelectorAll('.js-accordion');
