@@ -39,7 +39,9 @@ export default class Accordion {
 			return false;
 		}
 
-		this.accordions = [...this.rootElement.querySelectorAll('.js-accordion-panel')];
+		this.accordions = [...this.rootElement.children].filter(panel =>
+			panel.classList.contains('js-accordion-panel'),
+		);
 
 		this.accordions.forEach((element, index) => {
 			const panel = new Panel(element, { hash: this.options.hash });
