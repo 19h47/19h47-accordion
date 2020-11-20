@@ -25,7 +25,7 @@ export const setActive = element => element.classList.add('is-active');
  */
 export const dispatchEvent = (target, details, name) => {
 	const event = new CustomEvent(`Panel.${name}`, {
-		bubbles: true,
+		bubbles: false,
 		cancelable: true,
 		detail: details,
 	});

@@ -462,6 +462,115 @@ accordion.init();</code></pre>
 						</div>
 					</div>
 				</div>
+
+				<div class="col-12 my-5">
+					<div class="border p-3">
+						<h2 class="mb-3">Nested</h2>
+
+						<div class="js-accordion">
+							<div
+								id="lorem"
+								class="card js-accordion-panel my-3"
+								data-accordion-open="false"
+								data-accordion-deselect="true"
+							>
+								<div class="card-header">
+									<button
+										class="btn btn-primary js-accordion-header"
+										type="button"
+										aria-expanded="false"
+										aria-controls="lorem-body"
+									>
+										Lorem ipsum
+									</button>
+								</div>
+
+								<div id="lorem-body" class="js-accordion-body">
+									<div class="card-body js-accordion-inner">
+										<p>Dolor sit, amet consectetur adipisicing elit.</p>
+
+										<div class="js-accordion">
+											<div
+												id="porro"
+												class="card js-accordion-panel my-3"
+												data-accordion-open="false"
+												data-accordion-deselect="true"
+											>
+												<div class="card-header">
+													<button
+														class="btn btn-primary js-accordion-header"
+														type="button"
+														aria-expanded="false"
+														aria-controls="porro-body"
+													>
+														Porro
+													</button>
+												</div>
+
+												<div id="porro-body" class="js-accordion-body">
+													<div class="card-body js-accordion-inner">
+														Porro magnam dolorem maxime odio nulla
+														autem, sed veritatis sit possimus?
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div
+								id="elit"
+								class="card js-accordion-panel my-3"
+								data-accordion-open="false"
+								data-accordion-deselect="true"
+							>
+								<div class="card-header">
+									<button
+										type="button"
+										class="btn btn-primary js-accordion-header"
+										aria-expanded="true"
+										aria-controls="elit-body"
+									>
+										Elit
+									</button>
+								</div>
+
+								<div id="elit-body" class="js-accordion-body">
+									<div class="card-body js-accordion-inner">
+										Nihil iure suscipit reprehenderit nisi eaque at veniam
+										dolorem officiis omnis quam perferendis.
+									</div>
+								</div>
+							</div>
+
+							<div
+								id="quam"
+								class="card js-accordion-panel mt-3"
+								data-accordion-open="false"
+								data-accordion-deselect="true"
+							>
+								<div class="card-header">
+									<button
+										type="button"
+										class="btn btn-primary js-accordion-header has-decor"
+										aria-expanded="false"
+										aria-controls="quam-body"
+									>
+										Quam
+									</button>
+								</div>
+
+								<div id="quam-body" class="js-accordion-body">
+									<div class="card-body js-accordion-inner">
+										Ipsam quisquam distinctio, esse fugiat facere. Consectetur,
+										eius laboriosam.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
