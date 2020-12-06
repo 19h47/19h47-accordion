@@ -6,7 +6,7 @@
 	"scripts": {
 		"prod": "webpack --mode=production --config webpack/webpack.config.js",
 		"dev": "webpack --mode=development --config webpack/webpack.config.js",
-		"deploy": "npm login && npm run prod && npm publish",
+		"deploy": "yarn login && yarn prod && npm publish",
 		"start": "webpack-dev-server --mode=development --hot --config webpack/webpack.config.js"
 	},
 	"repository": {
