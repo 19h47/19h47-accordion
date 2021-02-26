@@ -37,7 +37,7 @@
 		"core-js": "^3.8.1",
 		"eslint": "^7.15.0",
 		"eslint-config-airbnb-base": "^14.2.1",
-		"eslint-config-prettier": "^7.0.0",
+		"eslint-config-prettier": "^8.1.0",
 		"eslint-config-standard": "^16.0.2",
 		"eslint-loader": "^4.0.2",
 		"eslint-import-resolver-webpack": "^0.13.0",
