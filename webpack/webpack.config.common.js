@@ -18,6 +18,7 @@ module.exports = {
 		docs: resolve('src/Accordion.js'),
 	},
 	output: {
+		path: resolve('/dist'),
 		library: 'Accordion',
 		libraryTarget: 'umd',
 		filename: '../[name]/main.js',
