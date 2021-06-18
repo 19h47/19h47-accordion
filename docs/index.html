@@ -24,22 +24,47 @@
 					<h1 class="m-0">
 						<a href="https://github.com/19h47/19h47-accordion">Accordion</a>
 					</h1>
+					<p>Build vertically collapsing accordions</p>
 				</div>
 			</div>
 			<div class="row my-5">
 				<div class="col-12">
-					<pre class="p-3 language-javascript"><code>import Accordion from '@19h47/accordion';
+					<pre class="p-3 mt-0 mb-3 language-javascript"><code>import Accordion from '@19h47/accordion';
 
 const $element = document.querySelector('.js-accordion');
 const accordion = new Accordion($element);
 
 accordion.init();</code></pre>
+
+					<pre class="p3 mb-0 mt-3 language-html"><code>&lt;div class=&quot;js-accordion&quot;&gt;
+	&lt;div class=&quot;js-accordion-panel&quot; data-accordion-open=&quot;true&quot; data-accordion-deselect=&quot;true&quot;&gt;
+		&lt;button
+			class=&quot;js-accordion-header&quot;
+			type=&quot;button&quot;
+			aria-expanded=&quot;true&quot;
+			aria-controls=&quot;lorem&quot;
+		&gt;
+			Toggle
+		&lt;/button&gt;
+
+		&lt;div id=&quot;lorem&quot; class=&quot;js-accordion-body&quot; role=&quot;region&quot;&gt;
+			&lt;div class=&quot;js-accordion-inner&quot;&gt;
+				Sit amet, consectetur adipisicing elit. Omnis ex inventore tempore. Quam voluptas
+				quibusdam excepturi accusantium voluptatum facere. Nemo vero iste recusandae, at
+				magnam tenetur maxime ad optio veniam!&lt;br /&gt;
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque, molestias
+				excepturi molestiae nesciunt alias. Nobis aut praesentium, commodi minus laborum
+				ullam at quod soluta qui tempore sit eveniet dicta esse.
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
 				</div>
 			</div>
 			<div class="row my-5">
 				<div class="col-12">
 					<div class="border p-3">
-						<h2 class="mb-3">Deselectable</h2>
+						<h2 class="mb-3"><a href="#deselectable">Deselectable</a></h2>
 
 						<div class="js-accordion">
 							<div class="border p-3 my-3">
@@ -110,7 +135,7 @@ accordion.init();</code></pre>
 			<div class="row my-5">
 				<div class="col-12">
 					<div class="border p-3">
-						<h2 class="mb-3">Undeselectable</h2>
+						<h2 class="mb-3"><a href="#undeselectable">Undeselectable</a></h2>
 
 						<div class="js-accordion">
 							<div class="border p-3 my-3">
@@ -181,7 +206,7 @@ accordion.init();</code></pre>
 			<div class="row my-5">
 				<div class="col-12">
 					<div class="border p-3">
-						<h2 class="mb-3">Hash</h2>
+						<h2 class="mb-3"><a href="#hash">Hash</a></h2>
 
 						<div class="js-accordion">
 							<div id="behir" class="card js-accordion-panel my-3" data-accordion-open="false" data-accordion-deselect="true">
@@ -250,7 +275,7 @@ accordion.init();</code></pre>
 				</div>
 				<div class="col-12 my-5">
 					<div class="border p-3">
-						<h2 class="mb-3">Multiselectable</h2>
+						<h2 class="mb-3"><a href="#multiselectable">Multiselectable</a></h2>
 
 						<div class="js-accordion" data-accordion-multiselectable="true">
 							<!-- Panel -->
@@ -339,7 +364,7 @@ accordion.init();</code></pre>
 
 				<div class="col-12 my-5">
 					<div class="border p-3">
-						<h2 class="mb-3">Nested</h2>
+						<h2 class="mb-3"><a href="#nested">Nested</a></h2>
 
 						<div class="js-accordion">
 							<div id="lorem" class="card js-accordion-panel my-3" data-accordion-open="false" data-accordion-deselect="true">
