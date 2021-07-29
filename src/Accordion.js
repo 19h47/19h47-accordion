@@ -106,21 +106,26 @@ export default class Accordion {
 	 */
 	handleKeydown(event) {
 		const key = event.keyCode || event.which;
+		const { target } = event;
 
 		const next = () => {
-			this.current = this.current + 1 > this.panels.length - 1 ? 0 : this.current + 1;
+			if (target.classList.contains('js-accordion-header')) {
+				this.current = this.current + 1 > this.panels.length - 1 ? 0 : this.current + 1;
 
-			this.panels[this.current].$button.focus();
+				this.panels[this.current].$button.focus();
 
-			event.preventDefault();
+				event.preventDefault();
+			}
 		};
 
 		const previous = () => {
-			this.current = 0 > this.current - 1 ? this.panels.length - 1 : this.current - 1;
+			if (target.classList.contains('js-accordion-header')) {
+				this.current = 0 > this.current - 1 ? this.panels.length - 1 : this.current - 1;
 
-			this.panels[this.current].$button.focus();
+				this.panels[this.current].$button.focus();
 
-			event.preventDefault();
+				event.preventDefault();
+			}
 		};
 
 		const first = () => {

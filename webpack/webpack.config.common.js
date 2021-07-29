@@ -9,6 +9,7 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const resolve = require('./webpack.utils');
 
@@ -29,7 +30,7 @@ module.exports = {
 		],
 		compress: true,
 		port: 3000,
-		firewall: true,
+		// firewall: true,
 		// writeToDisk: true,
 	},
 	resolve: {
@@ -40,12 +41,6 @@ module.exports = {
 	},
 	module: {
 		rules: [
-			{
-				enforce: 'pre',
-				test: /\.js$/,
-				exclude: /node_modules/,
-				loader: 'eslint-loader',
-			},
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
@@ -68,5 +63,6 @@ module.exports = {
 			excludeWarnings: true,
 			alwaysNotify: true,
 		}),
+		new ESLintPlugin()
 	],
 };

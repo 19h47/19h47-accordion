@@ -18,7 +18,7 @@ module.exports = {
 		yoda: [2, 'always'],
 		'import/no-named-as-default': 0,
 	},
-	parser: 'babel-eslint',
+	parser: '@babel/eslint-parser',
 	parserOptions: {
 		sourceType: 'module',
 		allowImportExportEverywhere: true,
