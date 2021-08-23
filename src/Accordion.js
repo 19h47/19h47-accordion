@@ -1,5 +1,5 @@
-import Panel from '@/Panel';
 import { ARROW_UP, ARROW_RIGHT, ARROW_DOWN, ARROW_LEFT, HOME, END } from '@19h47/keycode';
+import Panel from '@/Panel';
 
 const optionsDefault = {
 	multiselectable: false,
