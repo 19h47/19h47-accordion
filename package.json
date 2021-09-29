@@ -47,7 +47,7 @@
 		"eslint-webpack-plugin": "^3.0.1",
 		"html-webpack-plugin": "^5.0.0-alpha.15",
 		"prettier": "^2.2.1",
-		"webpack": "5.52.1",
+		"webpack": "5.55.1",
 		"webpack-cli": "4.8.0",
 		"webpack-dev-server": "4.2.0",
 		"webpack-merge": "^5.4.0",
