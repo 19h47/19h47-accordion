@@ -33,7 +33,7 @@
 		"@babel/runtime": "^7.12.5",
 		"babel-loader": "^8.2.2",
 		"clean-webpack-plugin": "^4.0.0-alpha.0",
-		"copy-webpack-plugin": "^9.0.0",
+		"copy-webpack-plugin": "^10.0.0",
 		"core-js": "^3.18.3",
 		"eslint": "^8.2.0",
 		"eslint-config-airbnb-base": "^15.0.0",
