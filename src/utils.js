@@ -33,3 +33,10 @@ export const dispatchEvent = (target, details, name) => {
 	// Dispatch the event on target.
 	return target.dispatchEvent(event);
 };
+
+/**
+ * Get URL hash
+ *
+ * @return string
+ */
+export const getURLHash = () => document.location.hash.replace(/^#\//, '');

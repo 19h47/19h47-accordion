@@ -1,5 +1,6 @@
 import { ARROW_UP, ARROW_RIGHT, ARROW_DOWN, ARROW_LEFT, HOME, END } from '@19h47/keycode';
 import Panel from '@/Panel';
+import { getURLHash } from '@/utils';
 
 const optionsDefault = {
 	multiselectable: false,
@@ -72,7 +73,7 @@ export default class Accordion {
 	 * InitEvents
 	 */
 	initEvents() {
-		window.addEventListener('hashchange', this.handleHashchange, false);
+		window.addEventListener('hashchange', this.handleHashchange);
 		this.rootElement.addEventListener('keydown', this.handleKeydown);
 	}
 
@@ -80,18 +81,11 @@ export default class Accordion {
 	 * handleHashchange
 	 */
 	handleHashchange() {
-		const {
-			location: { hash },
-		} = window;
-
-		if (1 > window.location.hash.length) {
-			return;
-		}
-
 		this.panels.forEach((panel, index) => {
-			if (panel.$body.id === hash.substring(1)) {
+			if (`#${panel.$body.id}` === getURLHash()) {
 				this.current = index;
 				this.closeAll();
+
 				return panel.open();
 			}
 

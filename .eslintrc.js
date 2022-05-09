@@ -6,7 +6,7 @@ module.exports = {
 		node: true,
 		browser: true,
 	},
-	extends: ['standard', 'airbnb-base', 'prettier'],
+	extends: ['airbnb-base', 'prettier'],
 	rules: {
 		'arrow-parens': ['error', 'as-needed'],
 		'no-console': 'off',
