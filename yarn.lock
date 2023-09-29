@@ -3,9 +3,9 @@
 
 
 "@19h47/keycode@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@19h47/keycode/-/keycode-3.0.3.tgz#c8861d411ad509d656a53ec87d54eb0556181e6e"
-  integrity sha512-a0lzC/oCRDVcqlefX528QXzEvXjE1hFFgkAk/K3NaORYNcTiAazS8SjfUf0HiD+gOXn+NaNv4gpFmOWHkQAmDw==
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@19h47/keycode/-/keycode-3.1.0.tgz#8421d6994750b4bf7b9dc52d26c369fa8124515c"
+  integrity sha512-hrca8cBROfPKe17ya0f+ivAfi/kZeDMli1KtcxOsckUWePQvuGIUO2pT9QKStXNzJWDzeQGdYuJu9dapK++HSw==
 
 "@19h47/prettier-config@^1.0.0":
   version "1.0.0"
