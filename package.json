@@ -1,6 +1,6 @@
 {
 	"name": "@19h47/accordion",
-	"version": "5.0.0",
+	"version": "5.0.1",
 	"description": "Accordion",
 	"main": "dist/main.js",
 	"scripts": {

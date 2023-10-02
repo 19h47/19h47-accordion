@@ -95,7 +95,7 @@ const accordion = new Accordion($element);
 accordion.init();
 
 accordion.panels.forEach(panel => {
-	panel.rootElement.addEventListener('Panel.open', ({ type, detail }) => {
+	panel.el.addEventListener('Panel.open', ({ type, detail }) => {
 		console.log({ type, detail });
 	});
 });
@@ -112,7 +112,7 @@ const accordion = new Accordion($element);
 accordion.init();
 
 accordion.panels.forEach(panel => {
-	panel.rootElement.addEventListener('Panel.close', ({ type, detail }) => {
+	panel.el.addEventListener('Panel.close', ({ type, detail }) => {
 		console.log({ type, detail });
 	});
 });
