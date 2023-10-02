@@ -1,6 +1,9 @@
-import { ARROW_UP, ARROW_RIGHT, ARROW_DOWN, ARROW_LEFT, HOME, END } from '@19h47/keycode';
-import Panel from '@/Panel';
-import { getURLHash } from '@/utils';
+import Panel from './Panel';
+import { getURLHash } from './utils';
+
+interface Options {
+	multiselectable?: boolean;
+}
 
 const optionsDefault = {
 	multiselectable: false,
@@ -12,17 +15,20 @@ const optionsDefault = {
  * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
  */
 export default class Accordion {
+	el: HTMLElement;
+	accordions: HTMLElement[] = [];
+	panels: Panel[] = [];
+	current: number = 0;
+	options: Options;
+
 	/**
 	 * Constructor
 	 *
-	 * @param {object} element
-	 * @param {object} options
+	 * @param {object} el
+	 * @param {Options} options
 	 */
-	constructor(element, options = {}) {
-		this.rootElement = element;
-		this.accordions = [];
-		this.panels = [];
-		this.current = 0;
+	constructor(el: HTMLElement, options: Options = {}) {
+		this.el = el;
 
 		this.options = { ...optionsDefault, ...options };
 
@@ -34,18 +40,18 @@ export default class Accordion {
 	/**
 	 * Init
 	 */
-	init() {
+	init(): boolean {
 		// No need to go further if no element have been given
-		if (null === this.rootElement || undefined === this.rootElement) {
+		if (null === this.el || undefined === this.el) {
 			return false;
 		}
 
-		this.accordions = [...this.rootElement.children].filter(panel =>
+		this.accordions = [...this.el.children].filter(panel =>
 			panel.classList.contains('js-accordion-panel'),
-		);
+		) as HTMLElement[];
 
 		this.accordions.forEach((element, index) => {
-			const panel = new Panel(element, { hash: this.options.hash });
+			const panel = new Panel(element);
 
 			panel.init();
 			this.panels.push(panel);
@@ -72,17 +78,17 @@ export default class Accordion {
 	/**
 	 * InitEvents
 	 */
-	initEvents() {
+	initEvents(): void {
 		window.addEventListener('hashchange', this.handleHashchange);
-		this.rootElement.addEventListener('keydown', this.handleKeydown);
+		this.el.addEventListener('keydown', this.handleKeydown);
 	}
 
 	/**
 	 * handleHashchange
 	 */
-	handleHashchange() {
+	handleHashchange(): void {
 		this.panels.forEach((panel, index) => {
-			if (`#${panel.$body.id}` === getURLHash()) {
+			if (panel.$body && `#${panel.$body.id}` === getURLHash()) {
 				this.current = index;
 				this.closeAll();
 
@@ -98,53 +104,52 @@ export default class Accordion {
 	 *
 	 * @param {object} event
 	 */
-	handleKeydown(event) {
-		const key = event.keyCode || event.which;
-		const { target } = event;
+	handleKeydown(event: KeyboardEvent): any {
+		const { target, key, code } = event;
 
 		const next = () => {
-			if (target.classList.contains('js-accordion-header')) {
+			if ((target as HTMLElement).classList.contains('js-accordion-header')) {
 				this.current = this.current + 1 > this.panels.length - 1 ? 0 : this.current + 1;
 
-				this.panels[this.current].$button.focus();
+				this.panels[this.current].$button?.focus();
 
 				event.preventDefault();
 			}
 		};
 
 		const previous = () => {
-			if (target.classList.contains('js-accordion-header')) {
+			if ((target as HTMLElement).classList.contains('js-accordion-header')) {
 				this.current = 0 > this.current - 1 ? this.panels.length - 1 : this.current - 1;
 
-				this.panels[this.current].$button.focus();
+				this.panels[this.current].$button?.focus();
 
 				event.preventDefault();
 			}
 		};
 
 		const first = () => {
-			this.panels[0].$button.focus();
+			this.panels[0].$button?.focus();
 
 			event.preventDefault();
 		};
 
 		const last = () => {
-			this.panels[this.panels.length - 1].$button.focus();
+			this.panels[this.panels.length - 1].$button?.focus();
 
 			event.preventDefault();
 		};
 
-		const codes = {
-			[ARROW_UP]: previous,
-			[ARROW_RIGHT]: next,
-			[ARROW_DOWN]: next,
-			[ARROW_LEFT]: previous,
-			[HOME]: first,
-			[END]: last,
+		const codes : any = {
+			ArrowUp: previous,
+			ArrowRight: next,
+			ArrowDown: next,
+			ArrowLeft: previous,
+			Home: first,
+			End: last,
 			default: () => false,
 		};
 
-		return (codes[key] || codes.default)();
+		return (codes[key || code] || codes.default)();
 	}
 
 	/**
@@ -155,12 +160,12 @@ export default class Accordion {
 	/**
 	 * destroyAll
 	 */
-	destroyAll() {
+	destroyAll(): boolean {
 		this.panels.forEach(panel => panel.destroy());
 		this.panels = [];
 
 		window.removeEventListener('hashchange', this.handleHashchange, false);
-		this.rootElement.removeEventListener('keydown', this.handleKeydown);
+		this.el.removeEventListener('keydown', this.handleKeydown);
 
 		return true;
 	}

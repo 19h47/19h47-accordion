@@ -1,4 +1,4 @@
-const plugins = ['@babel'];
+const plugins = [];
 
 module.exports = {
 	root: true,
@@ -17,11 +17,6 @@ module.exports = {
 		'no-param-reassign': ['error', { props: false }],
 		yoda: [2, 'always'],
 		'import/no-named-as-default': 0,
-	},
-	parser: '@babel/eslint-parser',
-	parserOptions: {
-		sourceType: 'module',
-		allowImportExportEverywhere: true,
 	},
 	settings: {
 		'import/resolver': {

@@ -15,8 +15,8 @@ const resolve = require('./webpack.utils');
 
 module.exports = {
 	entry: {
-		dist: resolve('src/Accordion.js'),
-		docs: resolve('src/Accordion.js'),
+		dist: resolve('lib/index.ts'),
+		docs: resolve('lib/index.ts'),
 	},
 	output: {
 		path: resolve('/dist'),
@@ -25,15 +25,12 @@ module.exports = {
 		filename: '../[name]/main.js',
 	},
 	devServer: {
-		static: [
-			resolve('/')
-		],
-		compress: true,
 		port: 3000,
-		// firewall: true,
-		// writeToDisk: true,
+		static: [resolve('/')],
+		compress: true,
 	},
 	resolve: {
+		extensions: ['.ts', '.tsx', '.js'],
 		alias: {
 			'@': resolve('src'),
 			Utils: resolve('src/utils'),
@@ -42,9 +39,9 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.js$/,
+				test: /\.tsx?$/,
+				use: 'ts-loader',
 				exclude: /node_modules/,
-				loader: 'babel-loader',
 			},
 		],
 	},
