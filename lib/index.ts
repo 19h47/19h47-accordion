@@ -31,10 +31,6 @@ export default class Accordion {
 		this.el = el;
 
 		this.options = { ...optionsDefault, ...options };
-
-		// Bind.
-		this.handleHashchange = this.handleHashchange.bind(this);
-		this.handleKeydown = this.handleKeydown.bind(this);
 	}
 
 	/**
@@ -86,7 +82,7 @@ export default class Accordion {
 	/**
 	 * handleHashchange
 	 */
-	handleHashchange(): void {
+	handleHashchange = (): void => {
 		this.panels.forEach((panel, index) => {
 			if (panel.$body && `#${panel.$body.id}` === getURLHash()) {
 				this.current = index;
@@ -102,9 +98,9 @@ export default class Accordion {
 	/**
 	 * Handle keydown
 	 *
-	 * @param {object} event
+	 * @param {KeyboardEvent} event
 	 */
-	handleKeydown(event: KeyboardEvent): any {
+	handleKeydown = (event: KeyboardEvent): any => {
 		const { target, key, code } = event;
 
 		const next = () => {

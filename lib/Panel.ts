@@ -31,11 +31,7 @@ export default class Panel {
 		this.$inner = this.el.querySelector('.js-accordion-inner');
 
 		this.isDeselect = JSON.parse(this.el.getAttribute('data-accordion-deselect') as string);
-		this.isOpen = JSON.parse(this.el.getAttribute('data-accordion-open') as string) || false;
-
-		// Bind
-		this.handleResize = this.handleResize.bind(this);
-		this.handleClick = this.handleClick.bind(this);
+		this.isOpen = JSON.parse(this.el.getAttribute('data-accordion-open') as string);
 
 		this.$body?.style.setProperty('max-height', this.height.toString());
 		this.$body?.style.setProperty('overflow', 'hidden');
@@ -53,7 +49,7 @@ export default class Panel {
 		window.addEventListener('resize', this.handleResize);
 	}
 
-	handleClick(): boolean | void {
+	handleClick = (): boolean | void => {
 		// console.info('Panel.handleClick', this.isOpen);
 
 		if (false === this.isDeselect && true === this.isOpen) {
@@ -75,7 +71,7 @@ export default class Panel {
 		return true;
 	}
 
-	handleResize(): void {
+	handleResize = (): void => {
 		// console.info('Panel.handleResize');
 
 		this.height = this.$inner?.offsetHeight || 0;
