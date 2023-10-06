@@ -540,8 +540,33 @@ accordion.init();</code></pre>
 
 												<div id="porro-body" class="js-accordion-body">
 													<div class="card-body js-accordion-inner">
-														Porro magnam dolorem maxime odio nulla
-														autem, sed veritatis sit possimus?
+														<p>Porro magnam dolorem maxime odio nulla
+														autem, sed veritatis sit possimus?</p>
+														<div class="js-accordion">
+															<div
+																id="porro"
+																class="card js-accordion-panel my-3"
+																data-accordion-open="false"
+																data-accordion-deselect="true"
+															>
+																<div class="card-header">
+																	<button
+																		class="btn btn-primary js-accordion-header"
+																		type="button"
+																		aria-expanded="false"
+																		aria-controls="architecto-body"
+																	>
+																		Architecto
+																	</button>
+																</div>
+
+																<div id="architecto-body" class="js-accordion-body">
+																	<div class="card-body js-accordion-inner">
+																		Lorem ipsum, dolor sit amet consectetur adipisicing elit. Provident exercitationem repudiandae illum officiis sint laudantium, maiores est mollitia, atque minus nisi facilis soluta obcaecati ratione deserunt architecto asperiores quo cumque.
+																	</div>
+																</div>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -603,6 +628,121 @@ accordion.init();</code></pre>
 					</div>
 				</div>
 			</div>
+
+			<div class="row my-5">
+				<div class="col-12">
+					<div class="border p-3">
+						<h2 class="mb-3"><a href="#Add">Add</a></h2>
+
+						<div class="js-accordion">
+							<div class="border p-3 my-3">
+								<div class="mb-2 form-group">
+									<input
+										class="form-control js-input"
+										type="text"
+										placeholder="Header"
+									/>
+								</div>
+								<div class="mb-2 form-group">
+									<textarea
+										placeholder="Body"
+										class="form-control js-textarea"
+									></textarea>
+								</div>
+								<button class="btn btn-primary js-destroy" type="button">
+									Destroy
+								</button>
+								<button class="btn btn-primary js-create" type="button">
+									Create
+								</button>
+								<button class="btn btn-primary js-add" type="button">Add</button>
+							</div>
+
+							<div
+								class="card js-accordion-panel my-3"
+								data-accordion-open="true"
+								data-accordion-deselect="true"
+							>
+								<div class="card-header">
+									<button
+										class="btn btn-primary js-accordion-header"
+										type="button"
+										aria-expanded="true"
+										aria-controls="lorem"
+									>
+										Toggle
+									</button>
+								</div>
+
+								<div id="lorem" class="js-accordion-body">
+									<div class="card-body js-accordion-inner">
+										<p class="mb-0">
+											Sit amet, consectetur adipisicing elit. Omnis ex
+											inventore tempore. Quam voluptas quibusdam excepturi
+											accusantium voluptatum facere. Nemo vero iste
+											recusandae, at magnam tenetur maxime ad optio veniam!<br />
+											Lorem ipsum dolor sit amet, consectetur adipisicing
+											elit. Doloremque, molestias excepturi molestiae nesciunt
+											alias. Nobis aut praesentium, commodi minus laborum
+											ullam at quod soluta qui tempore sit eveniet dicta esse.
+										</p>
+									</div>
+								</div>
+							</div>
+
+							<div
+								class="card js-accordion-panel my-3"
+								data-accordion-open="false"
+								data-accordion-deselect="true"
+							>
+								<div class="card-header">
+									<button
+										class="btn btn-primary js-accordion-header"
+										type="button"
+										aria-expanded="true"
+										aria-controls="consectetur"
+									>
+										Toggle
+									</button>
+								</div>
+
+								<div id="consectetur" class="js-accordion-body">
+									<div class="card-body js-accordion-inner">
+										Itaque dolore ipsa harum nobis distinctio aperiam quis omnis
+										error incidunt iusto dolorem inventore laboriosam quaerat
+										numquam tenetur dicta quibusdam quisquam, debitis!
+									</div>
+								</div>
+							</div>
+
+							<div
+								class="card js-accordion-panel mt-3"
+								data-accordion-open="false"
+								data-accordion-deselect="true"
+							>
+								<div class="card-header">
+									<button
+										class="btn btn-primary js-accordion-header has-decor"
+										type="button"
+										aria-expanded="false"
+										aria-controls="nihil"
+									>
+										Toggle
+									</button>
+								</div>
+
+								<div id="nihil" class="js-accordion-body">
+									<div class="card-body js-accordion-inner">
+										Nemo nobis doloribus praesentium eum animi qui eos. Sit
+										accusantium rem consequatur quisquam ullam veritatis tenetur
+										architecto.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
@@ -639,11 +779,17 @@ accordion.init();</code></pre>
 			};
 
 			for (var i = 0; i < elements.length; i += 1) {
-				const multiselectable =
-					JSON.parse(elements[i].getAttribute('data-accordion-multiselectable')) || false;
-				const accordion = new Accordion.default(elements[i], { multiselectable });
-				const $destroy = elements[i].querySelector('.js-destroy') || false;
-				const $create = elements[i].querySelector('.js-create') || false;
+				const $el = elements[i];
+				const multiselectable = JSON.parse(
+					$el.getAttribute('data-accordion-multiselectable') || false,
+				);
+				const accordion = new Accordion.default($el, { multiselectable });
+				const $destroy = $el.querySelector('.js-destroy') || false;
+				const $create = $el.querySelector('.js-create') || false;
+
+				const $add = $el.querySelector('.js-add');
+				const $input = $el.querySelector('.js-input');
+				const $textarea = $el.querySelector('.js-textarea');
 
 				accordion.init();
 
@@ -678,6 +824,56 @@ accordion.init();</code></pre>
 					$create.addEventListener('click', () => {
 						accordion.destroyAll();
 						accordion.init();
+					});
+				$add &&
+					$add.addEventListener('click', () => {
+						const { value: header } = $input;
+						const { value: body } = $textarea;
+
+						if (header && body) {
+							console.log(header, body);
+
+							accordion.destroyAll();
+
+							accordion.el.insertAdjacentHTML(
+								'beforeend',
+								`<div
+									class="card js-accordion-panel mt-3"
+									data-accordion-open="false"
+									data-accordion-deselect="true"
+								>
+									<div class="card-header">
+										<button
+											class="btn btn-primary js-accordion-header has-decor"
+											type="button"
+											aria-expanded="false"
+											aria-controls="${header}"
+										>
+											${header}
+										</button>
+									</div>
+
+									<div id="${header}" class="js-accordion-body">
+										<div class="card-body js-accordion-inner">
+											${body}
+										</div>
+									</div>
+								</div>`,
+							);
+
+							accordion.init();
+
+							accordion.panels.forEach(panel => {
+								panel.el.addEventListener('Panel.open', ({ type, detail }) => {
+									console.log({ type, detail });
+
+									const $button = detail.current.querySelector('button,a');
+									const controls = $button.getAttribute('aria-controls');
+
+									onChange(`<strong>${type}</strong> ${controls}`);
+								});
+							});
+						}
 					});
 			}
 		</script>
