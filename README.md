@@ -25,12 +25,13 @@ accordion.init();
 			class="js-accordion-header"
 			type="button"
 			aria-expanded="true"
-			aria-controls="lorem"
+			aria-controls="lorem-body"
+			id="lorem-header"
 		>
 			Toggle
 		</button>
 
-		<div id="lorem" role="region">
+		<div id="lorem-body" role="region">
 			<div class="js-accordion-inner">
 				Sit amet, consectetur adipisicing elit. Omnis ex inventore tempore. Quam voluptas
 				quibusdam excepturi accusantium voluptatum facere. Nemo vero iste recusandae, at
