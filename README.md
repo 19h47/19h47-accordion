@@ -30,7 +30,7 @@ accordion.init();
 			Toggle
 		</button>
 
-		<div id="lorem" class="js-accordion-body" role="region">
+		<div id="lorem" role="region">
 			<div class="js-accordion-inner">
 				Sit amet, consectetur adipisicing elit. Omnis ex inventore tempore. Quam voluptas
 				quibusdam excepturi accusantium voluptatum facere. Nemo vero iste recusandae, at
@@ -58,9 +58,10 @@ accordion.init();
 
 ## Role, Property, State, and Tabindex Attributes
 
-| Role   | Attribute | Element | Usage                                                                           |
-| ------ | --------- | ------- | ------------------------------------------------------------------------------- |
-| region |           | div     | Creates a landmark region that contains the currently expanded accordion panel. |
+| Role   | Attribute          | Element | Usage                                                                           |
+| ------ | ------------------ | ------- | ------------------------------------------------------------------------------- |
+|        | aria-controls="ID" | button  | oints to the ID of the panel which the header controls.                         |
+| region |                    | div     | Creates a landmark region that contains the currently expanded accordion panel. |
 
 ## Option
 
@@ -95,8 +96,8 @@ const accordion = new Accordion($element);
 accordion.init();
 
 accordion.panels.forEach(panel => {
-	panel.el.addEventListener('Panel.open', ({ type, detail }) => {
-		console.log({ type, detail });
+	panel.el.addEventListener('Panel.open', ({ detail }) => {
+		console.log({ detail });
 	});
 });
 ```
@@ -112,8 +113,8 @@ const accordion = new Accordion($element);
 accordion.init();
 
 accordion.panels.forEach(panel => {
-	panel.el.addEventListener('Panel.close', ({ type, detail }) => {
-		console.log({ type, detail });
+	panel.el.addEventListener('Panel.close', ({ detail }) => {
+		console.log({ detail });
 	});
 });
 ```
@@ -126,10 +127,10 @@ accordion.panels.forEach(panel => {
 $ yarn install
 
 # serve with hot reload at localhost:3000
-$ yarn start
+$ yarn serve
 
 # build for production
-$ yarn prod
+$ yarn build
 
 ```
 
