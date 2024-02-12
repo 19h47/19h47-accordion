@@ -1,6 +1,6 @@
 {
 	"name": "@19h47/accordion",
-	"version": "5.1.0",
+	"version": "5.1.1",
 	"description": "Accordion",
 	"main": "dist/main.js",
 	"scripts": {
@@ -16,30 +16,30 @@
 	"keywords": [
 		"ES6"
 	],
-	"author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
+	"author": "Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/19h47/19h47-accordion/issues"
 	},
 	"homepage": "https://github.com/19h47/19h47-accordion#readme",
 	"devDependencies": {
-		"@19h47/prettier-config": "^1.0.0",
+		"@19h47/prettier-config": "^2.0.0",
 		"clean-webpack-plugin": "^4.0.0-alpha.0",
-		"copy-webpack-plugin": "^11.0.0",
-		"eslint": "^8.45.0",
+		"copy-webpack-plugin": "^12.0.2",
+		"eslint": "^8.56.0",
 		"eslint-config-airbnb-base": "^15.0.0",
-		"eslint-config-prettier": "^9.0.0",
-		"eslint-import-resolver-webpack": "^0.13.0",
-		"eslint-plugin-import": "^2.28.1",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-import-resolver-webpack": "^0.13.8",
+		"eslint-plugin-import": "^2.29.1",
 		"eslint-webpack-plugin": "^4.0.0",
-		"html-webpack-plugin": "^5.0.0-alpha.15",
-		"prettier": "^3.0.0",
-		"ts-loader": "^9.4.4",
-		"typescript": "^5.2.2",
-		"webpack": "5.88.2",
+		"html-webpack-plugin": "^5.6.0",
+		"prettier": "^3.2.5",
+		"ts-loader": "^9.5.1",
+		"typescript": "^5.3.3",
+		"webpack": "5.90.1",
 		"webpack-cli": "5.1.4",
-		"webpack-dev-server": "4.15.1",
-		"webpack-merge": "^5.4.0",
+		"webpack-dev-server": "5.0.0",
+		"webpack-merge": "^5.10.0",
 		"webpack-notifier": "^1.11.0"
 	}
 }
