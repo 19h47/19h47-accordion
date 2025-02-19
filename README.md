@@ -31,7 +31,7 @@ accordion.init();
 			Toggle
 		</button>
 
-		<div id="lorem-body" role="region">
+		<div id="lorem-body" role="region" aria-labelledby="lorem-header">
 			<div class="js-accordion-inner">
 				Sit amet, consectetur adipisicing elit. Omnis ex inventore tempore. Quam voluptas
 				quibusdam excepturi accusantium voluptatum facere. Nemo vero iste recusandae, at
@@ -59,10 +59,11 @@ accordion.init();
 
 ## Role, Property, State, and Tabindex Attributes
 
-| Role   | Attribute          | Element | Usage                                                                           |
-| ------ | ------------------ | ------- | ------------------------------------------------------------------------------- |
-|        | aria-controls="ID" | button  | oints to the ID of the panel which the header controls.                         |
-| region |                    | div     | Creates a landmark region that contains the currently expanded accordion panel. |
+| Role   | Attribute               | Element | Usage                                                                           |
+| ------ | ----------------------- | ------- | ------------------------------------------------------------------------------- |
+|        | aria-controls="ID"      | button  | oints to the ID of the panel which the header controls.                         |
+| region |                         |         | Creates a landmark region that contains the currently expanded accordion panel. |
+|        | aria-labelledby="IDREF" | div     | <ul><li>Defines the accessible name for the region element.</li><li>References the accordion header button that expands and collapses the region.</li><li>region elements are required to have an accessible name to be identified as a landmark.</li></ul> |
 
 ## Option
 
@@ -142,4 +143,4 @@ An example is located right [here](https://19h47.github.io/19h47-accordion/), se
 ## Acknowledgments
 
 -   [Accessible toggle tabs and accordion](https://gomakethings.com/accessible-toggle-tabs-and-accordions/)
--   [Accordion](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html)
+-   [Accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion/)
