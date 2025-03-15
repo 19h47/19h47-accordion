@@ -1,9 +1,11 @@
-import { setInactive, setActive, dispatchEvent } from './utils';
+import { setInactive, setActive } from './utils';
 
 const EXPANDED = 'aria-expanded';
 
 /**
  * Panel
+ *
+ * @class Panel
  *
  * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
  */
@@ -15,6 +17,8 @@ export default class Panel {
 	isDeselect: boolean = false;
 	isOpen: boolean = false;
 	height: number = 0;
+	openEvent: Event;
+	closeEvent: Event;
 
 	/**
 	 * Constructor
@@ -23,8 +27,22 @@ export default class Panel {
 	 */
 	constructor(el: HTMLElement) {
 		this.el = el;
+
+		const options = {
+			bubbles: false,
+			cancelable: true,
+			detail: { current: this.el },
+		}
+
+		this.openEvent = new CustomEvent(`Panel.open`, options);
+		this.closeEvent = new CustomEvent(`Panel.close`, options);
 	}
 
+	/**
+	 * Init
+	 *
+	 * @return {void}
+	 */
 	init(): void {
 		this.$button = this.el.querySelector('.js-accordion-header');
 
@@ -40,7 +58,7 @@ export default class Panel {
 		this.$body!.style.setProperty('overflow', 'hidden');
 		this.$body!.setAttribute('aria-labelledby', `${this.$button!.id}`);
 
-		this.resize();
+		this.handleResize();
 		this.initEvents();
 
 		if (true === this.isOpen) {
@@ -50,26 +68,34 @@ export default class Panel {
 		} */
 	}
 
+	/**
+	 * Init events
+	 *
+	 * @return {void}
+	 */
 	initEvents(): void {
-		this.$button!.addEventListener('click', this.handleClick);
-		window.addEventListener('resize', this.resize);
+		this.$button!.addEventListener('click', this.handleClick, { passive: true });
+		window.addEventListener('resize', this.handleResize, { passive: true });
 	}
 
+	/*
+	 * Handle click
+	 *
+	 * @return {boolean|void}
+	 */
 	handleClick = (): boolean | void => {
-		// console.info('Panel.handleClick', this.isOpen);
-
 		if (false === this.isDeselect && true === this.isOpen) {
 			return false;
 		}
 
 		if (true === this.isOpen) {
-			dispatchEvent(this.el, { current: this.el }, 'close');
+			this.el.dispatchEvent(this.closeEvent);
 
 			return this.close();
 		}
 
 		if (false === this.isOpen) {
-			dispatchEvent(this.el, { current: this.el }, 'open');
+			this.el.dispatchEvent(this.openEvent);
 
 			return this.open();
 		}
@@ -77,7 +103,12 @@ export default class Panel {
 		return true;
 	};
 
-	resize = (): void => {
+	/**
+	 * Handle resize
+	 *
+	 * @return {void}
+	 */
+	handleResize = (): void => {
 		// console.info('Panel.resize');
 
 		this.height = this.$inner?.offsetHeight || 0;
@@ -87,6 +118,11 @@ export default class Panel {
 		}
 	};
 
+	/**
+	 * Close
+	 *
+	 * @return {void}
+	 */
 	close(): void {
 		// console.info('Panel.close', this.isOpen);
 
@@ -101,9 +137,12 @@ export default class Panel {
 		this.isOpen = false;
 	}
 
+	/**
+	 * Open
+	 *
+	 * @return {void}
+	 */
 	open(): void {
-		// console.info('Panel.open');
-
 		this.el.setAttribute('data-accordion-open', 'true');
 		this.$button!.setAttribute(EXPANDED, 'true');
 
@@ -115,11 +154,16 @@ export default class Panel {
 		this.isOpen = true;
 	}
 
+	/**
+	 * Destroy
+	 *
+	 * @return {void}
+	 */
 	destroy(): void {
 		// console.info('Panel.destroy');
 
 		this.$button!.removeEventListener('click', this.handleClick);
-		window.removeEventListener('resize', this.resize);
+		window.removeEventListener('resize', this.handleResize);
 
 		this.$body!.style.removeProperty('max-height');
 		this.$body!.style.removeProperty('overflow');

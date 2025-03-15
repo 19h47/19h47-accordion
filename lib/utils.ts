@@ -17,26 +17,9 @@ export const setInactive = (element: HTMLElement): void => element.classList.rem
 export const setActive = (element: HTMLElement): void => element.classList.add('is-active');
 
 /**
- * Dispatch event
- *
- * @param {HTMLElement} target
- * @param {object} details
- * @param {string} name
- */
-export const dispatchEvent = (target: HTMLElement, details: object = {}, name: string = ''): boolean => {
-	const event = new CustomEvent(`Panel.${name}`, {
-		bubbles: false,
-		cancelable: true,
-		detail: details,
-	});
-
-	// Dispatch the event on target.
-	return target.dispatchEvent(event);
-};
-
-/**
  * Get URL hash
  *
- * @return string
+ * @access static
+ * @return {string} URL hash
  */
 export const getURLHash = (): string => document.location.hash.replace(/^#\//, '');

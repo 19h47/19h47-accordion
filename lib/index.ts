@@ -1,16 +1,31 @@
 import Panel from './Panel';
 import { getURLHash } from './utils';
 
+/**
+ * Options
+ *
+ * @interface Options
+ * @property {boolean} multiselectable - Determines if multiple panels can be expanded at the same time. Default is `false`.
+ */
 interface Options {
 	multiselectable?: boolean;
 }
 
-const optionsDefault = {
+/**
+ * Default options for the accordion component.
+ *
+ * @property {boolean} multiselectable - Determines if multiple panels can be expanded at the same time. Default is `false`.
+ */
+const optionsDefault: Options = {
 	multiselectable: false,
 };
 
 /**
  * Accordion
+ *
+ * @class Accordion
+ * @version 6.0.0
+ * @since 0.0.0
  *
  * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
  */
@@ -20,12 +35,13 @@ export default class Accordion {
 	panels: Panel[] = [];
 	current: number = 0;
 	options: Options;
+	listeners: Map<number, () => void> = new Map();
 
 	/**
 	 * Constructor
 	 *
-	 * @param {object} el
-	 * @param {Options} options
+	 * @param {HTMLElement} el
+	 * @param {Options} [options]
 	 */
 	constructor(el: HTMLElement, options: Options = {}) {
 		this.el = el;
@@ -34,17 +50,25 @@ export default class Accordion {
 	}
 
 	/**
-	 * Init
+	 * Initializes the accordion component.
+	 *
+	 * @returns {boolean} - Returns `false` if no element has been provided, otherwise `true`.
+	 *
+	 * This method performs the following actions:
+	 * - Checks if the element (`this.el`) is `null` or `undefined`. If so, it returns `false`.
+	 * - Filters the children of the element to find those with the class `js-accordion-panel` and stores them in `this.accordions`.
+	 * - Iterates over each accordion panel, initializes a new `Panel` instance, and adds it to `this.panels`.
+	 * - Adds an event listener for the `Panel.open` event to each panel.
+	 * - Initializes additional events by calling `this.initEvents()`.
+	 * - Handles any hash changes by calling `this.handleHashChange()`.
 	 */
 	init(): boolean {
-		// No need to go further if no element have been given
-		if (null === this.el || undefined === this.el) {
+		// No need to go further if no element has been given
+		if (!(this.el instanceof HTMLElement)) {
 			return false;
 		}
 
-		this.accordions = [...this.el.children].filter(panel =>
-			panel.classList.contains('js-accordion-panel'),
-		) as HTMLElement[];
+		this.accordions = [...this.el.children].filter(panel => panel.classList.contains('js-accordion-panel')) as HTMLElement[];
 
 		this.accordions.forEach((element, index) => {
 			const panel = new Panel(element);
@@ -52,37 +76,40 @@ export default class Accordion {
 			panel.init();
 			this.panels.push(panel);
 
-			element.addEventListener('Panel.open', () => {
-				this.current = index;
+			// Add listener
+			this.listeners.set(index, () => this.handlePanelOpen(index));
 
-				if (!this.options.multiselectable) {
-					this.closeAll();
-				}
-			});
-
-			// element.addEventListener('Panel.close', () => {});
+			panel.el.addEventListener('Panel.open', this.listeners.get(index)!);
 
 			return true;
 		});
 
 		this.initEvents();
-		this.handleHashchange();
+		this.handleHashChange();
 
 		return true;
 	}
 
 	/**
-	 * InitEvents
+	 * Initializes event listeners for the accordion component.
+	 *
+	 * This method sets up the following event listeners:
+	 * - `hashchange` event on the `window` object, handled by `handleHashChange`.
+	 * - `keydown` event on the accordion element (`this.el`), handled by `handleKeyDown`.
+	 *
+	 * @returns {void}
 	 */
 	initEvents(): void {
-		window.addEventListener('hashchange', this.handleHashchange);
-		this.el.addEventListener('keydown', this.handleKeydown);
+		window.addEventListener('hashchange', this.handleHashChange);
+		this.el.addEventListener('keydown', this.handleKeyDown);
 	}
 
 	/**
-	 * handleHashchange
+	 * handleHashChange
+	 *
+	 * @return {void}
 	 */
-	handleHashchange = (): void => {
+	handleHashChange = (): void => {
 		this.panels.forEach((panel, index) => {
 			if (panel.$body && `#${panel.$body.id}` === getURLHash()) {
 				this.current = index;
@@ -93,15 +120,18 @@ export default class Accordion {
 
 			return true;
 		});
-	}
+	};
 
 	/**
 	 * Handle keydown
 	 *
 	 * @param {KeyboardEvent} event
+	 *
+	 * @return {any}
 	 */
-	handleKeydown = (event: KeyboardEvent): any => {
-		const { target, key, code } = event;
+	handleKeyDown = (keyboardEvent: KeyboardEvent): any => {
+		const { target, key, code } = keyboardEvent;
+
 
 		const next = () => {
 			if ((target as HTMLElement).classList.contains('js-accordion-header')) {
@@ -109,7 +139,7 @@ export default class Accordion {
 
 				this.panels[this.current].$button?.focus();
 
-				event.preventDefault();
+				keyboardEvent.preventDefault();
 			}
 		};
 
@@ -119,23 +149,23 @@ export default class Accordion {
 
 				this.panels[this.current].$button?.focus();
 
-				event.preventDefault();
+				keyboardEvent.preventDefault();
 			}
 		};
 
 		const first = () => {
 			this.panels[0].$button?.focus();
 
-			event.preventDefault();
+			keyboardEvent.preventDefault();
 		};
 
 		const last = () => {
 			this.panels[this.panels.length - 1].$button?.focus();
 
-			event.preventDefault();
+			keyboardEvent.preventDefault();
 		};
 
-		const codes : any = {
+		const keyHandlers: any = {
 			ArrowUp: previous,
 			ArrowRight: next,
 			ArrowDown: next,
@@ -145,23 +175,44 @@ export default class Accordion {
 			default: () => false,
 		};
 
-		return (codes[key || code] || codes.default)();
-	}
+		return (keyHandlers[key || code] || keyHandlers.default)();
+	};
+
+	/**
+	 * handle Panel Open
+	 *
+	 * @param {number} index
+	 *
+	 * @return {void}
+	 */
+	handlePanelOpen = (index: number): void => {
+		this.current = index;
+
+		if (!this.options.multiselectable) {
+			this.closeAll();
+		}
+	};
 
 	/**
 	 * closeAll
+	 *
+	 * @return {void}
 	 */
-	closeAll = () => this.panels.forEach(panel => panel.close());
+	closeAll = (): void => this.panels.forEach(panel => panel.close());
 
 	/**
 	 * destroyAll
+	 *
+	 * @return {boolean}
 	 */
 	destroyAll(): boolean {
-		this.panels.forEach(panel => panel.destroy());
+		this.panels.forEach((panel, index) => {
+			panel.destroy();
+			panel.el.removeEventListener('Panel.open', this.listeners.get(index)!);
+		});
 		this.panels = [];
-
-		window.removeEventListener('hashchange', this.handleHashchange, false);
-		this.el.removeEventListener('keydown', this.handleKeydown);
+		window.removeEventListener('hashchange', this.handleHashChange);
+		this.el.removeEventListener('keydown', this.handleKeyDown);
 
 		return true;
 	}
