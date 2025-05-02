@@ -1,14 +1,14 @@
-const a = (n) => n.classList.remove("is-active"), p = (n) => n.classList.add("is-active"), f = () => document.location.hash.replace(/^#\//, ""), c = "aria-expanded";
-class v {
+const d = (h) => h.classList.remove("is-active"), f = (h) => h.classList.add("is-active"), u = () => document.location.hash.replace(/^#\//, ""), p = "aria-expanded";
+class b {
   /**
    * Constructor
    *
    * @param {HTMLElement} el
    */
   constructor(s) {
-    this.$body = null, this.$button = null, this.$inner = null, this.isDeselect = !1, this.isOpen = !1, this.height = 0, this.handleClick = () => this.isDeselect === !1 && this.isOpen === !0 ? !1 : this.isOpen === !0 ? (this.el.dispatchEvent(this.closeEvent), this.close()) : this.isOpen === !1 ? (this.el.dispatchEvent(this.openEvent), this.open()) : !0, this.handleResize = () => {
+    this.$body = null, this.$button = null, this.$inner = null, this.isDeselect = !1, this.isOpen = !1, this.height = 0, this.transitionDuration = 0, this.handleClick = () => this.isDeselect === !1 && this.isOpen === !0 ? !1 : this.isOpen === !0 ? (this.el.dispatchEvent(this.closeEvent), this.close()) : this.isOpen === !1 ? (this.el.dispatchEvent(this.openEvent), this.open()) : !0, this.handleResize = () => {
       var t;
-      this.height = ((t = this.$inner) == null ? void 0 : t.offsetHeight) || 0, this.isOpen && this.$body.style.setProperty("max-height", `${this.height}px`);
+      this.$body.removeAttribute("hidden"), this.height = ((t = this.$inner) == null ? void 0 : t.offsetHeight) || 0, this.$body.style.setProperty("overflow", "hidden"), this.transitionDuration = parseFloat(getComputedStyle(this.$body).transitionDuration) * 1e3 || 0;
     }, this.el = s;
     const e = {
       bubbles: !1,
@@ -23,10 +23,10 @@ class v {
    * @return {void}
    */
   init() {
-    var e;
+    var e, t;
     this.$button = this.el.querySelector(".js-accordion-header");
     const s = ((e = this.$button.getAttribute("aria-controls")) == null ? void 0 : e.trim().split(" ")[0]) || "";
-    this.$body = document.getElementById(s), this.$inner = this.$body.querySelector(".js-accordion-inner"), this.isDeselect = JSON.parse(this.el.getAttribute("data-accordion-deselect")), this.isOpen = JSON.parse(this.el.getAttribute("data-accordion-open")), this.$body.style.setProperty("max-height", this.height.toString()), this.$body.style.setProperty("overflow", "hidden"), this.$body.setAttribute("aria-labelledby", `${this.$button.id}`), this.handleResize(), this.initEvents(), this.isOpen === !0 && this.open();
+    this.$body = document.getElementById(s), this.$inner = this.$body.querySelector(".js-accordion-inner"), this.isDeselect = JSON.parse(this.el.getAttribute("data-accordion-deselect")), this.isOpen = JSON.parse(this.el.getAttribute("data-accordion-open")), this.$body.setAttribute("aria-labelledby", `${this.$button.id}`), this.handleResize(), this.initEvents(), ((t = this.$button) == null ? void 0 : t.tagName) === "BUTTON" && (this.isOpen === !0 ? this.open() : this.close());
   }
   /**
    * Init events
@@ -42,7 +42,9 @@ class v {
    * @return {void}
    */
   close() {
-    this.el.setAttribute("data-accordion-open", "false"), this.$button.setAttribute(c, "false"), this.$body.style.setProperty("max-height", "0"), a(this.el), this.isOpen = !1;
+    console.info("Panel.close", this.isOpen), this.el.setAttribute("data-accordion-open", "false"), this.$button.setAttribute(p, "false"), this.$body.style.setProperty("max-height", "0"), setTimeout(() => {
+      this.$body.setAttribute("hidden", "");
+    }, this.transitionDuration), d(this.el), this.isOpen = !1;
   }
   /**
    * Open
@@ -50,7 +52,9 @@ class v {
    * @return {void}
    */
   open() {
-    this.el.setAttribute("data-accordion-open", "true"), this.$button.setAttribute(c, "true"), this.$body.style.setProperty("max-height", `${this.height}px`), p(this.el), this.isOpen = !0;
+    this.el.setAttribute("data-accordion-open", "true"), this.$button.setAttribute(p, "true"), this.$body.removeAttribute("hidden"), setTimeout(() => {
+      this.$body.style.setProperty("max-height", `${this.height}px`);
+    }, 1), f(this.el), this.isOpen = !0;
   }
   /**
    * Destroy
@@ -58,13 +62,13 @@ class v {
    * @return {void}
    */
   destroy() {
-    this.$button.removeEventListener("click", this.handleClick), window.removeEventListener("resize", this.handleResize), this.$body.style.removeProperty("max-height"), this.$body.style.removeProperty("overflow"), a(this.el);
+    this.$button.removeEventListener("click", this.handleClick), window.removeEventListener("resize", this.handleResize), this.$body.style.removeProperty("max-height"), this.$body.style.removeProperty("overflow"), this.$body.removeAttribute("hidden"), d(this.el);
   }
 }
-const b = {
+const v = {
   multiselectable: !1
 };
-class g {
+class E {
   /**
    * Constructor
    *
@@ -73,19 +77,21 @@ class g {
    */
   constructor(s, e = {}) {
     this.accordions = [], this.panels = [], this.current = 0, this.listeners = /* @__PURE__ */ new Map(), this.handleHashChange = () => {
-      this.panels.forEach((t, h) => t.$body && `#${t.$body.id}` === f() ? (this.current = h, this.closeAll(), t.open()) : !0);
+      this.panels.forEach((t, n) => t.$body && `#${t.$body.id}` === u() ? (console.info({ index: n, $body: t.$body, bodyID: `#${t.$body.id}`, getURLHash: u() }), this.current = n, this.panels.forEach((o, r) => {
+        r !== n && o.close();
+      }), t.open()) : !0);
     }, this.handleKeyDown = (t) => {
-      const { target: h, key: d, code: u } = t, r = () => {
+      const { target: n, key: o, code: r } = t, a = () => {
         var i;
-        h.classList.contains("js-accordion-header") && (this.current = this.current + 1 > this.panels.length - 1 ? 0 : this.current + 1, (i = this.panels[this.current].$button) == null || i.focus(), t.preventDefault());
-      }, o = () => {
+        n.classList.contains("js-accordion-header") && (this.current = this.current + 1 > this.panels.length - 1 ? 0 : this.current + 1, (i = this.panels[this.current].$button) == null || i.focus(), t.preventDefault());
+      }, l = () => {
         var i;
-        h.classList.contains("js-accordion-header") && (this.current = 0 > this.current - 1 ? this.panels.length - 1 : this.current - 1, (i = this.panels[this.current].$button) == null || i.focus(), t.preventDefault());
-      }, l = {
-        ArrowUp: o,
-        ArrowRight: r,
-        ArrowDown: r,
-        ArrowLeft: o,
+        n.classList.contains("js-accordion-header") && (this.current = 0 > this.current - 1 ? this.panels.length - 1 : this.current - 1, (i = this.panels[this.current].$button) == null || i.focus(), t.preventDefault());
+      }, c = {
+        ArrowUp: l,
+        ArrowRight: a,
+        ArrowDown: a,
+        ArrowLeft: l,
         Home: () => {
           var i;
           (i = this.panels[0].$button) == null || i.focus(), t.preventDefault();
@@ -96,10 +102,12 @@ class g {
         },
         default: () => !1
       };
-      return (l[d || u] || l.default)();
+      return (c[o || r] || c.default)();
     }, this.handlePanelOpen = (t) => {
-      this.current = t, this.options.multiselectable || this.closeAll();
-    }, this.closeAll = () => this.panels.forEach((t) => t.close()), this.el = s, this.options = { ...b, ...e };
+      this.current = t, this.options.multiselectable || this.panels.forEach((n, o) => {
+        o !== t && n.close();
+      });
+    }, this.closeAll = () => this.panels.forEach((t) => t.close()), this.el = s, this.options = { ...v, ...e };
   }
   /**
    * Initializes the accordion component.
@@ -116,7 +124,7 @@ class g {
    */
   init() {
     return this.el instanceof HTMLElement ? (this.accordions = [...this.el.children].filter((s) => s.classList.contains("js-accordion-panel")), this.accordions.forEach((s, e) => {
-      const t = new v(s);
+      const t = new b(s);
       return t.init(), this.panels.push(t), this.listeners.set(e, () => this.handlePanelOpen(e)), t.el.addEventListener("Panel.open", this.listeners.get(e)), !0;
     }), this.initEvents(), this.handleHashChange(), !0) : !1;
   }
@@ -144,5 +152,5 @@ class g {
   }
 }
 export {
-  g as default
+  E as default
 };

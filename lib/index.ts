@@ -112,8 +112,13 @@ export default class Accordion {
 	handleHashChange = (): void => {
 		this.panels.forEach((panel, index) => {
 			if (panel.$body && `#${panel.$body.id}` === getURLHash()) {
+				console.info({index, $body: panel.$body, bodyID: `#${panel.$body.id}`, getURLHash: getURLHash()});
 				this.current = index;
-				this.closeAll();
+				this.panels.forEach((panel, i) => {
+					if (i !== index) {
+						panel.close();
+					}
+				});
 
 				return panel.open();
 			}
@@ -189,7 +194,11 @@ export default class Accordion {
 		this.current = index;
 
 		if (!this.options.multiselectable) {
-			this.closeAll();
+			this.panels.forEach((panel, i) => {
+				if (i !== index) {
+					panel.close();
+				}
+			});
 		}
 	};
 

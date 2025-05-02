@@ -78,7 +78,7 @@ accordion.init();</code></pre>
 							</button>
 						</div>
 
-						<div class="card js-accordion-panel my-3" data-accordion-open="true"
+						<div class="card js-accordion-panel my-3 is-active" data-accordion-open="true"
 							data-accordion-deselect="true">
 							<div class="card-header">
 								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
@@ -93,6 +93,13 @@ accordion.init();</code></pre>
 										<label for="number"> Number </label>
 										<input id="number" class="form-control" type="number" />
 									</div>
+									<ul>
+										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Lorem</a></li>
+									</ul>
 									<p>
 										Sit amet, consectetur adipisicing elit. Omnis ex
 										inventore tempore. Quam voluptas quibusdam excepturi
@@ -116,11 +123,19 @@ accordion.init();</code></pre>
 								</button>
 							</div>
 
-							<div id="consectetur-01">
+							<div id="consectetur-01" hidden>
 								<div class="card-body js-accordion-inner">
-									Itaque dolore ipsa harum nobis distinctio aperiam quis omnis
-									error incidunt iusto dolorem inventore laboriosam quaerat
-									numquam tenetur dicta quibusdam quisquam, debitis!
+									<ul>
+										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Lorem</a></li>
+									</ul>
+									<p>Itaque dolore ipsa harum nobis distinctio aperiam quis omnis
+										error incidunt iusto dolorem inventore laboriosam quaerat
+										numquam tenetur dicta quibusdam quisquam, debitis!
+									</p>
 								</div>
 							</div>
 						</div>
@@ -134,7 +149,7 @@ accordion.init();</code></pre>
 								</button>
 							</div>
 
-							<div id="nihil-01">
+							<div id="nihil-01" hidden>
 								<div class="card-body js-accordion-inner">
 									Nemo nobis doloribus praesentium eum animi qui eos. Sit
 									accusantium rem consequatur quisquam ullam veritatis tenetur
@@ -161,7 +176,7 @@ accordion.init();</code></pre>
 							</button>
 						</div>
 
-						<div class="card js-accordion-panel my-3" data-accordion-open="true"
+						<div class="card js-accordion-panel my-3 is-active" data-accordion-open="true"
 							data-accordion-deselect="false">
 							<div class="card-header">
 								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
@@ -226,33 +241,117 @@ accordion.init();</code></pre>
 		<div class="row my-5">
 			<div class="col-12">
 				<div class="border p-3">
+					<h2 class="mb-3"><a href="#with-transition">With transition</a></h2>
+
+					<div class="js-accordion">
+						<div class="border p-3 my-3">
+							<button class="btn btn-primary js-destroy" type="button">
+								Destroy
+							</button>
+							<button class="btn btn-primary js-create" type="button">
+								Create
+							</button>
+						</div>
+
+						<div class="card js-accordion-panel my-3 is-active" data-accordion-deselect="true">
+							<div class="card-header">
+								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
+									aria-controls="lorem-adipisicing-01" id="lorem-adipisicing-01-header">
+									Toggle
+								</button>
+							</div>
+
+							<div id="lorem-adipisicing-01" style="transition: max-height 0.3s ease-in-out;">
+								<div class="card-body js-accordion-inner">
+									<p>
+										Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus quos
+										dolor deleniti? A dolores tempore rerum accusantium perferendis architecto at
+										eos praesentium totam dolorum iusto consequuntur, quisquam quibusdam sapiente
+										fugiat!
+									</p>
+									<ul>
+										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Lorem</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="card js-accordion-panel my-3" data-accordion-open="false"
+							data-accordion-deselect="true">
+							<div class="card-header">
+								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
+									aria-controls="consectetur-amet-01" id="consectetur-amet-01-header">
+									Toggle
+								</button>
+							</div>
+
+							<div id="consectetur-amet-01" style="transition: max-height 0.3s ease-in-out;" hidden>
+								<div class="card-body js-accordion-inner">
+									<p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
+										fugiat eligendi ex
+										minima, quo eius dicta, cumque adipisci odio et hic in reiciendis sapiente nisi
+										ipsam rerum maxime corporis dolore!</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="card js-accordion-panel mt-3" data-accordion-open="false"
+							data-accordion-deselect="true">
+							<div class="card-header">
+								<button class="btn btn-primary js-accordion-header has-decor" type="button"
+									aria-expanded="false" aria-controls="nihil-sit-01" id="nihil-sit-01-header">
+									Toggle
+								</button>
+							</div>
+
+							<div id="nihil-sit-01" style="transition: max-height 0.3s ease-in-out;" hidden>
+								<div class="card-body js-accordion-inner">
+									<p class="mb-0">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque
+										cupiditate
+										aspernatur ut magnam quod voluptate recusandae laboriosam esse natus nobis
+										obcaecati
+										porro praesentium accusamus odio, assumenda voluptas optio vitae sapiente!</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row my-5">
+			<div class="col-12">
+				<div class="border p-3">
 					<h2 class="mb-3"><a href="#hash">Hash</a></h2>
 
 					<div class="js-accordion">
-						<div id="behir" class="card js-accordion-panel my-3" data-accordion-open="false"
+						<div id="behir" class="card js-accordion-panel my-3 is-active" data-accordion-open="true"
 							data-accordion-deselect="true">
 							<div class="card-header">
-								<a href="#behir-body" class="btn btn-primary js-accordion-header" type="button"
-									aria-expanded="false" aria-controls="behir-body">
+								<a href="#behir-body" id="behir-header" class="btn btn-primary js-accordion-header"
+									type="button" aria-expanded="true" aria-controls="behir-body">
 									Behir
 								</a>
 							</div>
 
 							<div id="behir-body">
 								<div class="card-body js-accordion-inner">
-									The behir is a snake-like reptilian monster whose dozen legs
-									allow it to move with considerable speed and climb at fully
-									half its normal movement rate. It can fold its limbs close
-									to its long, narrow body and slither in snake-fashion if it
-									desires. The head looks more crocodilian than snake-like,
-									but has no difficulty in opening its mouth wide enough to
-									swallow prey whole, the way a snake does.<br />
-									Behir have band-like scales of great hardness. Their color
-									ranges from ultramarine to deep blue with bands of
-									gray-brown. The belly is pale blue. The two large horns
-									curving back over the head look dangerous enough but are
-									actually used for preening the creature's scales and not for
-									fighting.
+									<p class="mb-0">The behir is a snake-like reptilian monster whose dozen legs
+										allow it to move with considerable speed and climb at fully
+										half its normal movement rate. It can fold its limbs close
+										to its long, narrow body and slither in snake-fashion if it
+										desires. The head looks more crocodilian than snake-like,
+										but has no difficulty in opening its mouth wide enough to
+										swallow prey whole, the way a snake does.<br />
+										Behir have band-like scales of great hardness. Their color
+										ranges from ultramarine to deep blue with bands of
+										gray-brown. The belly is pale blue. The two large horns
+										curving back over the head look dangerous enough but are
+										actually used for preening the creature's scales and not for
+										fighting.</p>
 								</div>
 							</div>
 						</div>
@@ -260,13 +359,13 @@ accordion.init();</code></pre>
 						<div id="stirge" class="card js-accordion-panel my-3" data-accordion-open="false"
 							data-accordion-deselect="true">
 							<div class="card-header">
-								<a href="#stirge-body" class="btn btn-primary js-accordion-header" aria-expanded="true"
-									aria-controls="stirge-body">
+								<a href="#stirge-body" id="stirge-header" class="btn btn-primary js-accordion-header"
+									aria-expanded="true" aria-controls="stirge-body">
 									Stirge
 								</a>
 							</div>
 
-							<div id="stirge-body">
+							<div id="stirge-body" hidden>
 								<div class="card-body js-accordion-inner">
 									Stirges are bird-like creatures that drink the blood of
 									their victims for sustenance. They have four small,
@@ -282,13 +381,14 @@ accordion.init();</code></pre>
 						<div id="androsphinx" class="card js-accordion-panel mt-3" data-accordion-open="false"
 							data-accordion-deselect="true">
 							<div class="card-header">
-								<a href="#androsphinx-body" class="btn btn-primary js-accordion-header has-decor"
-									aria-expanded="false" aria-controls="androsphinx-body">
+								<a href="#androsphinx-body" id="androsphinx-header"
+									class="btn btn-primary js-accordion-header has-decor" aria-expanded="false"
+									aria-controls="androsphinx-body">
 									Androsphinx
 								</a>
 							</div>
 
-							<div id="androsphinx-body">
+							<div id="androsphinx-body" hidden>
 								<div class="card-body js-accordion-inner">
 									Androsphinxes are huge, winged mythological creatures with
 									the bodies of male lions and man-like facial features. They
@@ -517,7 +617,7 @@ accordion.init();</code></pre>
 							<button class="btn btn-primary js-add" type="button">Add</button>
 						</div>
 
-						<div class="card js-accordion-panel my-3" data-accordion-open="true"
+						<div class="card js-accordion-panel my-3 is-active" data-accordion-open="true"
 							data-accordion-deselect="true">
 							<div class="card-header">
 								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
@@ -586,7 +686,7 @@ accordion.init();</code></pre>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
 	<script type="module">
-		import Accordion from './dist/accordion.js';
+		import Accordion from './lib/index.ts';
 		const elements = document.querySelectorAll('.js-accordion');
 		const alert = content => {
 			const div = document.createElement('div');
@@ -630,6 +730,16 @@ accordion.init();</code></pre>
 			const $input = $el.querySelector('.js-input');
 			const $textarea = $el.querySelector('.js-textarea');
 
+			// https://dev.to/bybydev/how-to-slugify-a-string-in-javascript-4o9n
+			const slugify = (str) => {
+				str = str.replace(/^\s+|\s+$/g, ''); // trim leading/trailing white space
+				str = str.toLowerCase(); // convert string to lowercase
+				str = str.replace(/[^a-z0-9 -]/g, '') // remove any non-alphanumeric characters
+					.replace(/\s+/g, '-') // replace spaces with hyphens
+					.replace(/-+/g, '-'); // remove consecutive hyphens
+				return str;
+			}
+
 			accordion.init();
 
 			accordion.panels.forEach(panel => {
@@ -670,7 +780,7 @@ accordion.init();</code></pre>
 					const { value: body } = $textarea;
 
 					if (header && body) {
-						console.log(header, body);
+						// console.log(header, body);
 
 						accordion.destroyAll();
 
@@ -686,13 +796,13 @@ accordion.init();</code></pre>
 											class="btn btn-primary js-accordion-header has-decor"
 											type="button"
 											aria-expanded="false"
-											aria-controls="${header}"
+											aria-controls="${slugify(header)}"
 										>
 											${header}
 										</button>
 									</div>
 
-									<div id="${header}">
+									<div id="${slugify(header)}">
 										<div class="card-body js-accordion-inner">
 											${body}
 										</div>
