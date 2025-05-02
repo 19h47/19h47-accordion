@@ -42,7 +42,7 @@ class b {
    * @return {void}
    */
   close() {
-    console.info("Panel.close", this.isOpen), this.el.setAttribute("data-accordion-open", "false"), this.$button.setAttribute(p, "false"), this.$body.style.setProperty("max-height", "0"), setTimeout(() => {
+    this.el.setAttribute("data-accordion-open", "false"), this.$button.setAttribute(p, "false"), this.$body.style.setProperty("max-height", "0"), setTimeout(() => {
       this.$body.setAttribute("hidden", "");
     }, this.transitionDuration), d(this.el), this.isOpen = !1;
   }

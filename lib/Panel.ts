@@ -110,7 +110,6 @@ export default class Panel {
 	 * @return {void}
 	 */
 	handleResize = (): void => {
-		// console.info('Panel.resize');
 		this.$body!.removeAttribute('hidden');
 		this.height = this.$inner?.offsetHeight || 0;
 		this.$body!.style.setProperty('overflow', 'hidden');
@@ -123,8 +122,6 @@ export default class Panel {
 	 * @return {void}
 	 */
 	close(): void {
-		console.info('Panel.close', this.isOpen);
-
 		this.el.setAttribute('data-accordion-open', 'false');
 		this.$button!.setAttribute(EXPANDED, 'false');
 
@@ -163,8 +160,6 @@ export default class Panel {
 	 * @return {void}
 	 */
 	destroy(): void {
-		// console.info('Panel.destroy');
-
 		this.$button!.removeEventListener('click', this.handleClick);
 		window.removeEventListener('resize', this.handleResize);
 
