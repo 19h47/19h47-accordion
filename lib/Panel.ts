@@ -125,7 +125,11 @@ export default class Panel {
 		this.el.setAttribute('data-accordion-open', 'false');
 		this.$button!.setAttribute(EXPANDED, 'false');
 
-		this.$body!.style.setProperty('max-height', '0');
+		this.$body!.style.setProperty('max-height', `${this.height}px`);
+
+		setTimeout(() => {
+			this.$body!.style.setProperty('max-height', '0');
+		}, 1);
 
 		setTimeout(() => {
 			this.$body!.setAttribute('hidden', '');
@@ -146,8 +150,13 @@ export default class Panel {
 		this.$button!.setAttribute(EXPANDED, 'true');
 
 		this.$body!.removeAttribute('hidden');
+
 		setTimeout(() => {
 			this.$body!.style.setProperty('max-height', `${this.height}px`);
+
+			setTimeout(() => {
+				this.$body!.style.removeProperty('max-height');
+			}, this.transitionDuration);
 		}, 1);
 
 		setActive(this.el);
