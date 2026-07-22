@@ -1,7 +1,5 @@
 import { setInactive, setActive } from "./utils";
 
-const EXPANDED = "aria-expanded";
-
 /**
  * Panel
  *
@@ -133,7 +131,7 @@ export default class Panel {
 	 */
 	close(): void {
 		this.el.setAttribute("data-accordion-open", "false");
-		this.$button!.setAttribute(EXPANDED, "false");
+		this.$button!.setAttribute("aria-expanded", "false");
 
 		this.$body!.style.setProperty("max-height", `${this.height}px`);
 
@@ -156,7 +154,7 @@ export default class Panel {
 	 */
 	open(): void {
 		this.el.setAttribute("data-accordion-open", "true");
-		this.$button!.setAttribute(EXPANDED, "true");
+		this.$button!.setAttribute("aria-expanded", "true");
 
 		this.$body!.removeAttribute("hidden");
 
