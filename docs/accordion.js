@@ -1,21 +1,20 @@
-const d = (h) => h.classList.remove("is-active"), f = (h) => h.classList.add("is-active"), u = () => document.location.hash.replace(/^#\//, ""), p = "aria-expanded";
-class b {
+const c = (n) => n.classList.remove("is-active"), p = (n) => n.classList.add("is-active"), d = () => document.location.hash.replace(/^#\//, ""), u = "aria-expanded";
+class f {
   /**
    * Constructor
    *
    * @param {HTMLElement} el
    */
-  constructor(s) {
+  constructor(e) {
     this.$body = null, this.$button = null, this.$inner = null, this.isDeselect = !1, this.isOpen = !1, this.height = 0, this.transitionDuration = 0, this.handleClick = () => this.isDeselect === !1 && this.isOpen === !0 ? !1 : this.isOpen === !0 ? (this.el.dispatchEvent(this.closeEvent), this.close()) : this.isOpen === !1 ? (this.el.dispatchEvent(this.openEvent), this.open()) : !0, this.handleResize = () => {
-      var t;
-      this.$body.removeAttribute("hidden"), this.height = ((t = this.$inner) == null ? void 0 : t.offsetHeight) || 0, this.$body.style.setProperty("overflow", "hidden"), this.transitionDuration = parseFloat(getComputedStyle(this.$body).transitionDuration) * 1e3 || 0;
-    }, this.el = s;
-    const e = {
+      this.$body.removeAttribute("hidden"), this.height = this.$inner?.offsetHeight || 0, this.$body.style.setProperty("overflow", "hidden"), this.transitionDuration = parseFloat(getComputedStyle(this.$body).transitionDuration) * 1e3 || 0;
+    }, this.el = e;
+    const s = {
       bubbles: !1,
       cancelable: !0,
       detail: { current: this.el }
     };
-    this.openEvent = new CustomEvent("Panel.open", e), this.closeEvent = new CustomEvent("Panel.close", e);
+    this.openEvent = new CustomEvent("Panel.open", s), this.closeEvent = new CustomEvent("Panel.close", s);
   }
   /**
    * Init
@@ -23,10 +22,11 @@ class b {
    * @return {void}
    */
   init() {
-    var e, t;
-    this.$button = this.el.querySelector(".js-accordion-header");
-    const s = ((e = this.$button.getAttribute("aria-controls")) == null ? void 0 : e.trim().split(" ")[0]) || "";
-    this.$body = document.getElementById(s), this.$inner = this.$body.querySelector(".js-accordion-inner"), this.isDeselect = JSON.parse(this.el.getAttribute("data-accordion-deselect")), this.isOpen = JSON.parse(this.el.getAttribute("data-accordion-open")), this.$body.setAttribute("aria-labelledby", `${this.$button.id}`), this.handleResize(), this.initEvents(), ((t = this.$button) == null ? void 0 : t.tagName) === "BUTTON" && (this.isOpen === !0 ? this.open() : this.close());
+    this.$button = this.el.querySelector(".js-accordion-header"), this.$body = this.$button.ariaControlsElements[0], this.$inner = this.$body.querySelector(".js-accordion-inner"), this.isDeselect = JSON.parse(
+      this.el.getAttribute("data-accordion-deselect")
+    ), this.isOpen = JSON.parse(
+      this.el.getAttribute("data-accordion-open")
+    ), this.$body.setAttribute("aria-labelledby", `${this.$button.id}`), this.handleResize(), this.initEvents(), this.$button?.tagName === "BUTTON" && (this.isOpen === !0 ? this.open() : this.close());
   }
   /**
    * Init events
@@ -34,7 +34,9 @@ class b {
    * @return {void}
    */
   initEvents() {
-    this.$button.addEventListener("click", this.handleClick, { passive: !0 }), window.addEventListener("resize", this.handleResize, { passive: !0 });
+    this.$button.addEventListener("click", this.handleClick, {
+      passive: !0
+    }), window.addEventListener("resize", this.handleResize, { passive: !0 });
   }
   /**
    * Close
@@ -42,9 +44,11 @@ class b {
    * @return {void}
    */
   close() {
-    this.el.setAttribute("data-accordion-open", "false"), this.$button.setAttribute(p, "false"), this.$body.style.setProperty("max-height", "0"), setTimeout(() => {
+    this.el.setAttribute("data-accordion-open", "false"), this.$button.setAttribute(u, "false"), this.$body.style.setProperty("max-height", `${this.height}px`), setTimeout(() => {
+      this.$body.style.setProperty("max-height", "0");
+    }, 1), setTimeout(() => {
       this.$body.setAttribute("hidden", "");
-    }, this.transitionDuration), d(this.el), this.isOpen = !1;
+    }, this.transitionDuration), c(this.el), this.isOpen = !1;
   }
   /**
    * Open
@@ -52,9 +56,11 @@ class b {
    * @return {void}
    */
   open() {
-    this.el.setAttribute("data-accordion-open", "true"), this.$button.setAttribute(p, "true"), this.$body.removeAttribute("hidden"), setTimeout(() => {
-      this.$body.style.setProperty("max-height", `${this.height}px`);
-    }, 1), f(this.el), this.isOpen = !0;
+    this.el.setAttribute("data-accordion-open", "true"), this.$button.setAttribute(u, "true"), this.$body.removeAttribute("hidden"), setTimeout(() => {
+      this.$body.style.setProperty("max-height", `${this.height}px`), setTimeout(() => {
+        this.$body.style.removeProperty("max-height");
+      }, this.transitionDuration);
+    }, 1), p(this.el), this.isOpen = !0;
   }
   /**
    * Destroy
@@ -62,52 +68,48 @@ class b {
    * @return {void}
    */
   destroy() {
-    this.$button.removeEventListener("click", this.handleClick), window.removeEventListener("resize", this.handleResize), this.$body.style.removeProperty("max-height"), this.$body.style.removeProperty("overflow"), this.$body.removeAttribute("hidden"), d(this.el);
+    this.$button.removeEventListener("click", this.handleClick), window.removeEventListener("resize", this.handleResize), this.$body.style.removeProperty("max-height"), this.$body.style.removeProperty("overflow"), this.$body.removeAttribute("hidden"), c(this.el);
   }
 }
-const v = {
+const b = {
   multiselectable: !1
 };
-class E {
+class $ {
   /**
    * Constructor
    *
    * @param {HTMLElement} el
    * @param {Options} [options]
    */
-  constructor(s, e = {}) {
+  constructor(e, s = {}) {
     this.accordions = [], this.panels = [], this.current = 0, this.listeners = /* @__PURE__ */ new Map(), this.handleHashChange = () => {
-      this.panels.forEach((t, n) => t.$body && `#${t.$body.id}` === u() ? (console.info({ index: n, $body: t.$body, bodyID: `#${t.$body.id}`, getURLHash: u() }), this.current = n, this.panels.forEach((o, r) => {
-        r !== n && o.close();
+      this.panels.forEach((t, i) => t.$body && `#${t.$body.id}` === d() ? (console.info({ index: i, $body: t.$body, bodyID: `#${t.$body.id}`, getURLHash: d() }), this.current = i, this.panels.forEach((h, o) => {
+        o !== i && h.close();
       }), t.open()) : !0);
     }, this.handleKeyDown = (t) => {
-      const { target: n, key: o, code: r } = t, a = () => {
-        var i;
-        n.classList.contains("js-accordion-header") && (this.current = this.current + 1 > this.panels.length - 1 ? 0 : this.current + 1, (i = this.panels[this.current].$button) == null || i.focus(), t.preventDefault());
-      }, l = () => {
-        var i;
-        n.classList.contains("js-accordion-header") && (this.current = 0 > this.current - 1 ? this.panels.length - 1 : this.current - 1, (i = this.panels[this.current].$button) == null || i.focus(), t.preventDefault());
-      }, c = {
-        ArrowUp: l,
-        ArrowRight: a,
-        ArrowDown: a,
-        ArrowLeft: l,
+      const { target: i, key: h, code: o } = t, r = () => {
+        i.classList.contains("js-accordion-header") && (this.current = this.current + 1 > this.panels.length - 1 ? 0 : this.current + 1, this.panels[this.current].$button?.focus(), t.preventDefault());
+      }, a = () => {
+        i.classList.contains("js-accordion-header") && (this.current = 0 > this.current - 1 ? this.panels.length - 1 : this.current - 1, this.panels[this.current].$button?.focus(), t.preventDefault());
+      }, l = {
+        ArrowUp: a,
+        ArrowRight: r,
+        ArrowDown: r,
+        ArrowLeft: a,
         Home: () => {
-          var i;
-          (i = this.panels[0].$button) == null || i.focus(), t.preventDefault();
+          this.panels[0].$button?.focus(), t.preventDefault();
         },
         End: () => {
-          var i;
-          (i = this.panels[this.panels.length - 1].$button) == null || i.focus(), t.preventDefault();
+          this.panels[this.panels.length - 1].$button?.focus(), t.preventDefault();
         },
         default: () => !1
       };
-      return (c[o || r] || c.default)();
+      return (l[h || o] || l.default)();
     }, this.handlePanelOpen = (t) => {
-      this.current = t, this.options.multiselectable || this.panels.forEach((n, o) => {
-        o !== t && n.close();
+      this.current = t, this.options.multiselectable || this.panels.forEach((i, h) => {
+        h !== t && i.close();
       });
-    }, this.closeAll = () => this.panels.forEach((t) => t.close()), this.el = s, this.options = { ...v, ...e };
+    }, this.closeAll = () => this.panels.forEach((t) => t.close()), this.el = e, this.options = { ...b, ...s };
   }
   /**
    * Initializes the accordion component.
@@ -123,9 +125,9 @@ class E {
    * - Handles any hash changes by calling `this.handleHashChange()`.
    */
   init() {
-    return this.el instanceof HTMLElement ? (this.accordions = [...this.el.children].filter((s) => s.classList.contains("js-accordion-panel")), this.accordions.forEach((s, e) => {
-      const t = new b(s);
-      return t.init(), this.panels.push(t), this.listeners.set(e, () => this.handlePanelOpen(e)), t.el.addEventListener("Panel.open", this.listeners.get(e)), !0;
+    return this.el instanceof HTMLElement ? (this.accordions = [...this.el.children].filter((e) => e.classList.contains("js-accordion-panel")), this.accordions.forEach((e, s) => {
+      const t = new f(e);
+      return t.init(), this.panels.push(t), this.listeners.set(s, () => this.handlePanelOpen(s)), t.el.addEventListener("Panel.open", this.listeners.get(s)), !0;
     }), this.initEvents(), this.handleHashChange(), !0) : !1;
   }
   /**
@@ -146,11 +148,11 @@ class E {
    * @return {boolean}
    */
   destroyAll() {
-    return this.panels.forEach((s, e) => {
-      s.destroy(), s.el.removeEventListener("Panel.open", this.listeners.get(e));
+    return this.panels.forEach((e, s) => {
+      e.destroy(), e.el.removeEventListener("Panel.open", this.listeners.get(s));
     }), this.panels = [], window.removeEventListener("hashchange", this.handleHashChange), this.el.removeEventListener("keydown", this.handleKeyDown), !0;
   }
 }
 export {
-  E as default
+  $ as default
 };

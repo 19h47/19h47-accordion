@@ -1,6 +1,6 @@
-import { setInactive, setActive } from './utils';
+import { setInactive, setActive } from "./utils";
 
-const EXPANDED = 'aria-expanded';
+const EXPANDED = "aria-expanded";
 
 /**
  * Panel
@@ -33,7 +33,7 @@ export default class Panel {
 			bubbles: false,
 			cancelable: true,
 			detail: { current: this.el },
-		}
+		};
 
 		this.openEvent = new CustomEvent(`Panel.open`, options);
 		this.closeEvent = new CustomEvent(`Panel.close`, options);
@@ -45,22 +45,28 @@ export default class Panel {
 	 * @return {void}
 	 */
 	init(): void {
-		this.$button = this.el.querySelector('.js-accordion-header');
+		this.$button = this.el.querySelector(".js-accordion-header");
 
-		const control = this.$button!.getAttribute('aria-controls')?.trim().split(' ')[0] || '';
+		this.$body = (
+			this.$button as HTMLElement & {
+				ariaControlsElements: readonly Element[];
+			}
+		).ariaControlsElements[0] as HTMLElement;
+		this.$inner = this.$body!.querySelector(".js-accordion-inner");
 
-		this.$body = document.getElementById(control);
-		this.$inner = this.$body!.querySelector('.js-accordion-inner');
+		this.isDeselect = JSON.parse(
+			this.el.getAttribute("data-accordion-deselect") as string,
+		);
+		this.isOpen = JSON.parse(
+			this.el.getAttribute("data-accordion-open") as string,
+		);
 
-		this.isDeselect = JSON.parse(this.el.getAttribute('data-accordion-deselect') as string);
-		this.isOpen = JSON.parse(this.el.getAttribute('data-accordion-open') as string);
-
-		this.$body!.setAttribute('aria-labelledby', `${this.$button!.id}`);
+		this.$body!.setAttribute("aria-labelledby", `${this.$button!.id}`);
 
 		this.handleResize();
 		this.initEvents();
 
-		if (this.$button?.tagName === 'BUTTON') {
+		if (this.$button?.tagName === "BUTTON") {
 			if (true === this.isOpen) {
 				this.open();
 			} else {
@@ -75,8 +81,10 @@ export default class Panel {
 	 * @return {void}
 	 */
 	initEvents(): void {
-		this.$button!.addEventListener('click', this.handleClick, { passive: true });
-		window.addEventListener('resize', this.handleResize, { passive: true });
+		this.$button!.addEventListener("click", this.handleClick, {
+			passive: true,
+		});
+		window.addEventListener("resize", this.handleResize, { passive: true });
 	}
 
 	/*
@@ -110,10 +118,12 @@ export default class Panel {
 	 * @return {void}
 	 */
 	handleResize = (): void => {
-		this.$body!.removeAttribute('hidden');
+		this.$body!.removeAttribute("hidden");
 		this.height = this.$inner?.offsetHeight || 0;
-		this.$body!.style.setProperty('overflow', 'hidden');
-		this.transitionDuration = (parseFloat(getComputedStyle(this.$body!).transitionDuration)) * 1000 || 0;
+		this.$body!.style.setProperty("overflow", "hidden");
+		this.transitionDuration =
+			parseFloat(getComputedStyle(this.$body!).transitionDuration) *
+			1000 || 0;
 	};
 
 	/**
@@ -122,19 +132,18 @@ export default class Panel {
 	 * @return {void}
 	 */
 	close(): void {
-		this.el.setAttribute('data-accordion-open', 'false');
-		this.$button!.setAttribute(EXPANDED, 'false');
+		this.el.setAttribute("data-accordion-open", "false");
+		this.$button!.setAttribute(EXPANDED, "false");
 
-		this.$body!.style.setProperty('max-height', `${this.height}px`);
+		this.$body!.style.setProperty("max-height", `${this.height}px`);
 
 		setTimeout(() => {
-			this.$body!.style.setProperty('max-height', '0');
+			this.$body!.style.setProperty("max-height", "0");
 		}, 1);
 
 		setTimeout(() => {
-			this.$body!.setAttribute('hidden', '');
+			this.$body!.setAttribute("hidden", "");
 		}, this.transitionDuration);
-
 
 		setInactive(this.el);
 		this.isOpen = false;
@@ -146,16 +155,16 @@ export default class Panel {
 	 * @return {void}
 	 */
 	open(): void {
-		this.el.setAttribute('data-accordion-open', 'true');
-		this.$button!.setAttribute(EXPANDED, 'true');
+		this.el.setAttribute("data-accordion-open", "true");
+		this.$button!.setAttribute(EXPANDED, "true");
 
-		this.$body!.removeAttribute('hidden');
+		this.$body!.removeAttribute("hidden");
 
 		setTimeout(() => {
-			this.$body!.style.setProperty('max-height', `${this.height}px`);
+			this.$body!.style.setProperty("max-height", `${this.height}px`);
 
 			setTimeout(() => {
-				this.$body!.style.removeProperty('max-height');
+				this.$body!.style.removeProperty("max-height");
 			}, this.transitionDuration);
 		}, 1);
 
@@ -169,12 +178,12 @@ export default class Panel {
 	 * @return {void}
 	 */
 	destroy(): void {
-		this.$button!.removeEventListener('click', this.handleClick);
-		window.removeEventListener('resize', this.handleResize);
+		this.$button!.removeEventListener("click", this.handleClick);
+		window.removeEventListener("resize", this.handleResize);
 
-		this.$body!.style.removeProperty('max-height');
-		this.$body!.style.removeProperty('overflow');
-		this.$body!.removeAttribute('hidden');
+		this.$body!.style.removeProperty("max-height");
+		this.$body!.style.removeProperty("overflow");
+		this.$body!.removeAttribute("hidden");
 
 		setInactive(this.el);
 	}
