@@ -1,550 +1,678 @@
 <!doctype html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Accordion</title>
+		<link rel="icon" type="image/png" href="accordion.png" />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/themes/prism.min.css"
+			rel="stylesheet"
+		/>
+	</head>
 
-<head>
-	<meta charset="UTF-8" />
-	<title>Accordion</title>
-	<link rel="icon" type="image/png" href="accordion.png" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
-	<link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet" />
-	<style>
-		.Alert {
-			margin: 1em;
-			position: fixed;
-			top: 0;
-			right: 0;
-			z-index: 10;
-		}
-	</style>
-</head>
+	<body>
+		<div
+			class="toast-container position-fixed top-0 end-0 p-3 js-alert"
+			aria-live="polite"
+			aria-atomic="true"
+		></div>
 
-<body>
-	<div class="Alert js-alert"></div>
-	<div class="container">
-		<div class="row my-5">
-			<div class="col-12">
-				<h1 class="m-0">
-					<a href="https://github.com/19h47/19h47-accordion">Accordion</a>
+		<div class="container py-5">
+			<header class="mb-5">
+				<h1 class="mb-2">
+					<a href="https://github.com/19h47/19h47-accordion">@19h47/accordion</a>
 				</h1>
-				<p>Build vertically collapsing accordions</p>
-			</div>
-		</div>
-		<div class="row my-5">
-			<div class="col-12">
-				<pre class="p-3 mt-0 mb-3 language-javascript"><code>import Accordion from '@19h47/accordion';
+				<p class="lead mb-2">Build vertically collapsing accordions</p>
+				<p class="text-secondary mb-0">
+					Panels are wired through <code>aria-controls</code> and resolved at runtime
+					with <code>ariaControlsElements</code> (Baseline 2025).
+				</p>
+			</header>
 
-const $element = document.querySelector('.js-accordion');
-const accordion = new Accordion($element);
+			<section class="mb-5" aria-labelledby="usage-heading">
+				<h2 id="usage-heading" class="h4 mb-3">Usage</h2>
+				<pre class="p-3 mb-3 language-javascript"><code>import Accordion from '@19h47/accordion';
+
+const element = document.querySelector('.js-accordion');
+const accordion = new Accordion(element);
 
 accordion.init();</code></pre>
 
-				<pre class="p3 mb-0 mt-3 language-html"><code>&lt;div class=&quot;js-accordion&quot;&gt;
-	&lt;div class=&quot;js-accordion-panel&quot; data-accordion-open=&quot;true&quot; data-accordion-deselect=&quot;true&quot;&gt;
+				<pre class="p-3 mb-0 language-html"><code>&lt;div class="js-accordion"&gt;
+	&lt;div
+		class="js-accordion-panel"
+		data-accordion-open="true"
+		data-accordion-deselect="true"
+	&gt;
 		&lt;button
-			class=&quot;js-accordion-header&quot;
-			type=&quot;button&quot;
-			aria-expanded=&quot;true&quot;
-			aria-controls=&quot;lorem&quot;
+			class="js-accordion-header"
+			type="button"
+			id="lorem-header"
+			aria-expanded="true"
+			aria-controls="lorem-body"
 		&gt;
 			Toggle
 		&lt;/button&gt;
 
-		&lt;div id=&quot;lorem&quot; class=&quot;js-accordion-body&quot; role=&quot;region&quot;&gt;
-			&lt;div class=&quot;js-accordion-inner&quot;&gt;
-				Sit amet, consectetur adipisicing elit. Omnis ex inventore tempore. Quam voluptas
-				quibusdam excepturi accusantium voluptatum facere. Nemo vero iste recusandae, at
-				magnam tenetur maxime ad optio veniam!&lt;br /&gt;
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque, molestias
-				excepturi molestiae nesciunt alias. Nobis aut praesentium, commodi minus laborum
-				ullam at quod soluta qui tempore sit eveniet dicta esse.
+		&lt;div id="lorem-body" role="region" aria-labelledby="lorem-header"&gt;
+			&lt;div class="js-accordion-inner"&gt;
+				Panel content
 			&lt;/div&gt;
 		&lt;/div&gt;
 	&lt;/div&gt;
 &lt;/div&gt;</code></pre>
-			</div>
-		</div>
-		<div class="row my-5">
-			<div class="col-12">
-				<div class="border p-3">
-					<h2 class="mb-3"><a href="#deselectable">Deselectable</a></h2>
+			</section>
+
+			<section class="mb-5" aria-labelledby="deselectable-heading">
+				<div class="border rounded p-3">
+					<h2 id="deselectable-heading" class="h4 mb-3">
+						<a href="#deselectable-heading">Deselectable</a>
+					</h2>
 
 					<div class="js-accordion">
-						<div class="border p-3 my-3">
-							<button class="btn btn-primary js-destroy" type="button">
+						<div class="d-flex gap-2 mb-3">
+							<button class="btn btn-outline-secondary js-destroy" type="button">
 								Destroy
 							</button>
-							<button class="btn btn-primary js-create" type="button">
-								Create
-							</button>
+							<button class="btn btn-primary js-create" type="button">Create</button>
 						</div>
 
-						<div class="card js-accordion-panel my-3 is-active" data-accordion-open="true"
-							data-accordion-deselect="true">
+						<div
+							class="card js-accordion-panel mb-3 is-active"
+							data-accordion-open="true"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
-									aria-controls="lorem-01" id="lorem-01-header">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="lorem-01-header"
+									aria-expanded="true"
+									aria-controls="lorem-01"
+								>
 									Toggle
 								</button>
 							</div>
-
-							<div id="lorem-01">
+							<div id="lorem-01" role="region" aria-labelledby="lorem-01-header">
 								<div class="card-body js-accordion-inner">
-									<div class="form-group">
-										<label for="number"> Number </label>
+									<div class="mb-3">
+										<label class="form-label" for="number">Number</label>
 										<input id="number" class="form-control" type="number" />
 									</div>
 									<ul>
 										<li><a href="#">Lorem</a></li>
-										<li><a href="#">Lorem</a></li>
-										<li><a href="#">Lorem</a></li>
-										<li><a href="#">Lorem</a></li>
-										<li><a href="#">Lorem</a></li>
+										<li><a href="#">Ipsum</a></li>
+										<li><a href="#">Dolor</a></li>
 									</ul>
-									<p>
-										Sit amet, consectetur adipisicing elit. Omnis ex
-										inventore tempore. Quam voluptas quibusdam excepturi
-										accusantium voluptatum facere. Nemo vero iste
-										recusandae, at magnam tenetur maxime ad optio veniam!<br />
-										Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Doloremque, molestias excepturi molestiae nesciunt
-										alias. Nobis aut praesentium, commodi minus laborum
-										ullam at quod soluta qui tempore sit eveniet dicta esse.
+									<p class="mb-0">
+										Sit amet, consectetur adipisicing elit. Omnis ex inventore
+										tempore. Quam voluptas quibusdam excepturi accusantium
+										voluptatum facere.
 									</p>
 								</div>
 							</div>
 						</div>
 
-						<div class="card js-accordion-panel my-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							class="card js-accordion-panel mb-3"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
-									aria-controls="consectetur-01">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="consectetur-01-header"
+									aria-expanded="false"
+									aria-controls="consectetur-01"
+								>
 									Toggle
 								</button>
 							</div>
-
-							<div id="consectetur-01" hidden>
+							<div
+								id="consectetur-01"
+								role="region"
+								aria-labelledby="consectetur-01-header"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
-									<ul>
-										<li><a href="#">Lorem</a></li>
-										<li><a href="#">Lorem</a></li>
-										<li><a href="#">Lorem</a></li>
-										<li><a href="#">Lorem</a></li>
-										<li><a href="#">Lorem</a></li>
-									</ul>
-									<p>Itaque dolore ipsa harum nobis distinctio aperiam quis omnis
-										error incidunt iusto dolorem inventore laboriosam quaerat
-										numquam tenetur dicta quibusdam quisquam, debitis!
+									<p class="mb-0">
+										Itaque dolore ipsa harum nobis distinctio aperiam quis omnis
+										error incidunt iusto dolorem inventore laboriosam.
 									</p>
 								</div>
 							</div>
 						</div>
 
-						<div class="card js-accordion-panel mt-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							class="card js-accordion-panel"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header has-decor" type="button"
-									aria-expanded="false" aria-controls="nihil-01" id="nihil-01-header">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="nihil-01-header"
+									aria-expanded="false"
+									aria-controls="nihil-01"
+								>
 									Toggle
 								</button>
 							</div>
-
-							<div id="nihil-01" hidden>
+							<div
+								id="nihil-01"
+								role="region"
+								aria-labelledby="nihil-01-header"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
-									Nemo nobis doloribus praesentium eum animi qui eos. Sit
-									accusantium rem consequatur quisquam ullam veritatis tenetur
-									architecto.
+									Nemo nobis doloribus praesentium eum animi qui eos.
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="row my-5">
-			<div class="col-12">
-				<div class="border p-3">
-					<h2 class="mb-3"><a href="#undeselectable">Undeselectable</a></h2>
+			</section>
+
+			<section class="mb-5" aria-labelledby="undeselectable-heading">
+				<div class="border rounded p-3">
+					<h2 id="undeselectable-heading" class="h4 mb-3">
+						<a href="#undeselectable-heading">Undeselectable</a>
+					</h2>
 
 					<div class="js-accordion">
-						<div class="border p-3 my-3">
-							<button class="btn btn-primary js-destroy" type="button">
+						<div class="d-flex gap-2 mb-3">
+							<button class="btn btn-outline-secondary js-destroy" type="button">
 								Destroy
 							</button>
-							<button class="btn btn-primary js-create" type="button">
-								Create
-							</button>
+							<button class="btn btn-primary js-create" type="button">Create</button>
 						</div>
 
-						<div class="card js-accordion-panel my-3 is-active" data-accordion-open="true"
-							data-accordion-deselect="false">
+						<div
+							class="card js-accordion-panel mb-3 is-active"
+							data-accordion-open="true"
+							data-accordion-deselect="false"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
-									aria-controls="lorem-02" id="lorem-02-header">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="lorem-02-header"
+									aria-expanded="true"
+									aria-controls="lorem-02"
+								>
 									Toggle
 								</button>
 							</div>
-
-							<div id="lorem-02">
+							<div id="lorem-02" role="region" aria-labelledby="lorem-02-header">
 								<div class="card-body js-accordion-inner">
-									Sit amet, consectetur adipisicing elit. Omnis ex inventore
-									tempore. Quam voluptas quibusdam excepturi accusantium
-									voluptatum facere. Nemo vero iste recusandae, at magnam
-									tenetur maxime ad optio veniam!<br />
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Doloremque, molestias excepturi molestiae nesciunt alias.
-									Nobis aut praesentium, commodi minus laborum ullam at quod
-									soluta qui tempore sit eveniet dicta esse.
+									<p class="mb-0">
+										Once open, this panel cannot be collapsed from its header.
+									</p>
 								</div>
 							</div>
 						</div>
 
-						<div class="card js-accordion-panel my-3" data-accordion-open="false"
-							data-accordion-deselect="false">
+						<div
+							class="card js-accordion-panel mb-3"
+							data-accordion-open="false"
+							data-accordion-deselect="false"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="false"
-									aria-controls="consectetur-02">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="consectetur-02-header"
+									aria-expanded="false"
+									aria-controls="consectetur-02"
+								>
 									Toggle
 								</button>
 							</div>
-
-							<div id="consectetur-02">
+							<div
+								id="consectetur-02"
+								role="region"
+								aria-labelledby="consectetur-02-header"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
-									Itaque dolore ipsa harum nobis distinctio aperiam quis omnis
-									error incidunt iusto dolorem inventore laboriosam quaerat
-									numquam tenetur dicta quibusdam quisquam, debitis!
+									Itaque dolore ipsa harum nobis distinctio aperiam quis omnis.
 								</div>
 							</div>
 						</div>
 
-						<div class="card js-accordion-panel mt-3" data-accordion-open="false"
-							data-accordion-deselect="false">
+						<div
+							class="card js-accordion-panel"
+							data-accordion-open="false"
+							data-accordion-deselect="false"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header has-decor" type="button"
-									aria-expanded="false" aria-controls="nihil-02" id="nihil-02-header">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="nihil-02-header"
+									aria-expanded="false"
+									aria-controls="nihil-02"
+								>
 									Toggle
 								</button>
 							</div>
-
-							<div id="nihil-02">
+							<div
+								id="nihil-02"
+								role="region"
+								aria-labelledby="nihil-02-header"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
-									Nemo nobis doloribus praesentium eum animi qui eos. Sit
-									accusantium rem consequatur quisquam ullam veritatis tenetur
-									architecto.
+									Nemo nobis doloribus praesentium eum animi qui eos.
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="row my-5">
-			<div class="col-12">
-				<div class="border p-3">
-					<h2 class="mb-3"><a href="#with-transition">With transition</a></h2>
+			</section>
+
+			<section class="mb-5" aria-labelledby="transition-heading">
+				<div class="border rounded p-3">
+					<h2 id="transition-heading" class="h4 mb-3">
+						<a href="#transition-heading">With transition</a>
+					</h2>
 
 					<div class="js-accordion">
-						<div class="border p-3 my-3">
-							<button class="btn btn-primary js-destroy" type="button">
+						<div class="d-flex gap-2 mb-3">
+							<button class="btn btn-outline-secondary js-destroy" type="button">
 								Destroy
 							</button>
-							<button class="btn btn-primary js-create" type="button">
-								Create
-							</button>
+							<button class="btn btn-primary js-create" type="button">Create</button>
 						</div>
 
-						<div class="card js-accordion-panel my-3 is-active" data-accordion-deselect="true">
+						<div
+							class="card js-accordion-panel mb-3 is-active"
+							data-accordion-open="true"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
-									aria-controls="lorem-adipisicing-01" id="lorem-adipisicing-01-header">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="lorem-adipisicing-01-header"
+									aria-expanded="true"
+									aria-controls="lorem-adipisicing-01"
+								>
 									Toggle
 								</button>
 							</div>
-
-							<div id="lorem-adipisicing-01" style="transition: max-height 0.3s ease-in-out;">
+							<div
+								id="lorem-adipisicing-01"
+								role="region"
+								aria-labelledby="lorem-adipisicing-01-header"
+								style="transition: max-height 0.3s ease-in-out"
+							>
 								<div class="card-body js-accordion-inner">
-									<p>
-										Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus quos
-										dolor deleniti? A dolores tempore rerum accusantium perferendis architecto at
-										eos praesentium totam dolorum iusto consequuntur, quisquam quibusdam sapiente
-										fugiat!
+									<p class="mb-0">
+										Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+										Voluptatibus quos dolor deleniti?
 									</p>
-									<ul>
-										<li><a href="#">Lorem</a></li>
-										<li><a href="#">Lorem</a></li>
-										<li><a href="#">Lorem</a></li>
-										<li><a href="#">Lorem</a></li>
-										<li><a href="#">Lorem</a></li>
-									</ul>
 								</div>
 							</div>
 						</div>
 
-						<div class="card js-accordion-panel my-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							class="card js-accordion-panel mb-3"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
-									aria-controls="consectetur-amet-01" id="consectetur-amet-01-header">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="consectetur-amet-01-header"
+									aria-expanded="false"
+									aria-controls="consectetur-amet-01"
+								>
 									Toggle
 								</button>
 							</div>
-
-							<div id="consectetur-amet-01" style="transition: max-height 0.3s ease-in-out;" hidden>
+							<div
+								id="consectetur-amet-01"
+								role="region"
+								aria-labelledby="consectetur-amet-01-header"
+								style="transition: max-height 0.3s ease-in-out"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
-									<p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
-										fugiat eligendi ex
-										minima, quo eius dicta, cumque adipisci odio et hic in reiciendis sapiente nisi
-										ipsam rerum maxime corporis dolore!</p>
+									<p class="mb-0">
+										Lorem ipsum dolor sit amet consectetur adipisicing elit.
+										Magnam fugiat eligendi ex minima.
+									</p>
 								</div>
 							</div>
 						</div>
 
-						<div class="card js-accordion-panel mt-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							class="card js-accordion-panel"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header has-decor" type="button"
-									aria-expanded="false" aria-controls="nihil-sit-01" id="nihil-sit-01-header">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="nihil-sit-01-header"
+									aria-expanded="false"
+									aria-controls="nihil-sit-01"
+								>
 									Toggle
 								</button>
 							</div>
-
-							<div id="nihil-sit-01" style="transition: max-height 0.3s ease-in-out;" hidden>
+							<div
+								id="nihil-sit-01"
+								role="region"
+								aria-labelledby="nihil-sit-01-header"
+								style="transition: max-height 0.3s ease-in-out"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
-									<p class="mb-0">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque
-										cupiditate
-										aspernatur ut magnam quod voluptate recusandae laboriosam esse natus nobis
-										obcaecati
-										porro praesentium accusamus odio, assumenda voluptas optio vitae sapiente!</p>
+									<p class="mb-0">
+										Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+										Eaque cupiditate aspernatur ut magnam.
+									</p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="row my-5">
-			<div class="col-12">
-				<div class="border p-3">
-					<h2 class="mb-3"><a href="#hash">Hash</a></h2>
+			</section>
+
+			<section class="mb-5" aria-labelledby="hash-heading">
+				<div class="border rounded p-3">
+					<h2 id="hash-heading" class="h4 mb-3">
+						<a href="#hash-heading">Hash</a>
+					</h2>
+					<p class="text-secondary small">
+						Open a panel via its body id, e.g.
+						<a href="#behir-body"><code>#behir-body</code></a>.
+					</p>
 
 					<div class="js-accordion">
-						<div id="behir" class="card js-accordion-panel my-3 is-active" data-accordion-open="true"
-							data-accordion-deselect="true">
+						<div
+							id="behir"
+							class="card js-accordion-panel mb-3 is-active"
+							data-accordion-open="true"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<a href="#behir-body" id="behir-header" class="btn btn-primary js-accordion-header"
-									type="button" aria-expanded="true" aria-controls="behir-body">
+								<a
+									href="#behir-body"
+									id="behir-header"
+									class="btn btn-primary js-accordion-header"
+									aria-expanded="true"
+									aria-controls="behir-body"
+								>
 									Behir
 								</a>
 							</div>
-
-							<div id="behir-body">
+							<div id="behir-body" role="region" aria-labelledby="behir-header">
 								<div class="card-body js-accordion-inner">
-									<p class="mb-0">The behir is a snake-like reptilian monster whose dozen legs
-										allow it to move with considerable speed and climb at fully
-										half its normal movement rate. It can fold its limbs close
-										to its long, narrow body and slither in snake-fashion if it
-										desires. The head looks more crocodilian than snake-like,
-										but has no difficulty in opening its mouth wide enough to
-										swallow prey whole, the way a snake does.<br />
-										Behir have band-like scales of great hardness. Their color
-										ranges from ultramarine to deep blue with bands of
-										gray-brown. The belly is pale blue. The two large horns
-										curving back over the head look dangerous enough but are
-										actually used for preening the creature's scales and not for
-										fighting.</p>
+									<p class="mb-0">
+										The behir is a snake-like reptilian monster whose dozen legs
+										allow it to move with considerable speed.
+									</p>
 								</div>
 							</div>
 						</div>
 
-						<div id="stirge" class="card js-accordion-panel my-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							id="stirge"
+							class="card js-accordion-panel mb-3"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<a href="#stirge-body" id="stirge-header" class="btn btn-primary js-accordion-header"
-									aria-expanded="true" aria-controls="stirge-body">
+								<a
+									href="#stirge-body"
+									id="stirge-header"
+									class="btn btn-primary js-accordion-header"
+									aria-expanded="false"
+									aria-controls="stirge-body"
+								>
 									Stirge
 								</a>
 							</div>
-
-							<div id="stirge-body" hidden>
+							<div
+								id="stirge-body"
+								role="region"
+								aria-labelledby="stirge-header"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
-									Stirges are bird-like creatures that drink the blood of
-									their victims for sustenance. They have four small,
-									pincer-like legs that they use to clamp onto the necks of
-									their victims. They are rusty-red to reddish brown in color,
-									and their eyes and feet are yellowish. The dangling
-									proboscises of stirges are pink at the tip, fading to gray
-									at the base (near their heads).
+									Stirges are bird-like creatures that drink the blood of their
+									victims for sustenance.
 								</div>
 							</div>
 						</div>
 
-						<div id="androsphinx" class="card js-accordion-panel mt-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							id="androsphinx"
+							class="card js-accordion-panel"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<a href="#androsphinx-body" id="androsphinx-header"
-									class="btn btn-primary js-accordion-header has-decor" aria-expanded="false"
-									aria-controls="androsphinx-body">
+								<a
+									href="#androsphinx-body"
+									id="androsphinx-header"
+									class="btn btn-primary js-accordion-header"
+									aria-expanded="false"
+									aria-controls="androsphinx-body"
+								>
 									Androsphinx
 								</a>
 							</div>
-
-							<div id="androsphinx-body" hidden>
+							<div
+								id="androsphinx-body"
+								role="region"
+								aria-labelledby="androsphinx-header"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
-									Androsphinxes are huge, winged mythological creatures with
-									the bodies of male lions and man-like facial features. They
-									can speak the languages of common and all sphinxes.
+									Androsphinxes are huge, winged mythological creatures with the
+									bodies of male lions and man-like facial features.
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-12 my-5">
-				<div class="border p-3">
-					<h2 class="mb-3"><a href="#multiselectable">Multiselectable</a></h2>
+			</section>
+
+			<section class="mb-5" aria-labelledby="multiselectable-heading">
+				<div class="border rounded p-3">
+					<h2 id="multiselectable-heading" class="h4 mb-3">
+						<a href="#multiselectable-heading">Multiselectable</a>
+					</h2>
 
 					<div class="js-accordion" data-accordion-multiselectable="true">
-						<!-- Panel -->
-						<div id="chimera" class="card js-accordion-panel my-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							id="chimera"
+							class="card js-accordion-panel mb-3"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="false"
-									aria-controls="chimera-body">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="chimera-header"
+									aria-expanded="false"
+									aria-controls="chimera-body"
+								>
 									Chimera
 								</button>
 							</div>
-
-							<div id="chimera-body">
+							<div
+								id="chimera-body"
+								role="region"
+								aria-labelledby="chimera-header"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
-									<p>
-										How chimerae were created is a dark mystery better left
-										unexplored. The chimera has the hindquarters of a large,
-										black goat and the forequarters of a huge, tawny lion.
-										Its body has brownish-black wings like those of a
-										dragon.
-									</p>
-									<p>
-										The monster has three heads, those of a goat, a lion,
-										and a fierce dragon. The goat head is pitch black, with
-										glowing amber eyes and long ochre horns. The lion head
-										is framed by a brown mane and has green eyes. The dragon
-										head is covered with orange scales and has black eyes.
-									</p>
 									<p class="mb-0">
-										The chimera speaks a limited form of the foul language
-										of red dragons. As a rule, however, it will only pause
-										to communicate with those creatures who are more
-										powerful than itself.
+										The chimera has the hindquarters of a large black goat and
+										the forequarters of a huge tawny lion.
 									</p>
 								</div>
 							</div>
 						</div>
 
-						<div id="fish" class="card js-accordion-panel my-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							id="fish"
+							class="card js-accordion-panel mb-3"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button type="button" class="btn btn-primary js-accordion-header" aria-expanded="true"
-									aria-controls="fish-body">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="fish-header"
+									aria-expanded="false"
+									aria-controls="fish-body"
+								>
 									Fish
 								</button>
 							</div>
-
-							<div id="fish-body">
+							<div id="fish-body" role="region" aria-labelledby="fish-header" hidden>
 								<div class="card-body js-accordion-inner">
-									Giant fish are a diverse group of creatures with varying
-									attack and defense capabilities. Many of these creatures are
-									able to swallow victims whole. Swallowed victims take normal
-									bite damage. Victims take 1 point of damage per round from
-									the fish's digestive juices and have a 5% cumulative chance
-									per round of suffocating. To escape the fish's stomach, a
-									victim can cut free with a sharp-edged weapon. The victim
-									may be rescued by cutting or tearing from the outside. When
-									the fish has lost 50% of its hit points, the victim breaks
-									free.
+									Giant fish are a diverse group of creatures with varying attack
+									and defense capabilities.
 								</div>
 							</div>
 						</div>
 
-						<div id="lizard-man" class="card js-accordion-panel mt-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							id="lizard-man"
+							class="card js-accordion-panel"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button type="button" class="btn btn-primary js-accordion-header has-decor"
-									aria-expanded="false" aria-controls="lizard-man-body">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="lizard-man-header"
+									aria-expanded="false"
+									aria-controls="lizard-man-body"
+								>
 									Lizard Man
 								</button>
 							</div>
-
-							<div id="lizard-man-body">
+							<div
+								id="lizard-man-body"
+								role="region"
+								aria-labelledby="lizard-man-header"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
-									Lizard men are savage, semi-aquatic, reptilian humanoids
-									that live through scavenging, raiding, and, in less hostile
-									areas, by fishing and gathering.<br />
-									Adult lizard men stand 6 to 7 feet tall, weighing 200 to 250
-									pounds. Skin tones range from dark green to gray to brown,
-									and their scales give them a flecked appearance. Their tails
-									average 3 to 4 feet long and are not prehensile. Males are
-									nearly impossible to distinguish from females without close
-									inspection. Lizard man garb is limited to strings of bones
-									and other barbaric ornament. Lizard men speak their own
-									language.
+									Lizard men are savage, semi-aquatic, reptilian humanoids.
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 
-			<div class="col-12 my-5">
-				<div class="border p-3">
-					<h2 class="mb-3"><a href="#nested">Nested</a></h2>
+			<section class="mb-5" aria-labelledby="nested-heading">
+				<div class="border rounded p-3">
+					<h2 id="nested-heading" class="h4 mb-3">
+						<a href="#nested-heading">Nested</a>
+					</h2>
 
 					<div class="js-accordion">
-						<div class="card js-accordion-panel my-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							class="card js-accordion-panel mb-3"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="false"
-									aria-controls="lorem-03" id="lorem-03-header">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="lorem-03-header"
+									aria-expanded="false"
+									aria-controls="lorem-03"
+								>
 									Lorem ipsum
 								</button>
 							</div>
-
-							<div id="lorem-03">
+							<div
+								id="lorem-03"
+								role="region"
+								aria-labelledby="lorem-03-header"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
 									<p>Dolor sit, amet consectetur adipisicing elit.</p>
 
 									<div class="js-accordion">
-										<div class="card js-accordion-panel mt-3" data-accordion-open="false"
-											data-accordion-deselect="true">
+										<div
+											class="card js-accordion-panel"
+											data-accordion-open="false"
+											data-accordion-deselect="true"
+										>
 											<div class="card-header">
-												<button class="btn btn-primary js-accordion-header" type="button"
-													aria-expanded="false" aria-controls="porro-01" id="porro-01-header">
+												<button
+													class="btn btn-primary js-accordion-header"
+													type="button"
+													id="porro-01-header"
+													aria-expanded="false"
+													aria-controls="porro-01"
+												>
 													Porro
 												</button>
 											</div>
-
-											<div id="porro-01">
+											<div
+												id="porro-01"
+												role="region"
+												aria-labelledby="porro-01-header"
+												hidden
+											>
 												<div class="card-body js-accordion-inner">
-													<p>Porro magnam dolorem maxime odio nulla
-														autem, sed veritatis sit possimus?</p>
+													<p>
+														Porro magnam dolorem maxime odio nulla autem.
+													</p>
 
 													<div class="js-accordion">
-														<div class="card js-accordion-panel mt-3"
-															data-accordion-open="false" data-accordion-deselect="true">
+														<div
+															class="card js-accordion-panel"
+															data-accordion-open="false"
+															data-accordion-deselect="true"
+														>
 															<div class="card-header">
-																<button class="btn btn-primary js-accordion-header"
-																	type="button" aria-expanded="false"
-																	aria-controls="architecto" id="architecto-header">
+																<button
+																	class="btn btn-primary js-accordion-header"
+																	type="button"
+																	id="architecto-header"
+																	aria-expanded="false"
+																	aria-controls="architecto"
+																>
 																	Architecto
 																</button>
 															</div>
-
-															<div id="architecto">
+															<div
+																id="architecto"
+																role="region"
+																aria-labelledby="architecto-header"
+																hidden
+															>
 																<div class="card-body js-accordion-inner">
-																	Lorem ipsum, dolor sit amet consectetur adipisicing
-																	elit. Provident exercitationem repudiandae illum
-																	officiis sint laudantium, maiores est mollitia,
-																	atque minus nisi facilis soluta obcaecati ratione
-																	deserunt architecto asperiores quo cumque.
+																	Lorem ipsum, dolor sit amet consectetur
+																	adipisicing elit.
 																</div>
 															</div>
 														</div>
@@ -557,275 +685,295 @@ accordion.init();</code></pre>
 							</div>
 						</div>
 
-						<div id="elit" class="card js-accordion-panel my-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							id="elit"
+							class="card js-accordion-panel mb-3"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button type="button" class="btn btn-primary js-accordion-header" aria-expanded="true"
-									aria-controls="elit-body">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="elit-header"
+									aria-expanded="false"
+									aria-controls="elit-body"
+								>
 									Elit
 								</button>
 							</div>
-
-							<div id="elit-body">
+							<div id="elit-body" role="region" aria-labelledby="elit-header" hidden>
 								<div class="card-body js-accordion-inner">
-									Nihil iure suscipit reprehenderit nisi eaque at veniam
-									dolorem officiis omnis quam perferendis.
+									Nihil iure suscipit reprehenderit nisi eaque at veniam.
 								</div>
 							</div>
 						</div>
 
-						<div id="quam" class="card js-accordion-panel mt-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							id="quam"
+							class="card js-accordion-panel"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button type="button" class="btn btn-primary js-accordion-header has-decor"
-									aria-expanded="false" aria-controls="quam-body">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="quam-header"
+									aria-expanded="false"
+									aria-controls="quam-body"
+								>
 									Quam
 								</button>
 							</div>
-
-							<div id="quam-body">
+							<div id="quam-body" role="region" aria-labelledby="quam-header" hidden>
 								<div class="card-body js-accordion-inner">
-									Ipsam quisquam distinctio, esse fugiat facere. Consectetur,
-									eius laboriosam.
+									Ipsam quisquam distinctio, esse fugiat facere.
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</section>
 
-		<div class="row my-5">
-			<div class="col-12">
-				<div class="border p-3">
-					<h2 class="mb-3"><a href="#Add">Add</a></h2>
+			<section class="mb-5" aria-labelledby="add-heading">
+				<div class="border rounded p-3">
+					<h2 id="add-heading" class="h4 mb-3">
+						<a href="#add-heading">Add</a>
+					</h2>
 
 					<div class="js-accordion">
-						<div class="border p-3 my-3">
-							<div class="mb-2 form-group">
-								<input class="form-control js-input" type="text" placeholder="Header" />
+						<div class="mb-3">
+							<div class="mb-2">
+								<label class="form-label" for="panel-header">Header</label>
+								<input
+									id="panel-header"
+									class="form-control js-input"
+									type="text"
+									placeholder="Header"
+								/>
 							</div>
-							<div class="mb-2 form-group">
-								<textarea placeholder="Body" class="form-control js-textarea"></textarea>
+							<div class="mb-3">
+								<label class="form-label" for="panel-body">Body</label>
+								<textarea
+									id="panel-body"
+									class="form-control js-textarea"
+									placeholder="Body"
+									rows="3"
+								></textarea>
 							</div>
-							<button class="btn btn-primary js-destroy" type="button">
-								Destroy
-							</button>
-							<button class="btn btn-primary js-create" type="button">
-								Create
-							</button>
-							<button class="btn btn-primary js-add" type="button">Add</button>
+							<div class="d-flex flex-wrap gap-2">
+								<button class="btn btn-outline-secondary js-destroy" type="button">
+									Destroy
+								</button>
+								<button class="btn btn-primary js-create" type="button">
+									Create
+								</button>
+								<button class="btn btn-success js-add" type="button">Add</button>
+							</div>
 						</div>
 
-						<div class="card js-accordion-panel my-3 is-active" data-accordion-open="true"
-							data-accordion-deselect="true">
+						<div
+							class="card js-accordion-panel mb-3 is-active"
+							data-accordion-open="true"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
-									aria-controls="lorem-04" id="lorem-04-header">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="lorem-04-header"
+									aria-expanded="true"
+									aria-controls="lorem-04"
+								>
 									Toggle
 								</button>
 							</div>
-
-							<div id="lorem-04">
+							<div id="lorem-04" role="region" aria-labelledby="lorem-04-header">
 								<div class="card-body js-accordion-inner">
 									<p class="mb-0">
-										Sit amet, consectetur adipisicing elit. Omnis ex
-										inventore tempore. Quam voluptas quibusdam excepturi
-										accusantium voluptatum facere. Nemo vero iste
-										recusandae, at magnam tenetur maxime ad optio veniam!<br />
-										Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Doloremque, molestias excepturi molestiae nesciunt
-										alias. Nobis aut praesentium, commodi minus laborum
-										ullam at quod soluta qui tempore sit eveniet dicta esse.
+										Sit amet, consectetur adipisicing elit. Omnis ex inventore
+										tempore.
 									</p>
 								</div>
 							</div>
 						</div>
 
-						<div class="card js-accordion-panel my-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							class="card js-accordion-panel mb-3"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header" type="button" aria-expanded="true"
-									aria-controls="consectetur-03">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="consectetur-03-header"
+									aria-expanded="false"
+									aria-controls="consectetur-03"
+								>
 									Toggle
 								</button>
 							</div>
-
-							<div id="consectetur-03">
+							<div
+								id="consectetur-03"
+								role="region"
+								aria-labelledby="consectetur-03-header"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
-									Itaque dolore ipsa harum nobis distinctio aperiam quis omnis
-									error incidunt iusto dolorem inventore laboriosam quaerat
-									numquam tenetur dicta quibusdam quisquam, debitis!
+									Itaque dolore ipsa harum nobis distinctio aperiam quis omnis.
 								</div>
 							</div>
 						</div>
 
-						<div class="card js-accordion-panel mt-3" data-accordion-open="false"
-							data-accordion-deselect="true">
+						<div
+							class="card js-accordion-panel"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
 							<div class="card-header">
-								<button class="btn btn-primary js-accordion-header has-decor" type="button"
-									aria-expanded="false" aria-controls="nihil-03" id="nihil-03-header">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="nihil-03-header"
+									aria-expanded="false"
+									aria-controls="nihil-03"
+								>
 									Toggle
 								</button>
 							</div>
-
-							<div id="nihil-03">
+							<div
+								id="nihil-03"
+								role="region"
+								aria-labelledby="nihil-03-header"
+								hidden
+							>
 								<div class="card-body js-accordion-inner">
-									Nemo nobis doloribus praesentium eum animi qui eos. Sit
-									accusantium rem consequatur quisquam ullam veritatis tenetur
-									architecto.
+									Nemo nobis doloribus praesentium eum animi qui eos.
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 		</div>
-	</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
-	<script type="module">
-		import Accordion from './lib/index.ts';
-		const elements = document.querySelectorAll('.js-accordion');
-		const alert = content => {
-			const div = document.createElement('div');
 
-			div.className = 'toast fade show';
-			div.style = 'toast fade show';
-			div.innerHTML = `<div class="toast-body">${content}</div>`;
+		<script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/prism.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/plugins/autoloader/prism-autoloader.min.js"></script>
+		<script type="module">
+			import Accordion from './lib/index.ts';
 
-			div.setAttribute('role', 'alert');
-			div.setAttribute('aria-live', 'assertive');
-			div.setAttribute('aria-atomic', 'true');
+			const alertRoot = document.querySelector('.js-alert');
 
-			return div;
-		};
-		const $alert = document.querySelector('.js-alert');
+			const slugify = (value) =>
+				value
+					.trim()
+					.toLowerCase()
+					.normalize('NFD')
+					.replace(/[\u0300-\u036f]/g, '')
+					.replace(/[^a-z0-9 -]/g, '')
+					.replace(/\s+/g, '-')
+					.replace(/-+/g, '-');
 
-		const onChange = content => {
-			const $el = alert(content);
+			const createToast = (content) => {
+				const toast = document.createElement('div');
+				toast.className = 'toast show text-bg-dark border-0';
+				toast.setAttribute('role', 'status');
+				toast.setAttribute('aria-live', 'polite');
+				toast.setAttribute('aria-atomic', 'true');
+				toast.innerHTML = `<div class="toast-body">${content}</div>`;
+				return toast;
+			};
 
-			$alert.appendChild($el);
+			const notify = (content) => {
+				const toast = createToast(content);
+				alertRoot.append(toast);
+				toast.addEventListener('click', () => toast.remove(), { once: true });
+				setTimeout(() => toast.remove(), 2000);
+			};
 
-			$el.addEventListener(
-				'click',
-				() => $el.style.setProperty('display', 'none'),
-				false,
-			);
+			const controlledLabel = (header) => {
+				const [controlled] = header.ariaControlsElements ?? [];
+				return controlled?.id || header.getAttribute('aria-controls') || 'panel';
+			};
 
-			setTimeout(() => $el.parentNode.removeChild($el), 2000);
-		};
-
-		for (var i = 0; i < elements.length; i += 1) {
-			const $el = elements[i];
-			const multiselectable = JSON.parse(
-				$el.getAttribute('data-accordion-multiselectable') || false,
-			);
-			const accordion = new Accordion($el, { multiselectable });
-			const $destroy = $el.querySelector('.js-destroy') || false;
-			const $create = $el.querySelector('.js-create') || false;
-
-			const $add = $el.querySelector('.js-add');
-			const $input = $el.querySelector('.js-input');
-			const $textarea = $el.querySelector('.js-textarea');
-
-			// https://dev.to/bybydev/how-to-slugify-a-string-in-javascript-4o9n
-			const slugify = (str) => {
-				str = str.replace(/^\s+|\s+$/g, ''); // trim leading/trailing white space
-				str = str.toLowerCase(); // convert string to lowercase
-				str = str.replace(/[^a-z0-9 -]/g, '') // remove any non-alphanumeric characters
-					.replace(/\s+/g, '-') // replace spaces with hyphens
-					.replace(/-+/g, '-'); // remove consecutive hyphens
-				return str;
-			}
-
-			accordion.init();
-
-			accordion.panels.forEach(panel => {
-				panel.el.addEventListener('Panel.close', ({ type, detail }) => {
-					console.log({ type, detail });
-
-					const $button = detail.current.querySelector('button,a');
-					const controls = $button.getAttribute('aria-controls');
-
-					onChange(`<strong>${type}</strong> ${controls}`);
-				});
-			});
-
-			accordion.panels.forEach(panel => {
-				panel.el.addEventListener('Panel.open', ({ type, detail }) => {
-					console.log({ type, detail });
-
-					const $button = detail.current.querySelector('button,a');
-					const controls = $button.getAttribute('aria-controls');
-
-					onChange(`<strong>${type}</strong> ${controls}`);
-				});
-			});
-
-			$destroy &&
-				$destroy.addEventListener('click', () => {
-					accordion.destroyAll();
-				});
-
-			$create &&
-				$create.addEventListener('click', () => {
-					accordion.destroyAll();
-					accordion.init();
-				});
-			$add &&
-				$add.addEventListener('click', () => {
-					const { value: header } = $input;
-					const { value: body } = $textarea;
-
-					if (header && body) {
-						// console.log(header, body);
-
-						accordion.destroyAll();
-
-						accordion.el.insertAdjacentHTML(
-							'beforeend',
-							`<div
-									class="card js-accordion-panel mt-3"
-									data-accordion-open="false"
-									data-accordion-deselect="true"
-								>
-									<div class="card-header">
-										<button
-											class="btn btn-primary js-accordion-header has-decor"
-											type="button"
-											aria-expanded="false"
-											aria-controls="${slugify(header)}"
-										>
-											${header}
-										</button>
-									</div>
-
-									<div id="${slugify(header)}">
-										<div class="card-body js-accordion-inner">
-											${body}
-										</div>
-									</div>
-								</div>`,
-						);
-
-						accordion.init();
-
-						accordion.panels.forEach(panel => {
-							panel.el.addEventListener('Panel.open', ({ type, detail }) => {
-								console.log({ type, detail });
-
-								const $button = detail.current.querySelector('button,a');
-								const controls = $button.getAttribute('aria-controls');
-
-								onChange(`<strong>${type}</strong> ${controls}`);
-							});
+			const bindPanelEvents = (accordion) => {
+				for (const panel of accordion.panels) {
+					for (const type of ['Panel.open', 'Panel.close']) {
+						panel.el.addEventListener(type, ({ type: eventType, detail }) => {
+							const header = detail.current.querySelector(
+								'.js-accordion-header',
+							);
+							notify(
+								`<strong>${eventType}</strong> ${controlledLabel(header)}`,
+							);
 						});
 					}
-				});
-		}
-	</script>
-</body>
+				}
+			};
 
+			const mountAccordion = (element) => {
+				const multiselectable = element.dataset.accordionMultiselectable === 'true';
+				const accordion = new Accordion(element, { multiselectable });
+				const destroyButton = element.querySelector('.js-destroy');
+				const createButton = element.querySelector('.js-create');
+				const addButton = element.querySelector('.js-add');
+				const input = element.querySelector('.js-input');
+				const textarea = element.querySelector('.js-textarea');
+
+				accordion.init();
+				bindPanelEvents(accordion);
+
+				destroyButton?.addEventListener('click', () => accordion.destroyAll());
+				createButton?.addEventListener('click', () => {
+					accordion.destroyAll();
+					accordion.init();
+					bindPanelEvents(accordion);
+				});
+
+				addButton?.addEventListener('click', () => {
+					const header = input?.value.trim();
+					const body = textarea?.value.trim();
+					if (!header || !body) return;
+
+					const id = slugify(header);
+					accordion.destroyAll();
+					accordion.el.insertAdjacentHTML(
+						'beforeend',
+						`<div
+							class="card js-accordion-panel mt-3"
+							data-accordion-open="false"
+							data-accordion-deselect="true"
+						>
+							<div class="card-header">
+								<button
+									class="btn btn-primary js-accordion-header"
+									type="button"
+									id="${id}-header"
+									aria-expanded="false"
+									aria-controls="${id}"
+								>
+									${header}
+								</button>
+							</div>
+							<div id="${id}" role="region" aria-labelledby="${id}-header" hidden>
+								<div class="card-body js-accordion-inner">
+									${body}
+								</div>
+							</div>
+						</div>`,
+					);
+					accordion.init();
+					bindPanelEvents(accordion);
+					input.value = '';
+					textarea.value = '';
+				});
+			};
+
+			for (const element of document.querySelectorAll('.js-accordion')) {
+				mountAccordion(element);
+			}
+		</script>
+	</body>
 </html>

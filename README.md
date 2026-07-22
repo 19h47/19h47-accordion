@@ -6,145 +6,161 @@
 
 > Sur un petit air d'accordéon Léon
 
+Accessible accordion for the modern web. Panels are resolved through [`ariaControlsElements`](https://developer.mozilla.org/en-US/docs/Web/API/Element/ariaControlsElements) (Baseline 2025), with keyboard support aligned to the [WAI-ARIA Accordion pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
+
+## Requirements
+
+- ESM-capable environment
+- Browsers with [`Element.ariaControlsElements`](https://developer.mozilla.org/en-US/docs/Web/API/Element/ariaControlsElements) support
+
 ## Installation
 
+```bash
+pnpm add @19h47/accordion
 ```
-yarn add @19h47/accordion
-```
+
+Also works with `npm` / `yarn` / `bun`.
 
 ## Usage
 
-```javascript
+```js
 import Accordion from '@19h47/accordion';
 
-const $element = document.querySelector('.js-accordion');
-const accordion = new Accordion($element);
+const element = document.querySelector('.js-accordion');
+const accordion = new Accordion(element);
+
 accordion.init();
 ```
 
 ```html
 <div class="js-accordion">
-	<div class="js-accordion-panel" data-accordion-open="true" data-accordion-deselect="true">
+	<div
+		class="js-accordion-panel"
+		data-accordion-open="true"
+		data-accordion-deselect="true"
+	>
 		<button
 			class="js-accordion-header"
 			type="button"
+			id="lorem-header"
 			aria-expanded="true"
 			aria-controls="lorem-body"
-			id="lorem-header"
 		>
 			Toggle
 		</button>
 
 		<div id="lorem-body" role="region" aria-labelledby="lorem-header">
 			<div class="js-accordion-inner">
-				Sit amet, consectetur adipisicing elit. Omnis ex inventore tempore. Quam voluptas
-				quibusdam excepturi accusantium voluptatum facere. Nemo vero iste recusandae, at
-				magnam tenetur maxime ad optio veniam!<br />
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque, molestias
-				excepturi molestiae nesciunt alias. Nobis aut praesentium, commodi minus laborum
-				ullam at quod soluta qui tempore sit eveniet dicta esse.
+				Panel content
 			</div>
 		</div>
 	</div>
 </div>
 ```
 
-## Keyboard Support
+The header keeps a classic `aria-controls` IDREF in markup. At runtime, the library reads the controlled panel via `button.ariaControlsElements[0]` — no manual `getElementById` wiring.
 
-| Key                | Function                                                                                                                                                                                     |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| _Space_ or _Enter_ | When focus is on the accordion header of a collapsed section, expands the section.                                                                                                           |
-| _Tab_              | <ul><li>Moves focus to the next focusable element.</li><li>All focusable elements in the accordion are included in the page `Tab` sequence.</li></ul>                                        |
-| _Shift + Tab_      | <ul><li>Moves focus to the previous focusable element.</li><li>All focusable elements in the accordion are included in the page `Tab` sequence.</li></ul>                                    |
-| _Down Arrow_       | <ul><li>When focus is on an accordion header, moves focus to the next accordion header.</li><li>When focus is on last accordion header, moves focus to first accordion header.</li></ul>     |
-| _Up Arrow_         | <ul><li>When focus is on an accordion header, moves focus to the previous accordion header.</li><li>When focus is on first accordion header, moves focus to last accordion header.</li></ul> |
-| _Home_             | When focus is on an accordion header, moves focus to the first accordion header.                                                                                                             |
-| _End_              | When focus is on an accordion header, moves focus to the last accordion header.                                                                                                              |
+### Markup checklist
 
-## Role, Property, State, and Tabindex Attributes
+| Selector / attribute | Role |
+| --- | --- |
+| `.js-accordion` | Root container |
+| `.js-accordion-panel` | One panel (direct child of the root) |
+| `.js-accordion-header` | Toggle control (`<button>` recommended) |
+| `aria-controls` | Points to the panel region `id` |
+| `.js-accordion-inner` | Measured content used for height animation |
+| `role="region"` + `aria-labelledby` | Accessible name for the panel landmark |
 
-| Role   | Attribute               | Element | Usage                                                                           |
-| ------ | ----------------------- | ------- | ------------------------------------------------------------------------------- |
-|        | aria-controls="ID"      | button  | oints to the ID of the panel which the header controls.                         |
-| region |                         |         | Creates a landmark region that contains the currently expanded accordion panel. |
-|        | aria-labelledby="IDREF" | div     | <ul><li>Defines the accessible name for the region element.</li><li>References the accordion header button that expands and collapses the region.</li><li>region elements are required to have an accessible name to be identified as a landmark.</li></ul> |
+## Options
 
-## Option
+### Constructor
 
-Options can be set as `data-attribute`.
-
-### Open
-
-Is the panel open or not.
-
-```html
-<button data-accordion-open="true">Button</button>
+```js
+const accordion = new Accordion(element, {
+	multiselectable: false, // allow several panels open at once
+});
 ```
 
-### Deselect
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `multiselectable` | `boolean` | `false` | When `false`, opening a panel closes the others |
 
-Can the panel be deselected or not.
+You can also set `data-accordion-multiselectable="true"` on the root in demos; pass the parsed value into the constructor as above.
+
+### Panel data attributes
+
+Set these on `.js-accordion-panel`:
 
 ```html
-<button data-accordion-deselect="true">Button</button>
+<div
+	class="js-accordion-panel"
+	data-accordion-open="true"
+	data-accordion-deselect="true"
+>
+	…
+</div>
 ```
 
-## Event
+| Attribute | Description |
+| --- | --- |
+| `data-accordion-open` | Initial open state (`"true"` / `"false"`) |
+| `data-accordion-deselect` | When `"true"`, an open panel can be collapsed again by its header |
 
-### Open
+## Events
 
-```javascript
+```js
 import Accordion from '@19h47/accordion';
 
-const $element = document.querySelector('.js-accordion');
-const accordion = new Accordion($element);
-
+const accordion = new Accordion(document.querySelector('.js-accordion'));
 accordion.init();
 
-accordion.panels.forEach(panel => {
+for (const panel of accordion.panels) {
 	panel.el.addEventListener('Panel.open', ({ detail }) => {
-		console.log({ detail });
+		console.log('opened', detail.current);
 	});
-});
-```
 
-### Close
-
-```javascript
-import Accordion from '@19h47/accordion';
-
-const $element = document.querySelector('.js-accordion');
-const accordion = new Accordion($element);
-
-accordion.init();
-
-accordion.panels.forEach(panel => {
 	panel.el.addEventListener('Panel.close', ({ detail }) => {
-		console.log({ detail });
+		console.log('closed', detail.current);
 	});
-});
+}
 ```
 
-## Build Setup
+`detail.current` is the `.js-accordion-panel` element.
+
+## Keyboard support
+
+| Key | Behavior |
+| --- | --- |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Expand or collapse the focused header |
+| <kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd> | Move through focusable elements in page order |
+| <kbd>↓</kbd> / <kbd>→</kbd> | Next header (wraps) |
+| <kbd>↑</kbd> / <kbd>←</kbd> | Previous header (wraps) |
+| <kbd>Home</kbd> | First header |
+| <kbd>End</kbd> | Last header |
+
+## Accessibility
+
+| Role / attribute | Element | Notes |
+| --- | --- | --- |
+| `aria-controls` | header | IDREF to the panel region; reflected as `ariaControlsElements` |
+| `aria-expanded` | header | Updated on open / close |
+| `role="region"` | panel body | Landmark for the expandable content |
+| `aria-labelledby` | panel body | References the header `id` |
+
+## Development
 
 ```bash
-
-# install dependencies
-$ yarn install
-
-# serve with hot reload at localhost:3000
-$ yarn serve
-
-# build for production
-$ yarn build
-
+pnpm install
+pnpm dev      # Vite playground
+pnpm build    # library build → dist/
 ```
 
-## Example
+## Demo
 
-An example is located right [here](https://19h47.github.io/19h47-accordion/), see [sources](/docs/index.html).
+Live example: [19h47.github.io/19h47-accordion](https://19h47.github.io/19h47-accordion/) · [source](./docs/index.html)
 
 ## Acknowledgments
 
--   [Accessible toggle tabs and accordion](https://gomakethings.com/accessible-toggle-tabs-and-accordions/)
--   [Accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion/)
+- [WAI-ARIA Authoring Practices — Accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)
+- [Element.ariaControlsElements — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/ariaControlsElements)
+- [Accessible toggle tabs and accordion](https://gomakethings.com/accessible-toggle-tabs-and-accordions/)
