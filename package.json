@@ -15,7 +15,7 @@
 		}
 	},
 	"scripts": {
-		"deploy": "pnpm build && pnpm publish",
+		"release": "pnpm build && pnpm publish",
 		"dev": "vite",
 		"build": "vite build"
 	},
