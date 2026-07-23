@@ -110,9 +110,13 @@ export default class Accordion {
 	 * @return {void}
 	 */
 	handleHashChange = (): void => {
+		const hash = getURLHash();
+
 		this.panels.forEach((panel, index) => {
-			if (panel.$body && `#${panel.$body.id}` === getURLHash()) {
-				console.info({index, $body: panel.$body, bodyID: `#${panel.$body.id}`, getURLHash: getURLHash()});
+			const matchesBody = panel.$body?.id && `#${panel.$body.id}` === hash;
+			const matchesPanel = panel.el.id && `#${panel.el.id}` === hash;
+
+			if (matchesBody || matchesPanel) {
 				this.current = index;
 				this.panels.forEach((panel, i) => {
 					if (i !== index) {

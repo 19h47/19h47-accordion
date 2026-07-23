@@ -39,15 +39,17 @@ accordion.init();
 		data-accordion-open="true"
 		data-accordion-deselect="true"
 	>
-		<button
-			class="js-accordion-header"
-			type="button"
-			id="lorem-header"
-			aria-expanded="true"
-			aria-controls="lorem-body"
-		>
-			Toggle
-		</button>
+		<h3>
+			<button
+				class="js-accordion-header"
+				type="button"
+				id="lorem-header"
+				aria-expanded="true"
+				aria-controls="lorem-body"
+			>
+				Toggle
+			</button>
+		</h3>
 
 		<div id="lorem-body" role="region" aria-labelledby="lorem-header">
 			<div class="js-accordion-inner">
@@ -58,7 +60,24 @@ accordion.init();
 </div>
 ```
 
-The header keeps a classic `aria-controls` IDREF in markup. At runtime, the library reads the controlled panel via `button.ariaControlsElements[0]` — no manual `getElementById` wiring.
+The header keeps an `aria-controls` IDREF in markup. At runtime, the library resolves the panel via `ariaControlsElements`.
+
+Wrap each header control in a heading (`<h2>`–`<h6>`, or nested deeper levels as needed). The library does not inject or enforce this — clean document outline is up to you.
+
+### Header: `<button>` vs `<a>`
+
+Both work as `.js-accordion-header`. Choose based on intent:
+
+| | `<button type="button">` | `<a href="#panel-id">` |
+| --- | --- | --- |
+| Role | Toggle control (APG default) | Link + deep link to the panel |
+| Activation | Click, Enter, Space | Click / Enter (native link) |
+| URL hash | Optional, via your own logic | Native (`href` + browser history) |
+| Best for | In-page accordion only | Shareable / bookmarkable panels |
+
+Use `<button>` when the header only expands or collapses. Use `<a href="#…">` when the panel id should also be a real document fragment.
+
+For deep links, point `href` at the **panel root** (`.js-accordion-panel`, always in the layout), not the collapsible region. A fragment on a `hidden` / zero-height body makes the browser scroll to the wrong place.
 
 ### Markup checklist
 
@@ -66,7 +85,8 @@ The header keeps a classic `aria-controls` IDREF in markup. At runtime, the libr
 | --- | --- |
 | `.js-accordion` | Root container |
 | `.js-accordion-panel` | One panel (direct child of the root) |
-| `.js-accordion-header` | Toggle control (`<button>` recommended) |
+| heading (`h2`–`h6`) | Wraps the header control (consumer markup; not enforced by the library) |
+| `.js-accordion-header` | Toggle control (`<button>` or `<a>`), sole child of the heading |
 | `aria-controls` | Points to the panel region `id` |
 | `.js-accordion-inner` | Measured content used for height animation |
 | `role="region"` + `aria-labelledby` | Accessible name for the panel landmark |
@@ -144,6 +164,7 @@ for (const panel of accordion.panels) {
 | --- | --- | --- |
 | `aria-controls` | header | IDREF to the panel region; reflected as `ariaControlsElements` |
 | `aria-expanded` | header | Updated on open / close |
+| `aria-disabled` | header | Set to `"true"` when the panel is open and `data-accordion-deselect="false"` |
 | `role="region"` | panel body | Landmark for the expandable content |
 | `aria-labelledby` | panel body | References the header `id` |
 

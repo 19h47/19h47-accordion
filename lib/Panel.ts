@@ -64,12 +64,10 @@ export default class Panel {
 		this.handleResize();
 		this.initEvents();
 
-		if (this.$button?.tagName === "BUTTON") {
-			if (true === this.isOpen) {
-				this.open();
-			} else {
-				this.close();
-			}
+		if (true === this.isOpen) {
+			this.open();
+		} else {
+			this.close();
 		}
 	}
 
@@ -132,6 +130,7 @@ export default class Panel {
 	close(): void {
 		this.el.setAttribute("data-accordion-open", "false");
 		this.$button!.setAttribute("aria-expanded", "false");
+		this.$button!.removeAttribute("aria-disabled");
 
 		this.$body!.style.setProperty("max-height", `${this.height}px`);
 
@@ -155,6 +154,12 @@ export default class Panel {
 	open(): void {
 		this.el.setAttribute("data-accordion-open", "true");
 		this.$button!.setAttribute("aria-expanded", "true");
+
+		if (false === this.isDeselect) {
+			this.$button!.setAttribute("aria-disabled", "true");
+		} else {
+			this.$button!.removeAttribute("aria-disabled");
+		}
 
 		this.$body!.removeAttribute("hidden");
 
@@ -182,6 +187,7 @@ export default class Panel {
 		this.$body!.style.removeProperty("max-height");
 		this.$body!.style.removeProperty("overflow");
 		this.$body!.removeAttribute("hidden");
+		this.$button!.removeAttribute("aria-disabled");
 
 		setInactive(this.el);
 	}

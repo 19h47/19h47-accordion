@@ -20,7 +20,7 @@ var e = (e) => e.classList.remove("is-active"), t = (e) => e.classList.add("is-a
 		this.openEvent = new CustomEvent("Panel.open", t), this.closeEvent = new CustomEvent("Panel.close", t);
 	}
 	init() {
-		this.$button = this.el.querySelector(".js-accordion-header"), this.$body = this.$button.ariaControlsElements[0], this.$inner = this.$body.querySelector(".js-accordion-inner"), this.isDeselect = JSON.parse(this.el.getAttribute("data-accordion-deselect")), this.isOpen = JSON.parse(this.el.getAttribute("data-accordion-open")), this.$body.setAttribute("aria-labelledby", `${this.$button.id}`), this.handleResize(), this.initEvents(), this.$button?.tagName === "BUTTON" && (!0 === this.isOpen ? this.open() : this.close());
+		this.$button = this.el.querySelector(".js-accordion-header"), this.$body = this.$button.ariaControlsElements[0], this.$inner = this.$body.querySelector(".js-accordion-inner"), this.isDeselect = JSON.parse(this.el.getAttribute("data-accordion-deselect")), this.isOpen = JSON.parse(this.el.getAttribute("data-accordion-open")), this.$body.setAttribute("aria-labelledby", `${this.$button.id}`), this.handleResize(), this.initEvents(), !0 === this.isOpen ? this.open() : this.close();
 	}
 	initEvents() {
 		this.$button.addEventListener("click", this.handleClick, { passive: !0 }), window.addEventListener("resize", this.handleResize, { passive: !0 });
@@ -30,21 +30,21 @@ var e = (e) => e.classList.remove("is-active"), t = (e) => e.classList.add("is-a
 		this.$body.removeAttribute("hidden"), this.height = this.$inner?.offsetHeight || 0, this.$body.style.setProperty("overflow", "hidden"), this.transitionDuration = parseFloat(getComputedStyle(this.$body).transitionDuration) * 1e3 || 0;
 	};
 	close() {
-		this.el.setAttribute("data-accordion-open", "false"), this.$button.setAttribute("aria-expanded", "false"), this.$body.style.setProperty("max-height", `${this.height}px`), setTimeout(() => {
+		this.el.setAttribute("data-accordion-open", "false"), this.$button.setAttribute("aria-expanded", "false"), this.$button.removeAttribute("aria-disabled"), this.$body.style.setProperty("max-height", `${this.height}px`), setTimeout(() => {
 			this.$body.style.setProperty("max-height", "0");
 		}, 1), setTimeout(() => {
 			this.$body.setAttribute("hidden", "");
 		}, this.transitionDuration), e(this.el), this.isOpen = !1;
 	}
 	open() {
-		this.el.setAttribute("data-accordion-open", "true"), this.$button.setAttribute("aria-expanded", "true"), this.$body.removeAttribute("hidden"), setTimeout(() => {
+		this.el.setAttribute("data-accordion-open", "true"), this.$button.setAttribute("aria-expanded", "true"), !1 === this.isDeselect ? this.$button.setAttribute("aria-disabled", "true") : this.$button.removeAttribute("aria-disabled"), this.$body.removeAttribute("hidden"), setTimeout(() => {
 			this.$body.style.setProperty("max-height", `${this.height}px`), setTimeout(() => {
 				this.$body.style.removeProperty("max-height");
 			}, this.transitionDuration);
 		}, 1), t(this.el), this.isOpen = !0;
 	}
 	destroy() {
-		this.$button.removeEventListener("click", this.handleClick), window.removeEventListener("resize", this.handleResize), this.$body.style.removeProperty("max-height"), this.$body.style.removeProperty("overflow"), this.$body.removeAttribute("hidden"), e(this.el);
+		this.$button.removeEventListener("click", this.handleClick), window.removeEventListener("resize", this.handleResize), this.$body.style.removeProperty("max-height"), this.$body.style.removeProperty("overflow"), this.$body.removeAttribute("hidden"), this.$button.removeAttribute("aria-disabled"), e(this.el);
 	}
 }, i = { multiselectable: !1 }, a = class {
 	el;
@@ -69,14 +69,13 @@ var e = (e) => e.classList.remove("is-active"), t = (e) => e.classList.add("is-a
 		window.addEventListener("hashchange", this.handleHashChange), this.el.addEventListener("keydown", this.handleKeyDown);
 	}
 	handleHashChange = () => {
-		this.panels.forEach((e, t) => e.$body && `#${e.$body.id}` === n() ? (console.info({
-			index: t,
-			$body: e.$body,
-			bodyID: `#${e.$body.id}`,
-			getURLHash: n()
-		}), this.current = t, this.panels.forEach((e, n) => {
-			n !== t && e.close();
-		}), e.open()) : !0);
+		let e = n();
+		this.panels.forEach((t, n) => {
+			let r = t.$body?.id && `#${t.$body.id}` === e, i = t.el.id && `#${t.el.id}` === e;
+			return r || i ? (this.current = n, this.panels.forEach((e, t) => {
+				t !== n && e.close();
+			}), t.open()) : !0;
+		});
 	};
 	handleKeyDown = (e) => {
 		let { target: t, key: n, code: r } = e, i = () => {
