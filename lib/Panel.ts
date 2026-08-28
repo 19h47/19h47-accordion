@@ -1,5 +1,3 @@
-import { setInactive, setActive } from "./utils";
-
 /**
  * Panel
  *
@@ -142,7 +140,6 @@ export default class Panel {
 			this.$body!.setAttribute("hidden", "");
 		}, this.transitionDuration);
 
-		setInactive(this.el);
 		this.isOpen = false;
 	}
 
@@ -171,7 +168,6 @@ export default class Panel {
 			}, this.transitionDuration);
 		}, 1);
 
-		setActive(this.el);
 		this.isOpen = true;
 	}
 
@@ -188,7 +184,5 @@ export default class Panel {
 		this.$body!.style.removeProperty("overflow");
 		this.$body!.removeAttribute("hidden");
 		this.$button!.removeAttribute("aria-disabled");
-
-		setInactive(this.el);
 	}
 }

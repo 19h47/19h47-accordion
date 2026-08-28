@@ -1,5 +1,6 @@
 import Panel from './Panel';
-import { getURLHash } from './utils';
+
+const getURLHash = (): string => document.location.hash.replace(/^#\//, '');
 
 /**
  * Options

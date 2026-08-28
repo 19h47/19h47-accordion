@@ -13,6 +13,15 @@
 			href="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/themes/prism.min.css"
 			rel="stylesheet"
 		/>
+		<style>
+			.js-accordion-header[aria-expanded="true"] {
+				box-shadow: inset 0 0 0 2px var(--bs-primary);
+			}
+
+			.js-accordion-panel:has(> .card-header .js-accordion-header[aria-expanded="true"]) {
+				border-color: var(--bs-primary);
+			}
+		</style>
 	</head>
 
 	<body>
@@ -85,7 +94,7 @@ accordion.init();</code></pre>
 						</div>
 
 						<div
-							class="card js-accordion-panel mb-3 is-active"
+							class="card js-accordion-panel mb-3"
 							data-accordion-open="true"
 							data-accordion-deselect="true"
 						>
@@ -203,7 +212,7 @@ accordion.init();</code></pre>
 						</div>
 
 						<div
-							class="card js-accordion-panel mb-3 is-active"
+							class="card js-accordion-panel mb-3"
 							data-accordion-open="true"
 							data-accordion-deselect="false"
 						>
@@ -307,7 +316,7 @@ accordion.init();</code></pre>
 						</div>
 
 						<div
-							class="card js-accordion-panel mb-3 is-active"
+							class="card js-accordion-panel mb-3"
 							data-accordion-open="true"
 							data-accordion-deselect="true"
 						>
@@ -424,7 +433,7 @@ accordion.init();</code></pre>
 					<div class="js-accordion">
 						<div
 							id="behir"
-							class="card js-accordion-panel mb-3 is-active"
+							class="card js-accordion-panel mb-3"
 							data-accordion-open="true"
 							data-accordion-deselect="true"
 						>
@@ -817,7 +826,7 @@ accordion.init();</code></pre>
 						</div>
 
 						<div
-							class="card js-accordion-panel mb-3 is-active"
+							class="card js-accordion-panel mb-3"
 							data-accordion-open="true"
 							data-accordion-deselect="true"
 						>

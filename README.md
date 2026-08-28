@@ -62,7 +62,7 @@ accordion.init();
 
 The header keeps an `aria-controls` IDREF in markup. At runtime, the library resolves the panel via `ariaControlsElements`.
 
-Wrap each header control in a heading (`<h2>`–`<h6>`, or nested deeper levels as needed). The library does not inject or enforce this — clean document outline is up to you.
+Wrap each header control in a heading (`<h2>` to `<h6>`, or nested deeper levels as needed). The library does not inject or enforce this. Clean document outline is up to you.
 
 ### Header: `<button>` vs `<a>`
 
@@ -85,7 +85,7 @@ For deep links, point `href` at the **panel root** (`.js-accordion-panel`, alway
 | --- | --- |
 | `.js-accordion` | Root container |
 | `.js-accordion-panel` | One panel (direct child of the root) |
-| heading (`h2`–`h6`) | Wraps the header control (consumer markup; not enforced by the library) |
+| heading (`h2` to `h6`) | Wraps the header control (consumer markup, not enforced by the library) |
 | `.js-accordion-header` | Toggle control (`<button>` or `<a>`), sole child of the heading |
 | `aria-controls` | Points to the panel region `id` |
 | `.js-accordion-inner` | Measured content used for height animation |
@@ -105,7 +105,7 @@ const accordion = new Accordion(element, {
 | --- | --- | --- | --- |
 | `multiselectable` | `boolean` | `false` | When `false`, opening a panel closes the others |
 
-You can also set `data-accordion-multiselectable="true"` on the root in demos; pass the parsed value into the constructor as above.
+You can also set `data-accordion-multiselectable="true"` on the root in demos. Pass the parsed value into the constructor as above.
 
 ### Panel data attributes
 
@@ -162,11 +162,19 @@ for (const panel of accordion.panels) {
 
 | Role / attribute | Element | Notes |
 | --- | --- | --- |
-| `aria-controls` | header | IDREF to the panel region; reflected as `ariaControlsElements` |
-| `aria-expanded` | header | Updated on open / close |
+| `aria-controls` | header | IDREF to the panel region, reflected as `ariaControlsElements` |
+| `aria-expanded` | header | Updated on open / close. Use for open-state styling |
 | `aria-disabled` | header | Set to `"true"` when the panel is open and `data-accordion-deselect="false"` |
 | `role="region"` | panel body | Landmark for the expandable content |
 | `aria-labelledby` | panel body | References the header `id` |
+
+Style open state from the attribute the library already maintains. No `is-active` class:
+
+```css
+.js-accordion-header[aria-expanded="true"] {
+	/* … */
+}
+```
 
 ## Development
 
@@ -182,6 +190,6 @@ Live example: [19h47.github.io/19h47-accordion](https://19h47.github.io/19h47-ac
 
 ## Acknowledgments
 
-- [WAI-ARIA Authoring Practices — Accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)
-- [Element.ariaControlsElements — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/ariaControlsElements)
+- [WAI-ARIA Authoring Practices Guide: Accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)
+- [Element.ariaControlsElements on MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/ariaControlsElements)
 - [Accessible toggle tabs and accordion](https://gomakethings.com/accessible-toggle-tabs-and-accordions/)
